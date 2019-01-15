@@ -1,0 +1,9 @@
+language: go
+sudo: false
+install:
+  - go get github.com/zeebo/bencode
+script:
+  - go vet main.go
+  - go vet parser/*.go
+  - go vet tracker/*.go
+  - go build main.go
