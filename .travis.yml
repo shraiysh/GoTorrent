@@ -1,8 +1,12 @@
 language: go
-sudo: false
+sudo: true
 install:
   - go get github.com/zeebo/bencode
+  - go get -u golang.org/x/lint/golint
 script:
+  - golint main.go
+  - golint parser/*.go
+  - golint tracker/*.go
   - go vet main.go
   - go vet parser/*.go
   - go vet tracker/*.go

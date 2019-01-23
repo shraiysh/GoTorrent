@@ -5,6 +5,7 @@ import (
 	"bytes"
 )
 
+// BuildConnReq is the first connection request for tracker
 func BuildConnReq() ([]byte) {
 	buffer:= &bytes.Buffer{}
 	buffer.Write([]byte{0x00,0x00, 0x04, 0x17, 
@@ -15,6 +16,7 @@ func BuildConnReq() ([]byte) {
 	return buffer.Bytes()
 }
 
+// ResType is for decoding the responses received from socket
 func ResType(response bytes.Buffer) string {
 	action:= binary.BigEndian.Uint32(response.Bytes())
 	if (action==0) { return "connect" }
