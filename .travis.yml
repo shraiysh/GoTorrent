@@ -8,6 +8,7 @@ go:
 install:
   - go get github.com/zeebo/bencode
   - go get github.com/gojp/goreportcard/cmd/goreportcard-cli
+  - gi get github.com/stretchr/testify/assert
 script:
   - chmod +x ./build.sh
   - ./build.sh

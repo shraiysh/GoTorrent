@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"../parser"
+	"bufio"
 	"bytes"
 	"crypto/rand"
 	"encoding/binary"
@@ -38,12 +39,6 @@ func ParseConnResp(response bytes.Buffer) (uint32, uint32, uint64) {
 	return action, transactionId, connectionId
 }
 
-func writeUint64ToBuffer(buf *bytes.Buffer, value uint64) {
-	temp := make([]byte, 8)
-	binary.BigEndian.PutUint64(temp, value)
-	buf.Write(temp)
-}
-
 func getRandomByteArr(size uint) []byte {
 	temp := make([]byte, size)
 	_, err := rand.Read(temp)
@@ -55,50 +50,68 @@ func getRandomByteArr(size uint) []byte {
 
 // BuildAnnounceReq builds an announce request where we tell the tracker which files we're interested in
 func BuildAnnounceReq(connectionId uint64, torrent parser.TorrentFile, port uint16) bytes.Buffer {
-	buffer := bytes.NewBuffer(make([]byte, 0, 98))
+	var buffer bytes.Buffer
+	var writer *bufio.Writer = bufio.NewWriter(&buffer)
 
 	// connection id
-	writeUint64ToBuffer(buffer, connectionId)
+	binary.Write(writer, binary.BigEndian, connectionId)
 
 	// action
-	buffer.Write([]byte{1, 0, 0, 0})
+	binary.Write(writer, binary.BigEndian, uint32(1)) // announce req
 
 	// transaction id
-	buffer.Write(getRandomByteArr(4))
+	binary.Write(writer, binary.BigEndian, getRandomByteArr(4))
 
 	// info hash
-	buffer.WriteString(torrent.InfoHash)
+	binary.Write(writer, binary.BigEndian, torrent.InfoHash)
 
 	// peer id
-	buffer.Write(getRandomByteArr(20))
+	binary.Write(writer, binary.BigEndian, getRandomByteArr(20))
 
 	// downloaded
-	buffer.Write(make([]byte, 0, 8))
+	binary.Write(writer, binary.BigEndian, uint64(0))
 
 	// left
-	writeUint64ToBuffer(buffer, torrent.Length)
+	binary.Write(writer, binary.BigEndian, torrent.Length)
 
 	// uploaded
-	buffer.Write(make([]byte, 0, 8))
+	binary.Write(writer, binary.BigEndian, uint64(0))
 
 	// event
-	buffer.Write(make([]byte, 0, 4))
+	binary.Write(writer, binary.BigEndian, uint32(0))
 
 	// ip address
-	buffer.Write(make([]byte, 0, 4))
+	binary.Write(writer, binary.BigEndian, uint32(0))
 
 	// key
-	buffer.Write(getRandomByteArr(4))
+	binary.Write(writer, binary.BigEndian, getRandomByteArr(4))
 
 	// num want
-	numWant := make([]byte, 4)
-	binary.PutVarint(numWant, -1)
-	buffer.Write(numWant)
+	binary.Write(writer, binary.BigEndian, int32(-1))
 
 	// port
-	portArr := make([]byte, 2)
-	binary.BigEndian.PutUint16(portArr, port)
-	buffer.Write(portArr)
+	binary.Write(writer, binary.BigEndian, uint16(0))
 
-	return *buffer
+	writer.Flush()
+
+	return buffer
+}
+
+// ParseAnnounceResp parses necessary details from the announce response sent by tracker
+func ParseAnnounceResp(response bytes.Buffer) AnnounceResponse {
+	var result AnnounceResponse
+
+	var responseBytes []byte = response.Bytes()
+
+	result.action = binary.BigEndian.Uint32(responseBytes[0:4])
+	result.transactionId = binary.BigEndian.Uint32(responseBytes[4:8])
+	result.interval = binary.BigEndian.Uint32(responseBytes[8:12])
+	result.leechers = binary.BigEndian.Uint32(responseBytes[12:16])
+	result.seeders = binary.BigEndian.Uint32(responseBytes[16:20])
+
+	for i := 20; i+5 < len(responseBytes); i += 6 {
+		result.peers[binary.BigEndian.Uint32(responseBytes[i:i+4])] = binary.BigEndian.Uint16(responseBytes[i+4 : i+6])
+	}
+
+	return result
 }
