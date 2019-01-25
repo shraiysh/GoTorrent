@@ -28,7 +28,6 @@ BitTorrent Client Implementation
 	- To add changes in your working directory : ```git add .```
 	- Commit your changes : ```git commit -m "<message>"```
 	- Follow a simple commit message guideline eg . ``` Fix <issue_id> : <small description> Author@<your name>```
-	- In case you have made more than one commits, follow [this](https://shawn-duan.com/git/2016/04/12/git-operations/#merge-multiple-commits-into-one)to squash them. Use ```git log``` to find out the number of commits.
 	- Push your changes : ```git push origin <branch name>:<branch name>```
 	- Make sure that ```Travis CI build``` is passed.
 5. **Generating Pull requests :**
