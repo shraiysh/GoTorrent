@@ -5,6 +5,7 @@ import (
 
 	"github.com/zeebo/bencode"
 )
+
 //Struct Tags help bencode in identifying which fields to fill.
 
 //FileMetaData contains MetaData about a File.
