@@ -5,20 +5,21 @@ import (
 
 	"github.com/zeebo/bencode"
 )
+
 //Struct Tags help bencode in identifying which fields to fill.
 
 //FileMetaData contains MetaData about a File.
 type FileMetaData struct {
 	Path   []string `bencode:"path"`
-	Length int64    `bencode:"length"`
+	Length uint64   `bencode:"length"`
 }
 
 //InfoMetaData contains MetaData about the torrent.
 type InfoMetaData struct {
-	PieceLength int64              `bencode:"piece length"`
+	PieceLength uint64             `bencode:"piece length"`
 	Pieces      []byte             `bencode:"pieces"`
 	Name        string             `bencode:"name"`
-	Length      int64              `bencode:"length"`
+	Length      uint64             `bencode:"length"`
 	Files       bencode.RawMessage `bencode:"files"`
 }
 
@@ -35,7 +36,7 @@ type MetaData struct {
 //File contains length and path of a File in the torrent.
 type File struct {
 	Path   []string
-	Length int64
+	Length uint64
 }
 
 //TorrentFile contains information about the torrent.
@@ -45,6 +46,6 @@ type TorrentFile struct {
 	CreatedBy string
 	CreatedAt time.Time
 	InfoHash  string
-	Length    int64
+	Length    uint64
 	Files     []*File
 }

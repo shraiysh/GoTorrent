@@ -31,7 +31,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		return TorrentFile{}, err
 	}
 	//This variable refers to the Total torrent size.
-	var Length int64
+	var Length uint64
 	files := make([]*File, 0)
 	// single file context
 	if info.Length > 0 {
