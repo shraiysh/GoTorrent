@@ -33,7 +33,10 @@ BitTorrent Client Implementation
 5. **Generating Pull requests :**
 	- [Generate a pull request](https://help.github.com/articles/about-pull-requests/) from your ```branch``` branch to ```master``` branch.
 	- Don't close the issue by your own.
-6. Merging and squashing will be done by either @shraiysh and @Puneet2000.
+6. Squash all your commits in a branch before submitting pull request.
+7. **Commenting your Code**
+	- Include your comments directly preceding an object for GoDoc to document it.
+	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for commenting.
 
 
 ## Project Structure :
