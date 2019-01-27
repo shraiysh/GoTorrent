@@ -10,3 +10,9 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Ignore the goreportcard.db file generated
+goreportcard.db
+
+# Coz I use vim, adding this line.
+*.swp

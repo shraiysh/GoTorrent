@@ -12,6 +12,7 @@ BitTorrent Client Implementation
 2. **Dependencies** :
 	- Install Bencode Parser : ```go get github.com/zeebo/bencode```
 	- Install golint for formatting styles : ```go get -u golang.org/x/lint/golint```
+	- Install assert for testing : ```go get github.com/stretchr/testify/assert```
 
 
 ## Guidelines for contribution :
