@@ -34,17 +34,13 @@ BitTorrent Client Implementation
 5. **Generating Pull requests :**
 	- [Generate a pull request](https://help.github.com/articles/about-pull-requests/) from your ```branch``` branch to ```master``` branch.
 	- Don't close the issue by your own.
-6. Merging and squashing will be done by either @shraiysh and @Puneet2000.
-
-
-## Project Structure :
-1. **Package parser** :
-	- ```types.go``` : contain all the data structures used for parsing torrent files.
-	- ```parser.go``` : parsing the torrent file
-	- ```utis.go``` : utility cyrptographic functions
-2. **Package tracker** :
-	- ```utils.go``` : tracker utility functions.
-3. **test_torrents** :  sample torrent files for testing.
+7. **Commenting your Code**
+	- Include your comments directly preceding an object for GoDoc to document it.
+	- Indent pre-formatted comments.
+	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
+8. **Documentation**
+	- You can refer to [this](http://13.71.92.90/pkg/concurrency-8) to see the documentation generated for the master branch.
+	- Documentation will be updated automatically upon a pull request into master.
 
 ### Resources and References
 - [Bittorent Specifications](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
