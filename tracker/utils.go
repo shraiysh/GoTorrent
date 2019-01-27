@@ -31,12 +31,13 @@ func RespType(response bytes.Buffer) string {
 }
 
 // ParseConnResp parses the connection request and returns action, transactionId and connectionId
-func ParseConnResp(response bytes.Buffer) (uint32, uint32, uint64) {
+func ParseConnResp(response bytes.Buffer) ConnectResponse {
+	var connectionResponse ConnectResponse
 	responseBytes := response.Bytes()
-	action := binary.BigEndian.Uint32(responseBytes[0:4])
-	transactionId := binary.BigEndian.Uint32(responseBytes[4:8])
-	connectionId := binary.BigEndian.Uint64(responseBytes[8:])
-	return action, transactionId, connectionId
+	connectionResponse.action = binary.BigEndian.Uint32(responseBytes[0:4])
+	connectionResponse.transactionId = binary.BigEndian.Uint32(responseBytes[4:8])
+	connectionResponse.connectionId = binary.BigEndian.Uint64(responseBytes[8:])
+	return connectionResponse
 }
 
 func getRandomByteArr(size uint) []byte {
@@ -63,7 +64,9 @@ func BuildAnnounceReq(connectionId uint64, torrent parser.TorrentFile, port uint
 	binary.Write(writer, binary.BigEndian, getRandomByteArr(4))
 
 	// info hash
-	binary.Write(writer, binary.BigEndian, torrent.InfoHash)
+	var infoHash [20]byte
+	copy(infoHash[:], torrent.InfoHash)
+	binary.Write(writer, binary.BigEndian, infoHash)
 
 	// peer id
 	binary.Write(writer, binary.BigEndian, getRandomByteArr(20))
@@ -90,7 +93,7 @@ func BuildAnnounceReq(connectionId uint64, torrent parser.TorrentFile, port uint
 	binary.Write(writer, binary.BigEndian, int32(-1))
 
 	// port
-	binary.Write(writer, binary.BigEndian, uint16(0))
+	binary.Write(writer, binary.BigEndian, port)
 
 	writer.Flush()
 
