@@ -15,16 +15,34 @@ import (
 	"testing"
 )
 
-func getMockConnectResponseBuf(transactionId uint32, connectionId uint64) bytes.Buffer {
-	var mockResponseBuf bytes.Buffer
-	var writer *bufio.Writer = bufio.NewWriter(&mockResponseBuf)
+func getMockConnectResponseBuf(transactionID uint32, connectionID uint64) bytes.Buffer {
+	var mockConnectResponseBuf bytes.Buffer
+	writer := bufio.NewWriter(&mockConnectResponseBuf)
 
 	binary.Write(writer, binary.BigEndian, uint32(0)) // action=0 for connect response
-	binary.Write(writer, binary.BigEndian, transactionId)
-	binary.Write(writer, binary.BigEndian, connectionId)
+	binary.Write(writer, binary.BigEndian, transactionID)
+	binary.Write(writer, binary.BigEndian, connectionID)
 	writer.Flush()
 
-	return mockResponseBuf
+	return mockConnectResponseBuf
+}
+
+func getMockAnnounceResponseBuf(transactionID, interval, leechers, seeders uint32, peers map[uint32]uint16) bytes.Buffer {
+	var mockAnnounceResponseBuf bytes.Buffer
+	writer := bufio.NewWriter(&mockAnnounceResponseBuf)
+
+	binary.Write(writer, binary.BigEndian, uint32(1)) // action=1 for announce response
+	binary.Write(writer, binary.BigEndian, transactionID)
+	binary.Write(writer, binary.BigEndian, interval)
+	binary.Write(writer, binary.BigEndian, leechers)
+	binary.Write(writer, binary.BigEndian, seeders)
+	for ip, port := range peers {
+		binary.Write(writer, binary.BigEndian, ip)
+		binary.Write(writer, binary.BigEndian, port)
+	}
+
+	writer.Flush()
+	return mockAnnounceResponseBuf
 }
 
 func TestBuildConnReq(t *testing.T) {
@@ -39,7 +57,7 @@ func TestBuildConnReq(t *testing.T) {
 func TestRespType(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : RespType(): ")
 	var mockResponseBuf bytes.Buffer
-	var writer *bufio.Writer = bufio.NewWriter(&mockResponseBuf)
+	writer := bufio.NewWriter(&mockResponseBuf)
 
 	// Mock response contains only action - announce
 	binary.Write(writer, binary.BigEndian, uint32(1))
@@ -65,15 +83,15 @@ func TestRespType(t *testing.T) {
 
 func TestParseConnResp(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : ParseConnResp(): ")
-	var trId uint32 = rand.Uint32()
-	var connId uint64 = rand.Uint64()
-	var mockConnRespBuf bytes.Buffer = getMockConnectResponseBuf(trId, connId)
+	trID := rand.Uint32()
+	connID := rand.Uint64()
+	mockConnRespBuf := getMockConnectResponseBuf(trID, connID)
 
-	var mockConnResp ConnectResponse = ParseConnResp(mockConnRespBuf)
+	mockConnResp := ParseConnResp(mockConnRespBuf) // Object of type ConnectResponse
 
 	assert.Equal(t, mockConnResp.action, uint32(0), "Action for connect response must be uint32(0)")
-	assert.Equal(t, mockConnResp.transactionId, trId, "Unable to detect transactionId in connection response")
-	assert.Equal(t, mockConnResp.connectionId, connId, "Unable to detect connectionId in connection response")
+	assert.Equal(t, mockConnResp.transactionID, trID, "Unable to detect transactionID in connection response")
+	assert.Equal(t, mockConnResp.connectionID, connID, "Unable to detect connectionID in connection response")
 	fmt.Println("PASS")
 }
 
@@ -84,11 +102,11 @@ func getRandomTorrent() parser.TorrentFile {
 func TestBuildAnnounceReq(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : BuildAnnounceReq(): ")
 
-	var connId uint64 = rand.Uint64()
+	connID := rand.Uint64()
 	var torrent parser.TorrentFile = getRandomTorrent()
-	var port uint16 = uint16(6464)
+	port := uint16(6464)
 
-	var announceReqBuf bytes.Buffer = BuildAnnounceReq(connId, torrent, port)
+	announceReqBuf := BuildAnnounceReq(connID, torrent, port)
 	var announceReqReader io.Reader = bytes.NewReader(announceReqBuf.Bytes())
 
 	// Temporary variables to store data read from generated buffer
@@ -102,15 +120,15 @@ func TestBuildAnnounceReq(t *testing.T) {
 		return varName + ": not set properly in Announce Request"
 	}
 
-	// connectionId
+	// connectionID
 	binary.Read(announceReqReader, binary.BigEndian, &tempUint64)
-	assert.Equal(t, connId, tempUint64, errorMsg("connectionId"))
+	assert.Equal(t, connID, tempUint64, errorMsg("connectionID"))
 
 	// action
 	binary.Read(announceReqReader, binary.BigEndian, &tempUint32)
 	assert.Equal(t, uint32(1), tempUint32, errorMsg("action"))
 
-	// Cannot check for transactionId
+	// Cannot check for transactionID
 	binary.Read(announceReqReader, binary.BigEndian, &tempUint32)
 
 	// InfoHash
@@ -119,7 +137,7 @@ func TestBuildAnnounceReq(t *testing.T) {
 	copy(infoHash[:], torrent.InfoHash)
 	assert.Equal(t, infoHash, temp20ByteArr, errorMsg("torrent.InfoHash"))
 
-	// Cannot check for peerId
+	// Cannot check for peerID
 	binary.Read(announceReqReader, binary.BigEndian, &temp20ByteArr)
 
 	// downloaded
@@ -157,5 +175,36 @@ func TestBuildAnnounceReq(t *testing.T) {
 }
 
 func TestParseAnnounceResp(t *testing.T) {
-	// TODO Implement this test for tracker/utils.go: ParseAnnounceResp(bytes.Buffer)
+	fmt.Print("Testing tracker/utils.go : ParseAnnounceResp() : ")
+	transactionID, interval, leechers, seeders := rand.Uint32(), rand.Uint32(), rand.Uint32(), rand.Uint32()
+	peers := make(map[uint32]uint16)
+	for i := 0; i < rand.Intn(10000); i++ {
+		peers[rand.Uint32()] = uint16(rand.Intn(9000) + 1000)
+	}
+
+	mockAnnounceResponseBuf := getMockAnnounceResponseBuf(transactionID, interval, leechers, seeders, peers)
+
+	announceResponse := ParseAnnounceResp(mockAnnounceResponseBuf)
+
+	getErrorMsg := func(err string) string {
+		return err + ": Error in ParseAnnounceResp()"
+	}
+
+	// Checking for parsed parameters
+	assert.Equal(t, transactionID, announceResponse.transactionID, getErrorMsg("transactionID"))
+	assert.Equal(t, interval, announceResponse.interval, getErrorMsg("interval"))
+	assert.Equal(t, leechers, announceResponse.leechers, getErrorMsg("leechers"))
+	assert.Equal(t, seeders, announceResponse.seeders, getErrorMsg("seeders"))
+
+	// Checking: every peer created is parsed
+	for k, v := range peers {
+		assert.Contains(t, announceResponse.peers, k, getErrorMsg("keyNotParsedInPeers"))
+		assert.Equal(t, v, announceResponse.peers[k], getErrorMsg("ValueMismatchInPeers"))
+	}
+	// Checking: No extra peer is parsed
+	for k := range announceResponse.peers {
+		assert.Contains(t, peers, k, getErrorMsg("ExtraKeyParsed"))
+	}
+
+	fmt.Println("PASS")
 }

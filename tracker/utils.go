@@ -30,13 +30,13 @@ func RespType(response bytes.Buffer) string {
 	return "announce"
 }
 
-// ParseConnResp parses the connection request and returns action, transactionId and connectionId
+// ParseConnResp parses the connection request and returns action, transactionID and connectionID
 func ParseConnResp(response bytes.Buffer) ConnectResponse {
 	var connectionResponse ConnectResponse
 	responseBytes := response.Bytes()
 	connectionResponse.action = binary.BigEndian.Uint32(responseBytes[0:4])
-	connectionResponse.transactionId = binary.BigEndian.Uint32(responseBytes[4:8])
-	connectionResponse.connectionId = binary.BigEndian.Uint64(responseBytes[8:])
+	connectionResponse.transactionID = binary.BigEndian.Uint32(responseBytes[4:8])
+	connectionResponse.connectionID = binary.BigEndian.Uint64(responseBytes[8:])
 	return connectionResponse
 }
 
@@ -50,12 +50,12 @@ func getRandomByteArr(size uint) []byte {
 }
 
 // BuildAnnounceReq builds an announce request where we tell the tracker which files we're interested in
-func BuildAnnounceReq(connectionId uint64, torrent parser.TorrentFile, port uint16) bytes.Buffer {
+func BuildAnnounceReq(connectionID uint64, torrent parser.TorrentFile, port uint16) bytes.Buffer {
 	var buffer bytes.Buffer
-	var writer *bufio.Writer = bufio.NewWriter(&buffer)
+	writer := bufio.NewWriter(&buffer)
 
 	// connection id
-	binary.Write(writer, binary.BigEndian, connectionId)
+	binary.Write(writer, binary.BigEndian, connectionID)
 
 	// action
 	binary.Write(writer, binary.BigEndian, uint32(1)) // announce req
@@ -104,14 +104,15 @@ func BuildAnnounceReq(connectionId uint64, torrent parser.TorrentFile, port uint
 func ParseAnnounceResp(response bytes.Buffer) AnnounceResponse {
 	var result AnnounceResponse
 
-	var responseBytes []byte = response.Bytes()
+	responseBytes := response.Bytes()
 
 	result.action = binary.BigEndian.Uint32(responseBytes[0:4])
-	result.transactionId = binary.BigEndian.Uint32(responseBytes[4:8])
+	result.transactionID = binary.BigEndian.Uint32(responseBytes[4:8])
 	result.interval = binary.BigEndian.Uint32(responseBytes[8:12])
 	result.leechers = binary.BigEndian.Uint32(responseBytes[12:16])
 	result.seeders = binary.BigEndian.Uint32(responseBytes[16:20])
 
+	result.peers = make(map[uint32]uint16)
 	for i := 20; i+5 < len(responseBytes); i += 6 {
 		result.peers[binary.BigEndian.Uint32(responseBytes[i:i+4])] = binary.BigEndian.Uint16(responseBytes[i+4 : i+6])
 	}
