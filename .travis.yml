@@ -11,6 +11,7 @@ install:
   - go get github.com/zeebo/bencode
   - go get github.com/gojp/goreportcard/cmd/goreportcard-cli
   - go get github.com/stretchr/testify/assert
+  - curl -L https://git.io/vp6lP | sh
 
 script:
   - chmod +x ./build.sh
