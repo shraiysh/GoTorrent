@@ -4,11 +4,11 @@
 package tracker
 
 import (
-	"./../parser"
 	"bufio"
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"github.com/concurrency-8/parser"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"math/rand"

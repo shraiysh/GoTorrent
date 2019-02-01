@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./parser"
 	"fmt"
+	"github.com/concurrency-8/parser"
 )
 
 func main() {
