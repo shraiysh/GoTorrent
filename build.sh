@@ -7,9 +7,6 @@ files=(
 	tracker/*.go
 )
 
-test_files=(
-
-)
 
 # script for formatting 
 for i in "${files[@]}"; do
@@ -31,8 +28,6 @@ if [ $issuecount != 0 ]; then
 fi
 
 # script for running test files
-for i in "${test_files[@]}"; do
-	go test -coverprofile "$i"
-done
+go test ./...
 
 echo "Build Successful!"

@@ -1,12 +1,12 @@
 package tracker
 
 import (
-	"../parser"
 	"bufio"
 	"bytes"
 	"crypto/rand"
 	"encoding/binary"
 	"fmt"
+	"github.com/concurrency-8/parser"
 	"os"
 )
 
