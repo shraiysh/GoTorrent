@@ -29,6 +29,9 @@ BitTorrent Client Implementation
 3. **Testing the changes**
 	- Run the test cases if any: ```go test <test file>.go```
 	- Check the linting (Install [golint](https://github.com/golang/lint), if not already installed): ```golint <file_name>```
+	- Run `./build.sh` to check if the build passes
+
+	Note: If running `goreportcard-cli -v` shows errors in the files that are in the `vendor/` directory, ignore those issues. The TRAVIS build will take care that those files are not checked.
 4. **Commiting the changes**
 	- Update ```.gitignore``` if there is any need .
 	- To add changes in your working directory : ```git add .```
