@@ -10,6 +10,7 @@ BitTorrent Client Implementation
 	- Run ```sudo apt-get install golang```
 	- Set the environment variables `GOPATH` and `GOBIN`
 2. **Run the code**
+	
 	Get [dep](https://github.com/golang/dep) for installing the dependencies
 	```
 	$ cd $GOPATH/src/github.com # Come to the appropriate directory
@@ -42,7 +43,7 @@ BitTorrent Client Implementation
 	- Merge master with your branch: `git merge master`
 	- Push your changes : ```git push origin <your branch name>:<your branch name>```
 	- Make sure that ```Travis CI build``` is passed.
-5. **Generating Pull requests :**
+6. **Generating Pull requests :**
 	- [Generate a pull request](https://help.github.com/articles/about-pull-requests/) from your ```branch``` branch to ```master``` branch.
 	- Give the PR and apt title, and mention `Fixes #<issue_number>` in the comment to link it with the issue.
 	- Don't close the issue by your own.
