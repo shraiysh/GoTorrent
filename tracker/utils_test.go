@@ -15,6 +15,11 @@ import (
 	"testing"
 	"net/url"
 )
+
+func getTorrentFileList() []string {
+	return []string{"../test_torrents/ubuntu.iso.torrent", "../test_torrents/big-buck-bunny.torrent"}
+}
+
 func getErrorMsg(varName, functionName string) string {
 	return varName + ": not set properly in " + functionName + ". Tip: You might want to check if your network allows torrenting!"
 }
@@ -111,7 +116,7 @@ func getRandomTorrent() parser.TorrentFile {
 
 func getRandomClientReport() (report *ClientStatusReport) {
 
-	torrent := getRandomTorrent()
+	torrent,_ := parser.ParseFromFile(getTorrentFileList()[0])
 	report = &ClientStatusReport{}
 	report.TorrentFile = torrent
 	report.PeerID = string(getRandomByteArr(20))
@@ -234,8 +239,7 @@ func TestGetPeers(t *testing.T) {
 
 	fmt.Print("Testing tracker/utils.go : GetPeers(): ")
 
-	torrentfileList := [2]string{"../test_torrents/ubuntu.iso.torrent", "../test_torrents/big-buck-bunny.torrent"}
-	for _, torrentfileName := range torrentfileList {
+	for _, torrentfileName := range getTorrentFileList() {
 		//torrentfile := getRandomTorrent();
 		torrentfile, _ := parser.ParseFromFile(torrentfileName)
 		passes := false
