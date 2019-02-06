@@ -13,7 +13,11 @@ import (
 	"io"
 	"math/rand"
 	"testing"
+	"net/url"
 )
+func getErrorMsg(varName, functionName string) string {
+	return varName + ": not set properly in " + functionName + ". Tip: You might want to check if your network allows torrenting!"
+}
 
 func getMockConnectResponseBuf(transactionID uint32, connectionID uint64) bytes.Buffer {
 	var mockConnectResponseBuf bytes.Buffer
@@ -194,7 +198,7 @@ func TestBuildAnnounceReq(t *testing.T) {
 }
 
 func TestParseAnnounceResp(t *testing.T) {
-	fmt.Print("Testing tracker/utils.go : parseAnnounceResp() : ")
+	fmt.Print("Testing tracker/utils.go : parseAnnounceResp(): ")
 	transactionID, interval, leechers, seeders := rand.Uint32(), rand.Uint32(), rand.Uint32(), rand.Uint32()
 	length := rand.Intn(5)
 	peers := make([]Peer, length)
@@ -207,25 +211,53 @@ func TestParseAnnounceResp(t *testing.T) {
 
 	announceResponse := parseAnnounceResp(mockAnnounceResponseBuf)
 
-	getErrorMsg := func(err string) string {
-		return err + ": Error in parseAnnounceResp()"
-	}
-
 	// Checking for parsed parameters
-	assert.Equal(t, transactionID, announceResponse.TransactionID, getErrorMsg("transactionID"))
-	assert.Equal(t, interval, announceResponse.Interval, getErrorMsg("interval"))
-	assert.Equal(t, leechers, announceResponse.Leechers, getErrorMsg("leechers"))
-	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders"))
+	assert.Equal(t, transactionID, announceResponse.TransactionID, getErrorMsg("transactionID", "TestParseAnnounceResp"))
+	assert.Equal(t, interval, announceResponse.Interval, getErrorMsg("interval", "TestParseAnnounceResp"))
+	assert.Equal(t, leechers, announceResponse.Leechers, getErrorMsg("leechers", "TestParseAnnounceResponse"))
+	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders","TestParseAnnounceResponse" ))
 
 	// Checking: Number of peers received is same
-	assert.Equal(t, len(peers), len(announceResponse.Peers), getErrorMsg("LengthNotEqual"))
+	assert.Equal(t, len(peers), len(announceResponse.Peers), getErrorMsg("LengthNotEqual", "TestParseAnnounceResponse"))
 
 	// Checking: every peer created is parsed
 	for i := 0; i < length; i++ {
-		assert.Equal(t, peers[i].IPAdress, announceResponse.Peers[i].IPAdress, getErrorMsg("IPMismatchInPeers"))
-		assert.Equal(t, peers[i].Port, announceResponse.Peers[i].Port, getErrorMsg("PortMismatchInPeers"))
+		assert.Equal(t, peers[i].IPAdress, announceResponse.Peers[i].IPAdress, getErrorMsg("IPMismatchInPeers", "TestParseAnnounceResponse"))
+		assert.Equal(t, peers[i].Port, announceResponse.Peers[i].Port, getErrorMsg("PortMismatchInPeers", "TestParseAnnounceResponse"))
 
 	}
 
+	fmt.Println("PASS")
+}
+
+func TestGetPeers(t *testing.T) {
+
+	fmt.Print("Testing tracker/utils.go : GetPeers(): ")
+
+	torrentfileList := [2]string{"../test_torrents/ubuntu.iso.torrent", "../test_torrents/big-buck-bunny.torrent"}
+	for _, torrentfileName := range torrentfileList {
+		//torrentfile := getRandomTorrent();
+		torrentfile, _ := parser.ParseFromFile(torrentfileName)
+		passes := false
+		for _, announceUrl := range torrentfile.Announce {
+
+			u, err := url.Parse(announceUrl)
+			if err != nil {
+				fmt.Println("\nWarning:", err)
+				continue
+			}
+
+			clientReport := GetClientStatusReport(torrentfile, 6881)
+
+			_, err = GetPeers(u, clientReport)
+			if err != nil {
+				fmt.Println("\nWarning:", err)
+				continue
+			}
+			passes = true
+			break
+		}
+		assert.Equal(t, true, passes, getErrorMsg("torrentfile", "TestGetPeers"))
+	}
 	fmt.Println("PASS")
 }
