@@ -1,16 +1,15 @@
 package torrent
 
-import(
+import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/concurrency-8/tracker"
 	"github.com/concurrency-8/parser"
+	"github.com/concurrency-8/tracker"
 	"github.com/stretchr/testify/assert"
 	"math/rand"
-	"testing"
 	"os"
-
+	"testing"
 )
 
 func getTorrentFileList() []string {
@@ -18,7 +17,7 @@ func getTorrentFileList() []string {
 }
 
 func getRandomClientReport() (report *tracker.ClientStatusReport) {
-	torrent,_ := parser.ParseFromFile(getTorrentFileList()[0])
+	torrent, _ := parser.ParseFromFile(getTorrentFileList()[0])
 	report = &tracker.ClientStatusReport{}
 	report.TorrentFile = torrent
 	report.PeerID = string(getRandomByteArr(20))
@@ -50,7 +49,7 @@ func TestBuildHandshake(t *testing.T) {
 	assert.Nil(binary.Read(handshakeReader, binary.BigEndian, &pstrlen))
 
 	// Checks for the length and hence confirming that the pstrlen and pstr part are in sync
-	assert.Equal(int(49 + pstrlen), len(handshake.Bytes()))
+	assert.Equal(int(49+pstrlen), len(handshake.Bytes()))
 
 	pstr := make([]byte, pstrlen)
 	assert.Nil(binary.Read(handshakeReader, binary.BigEndian, &pstr))

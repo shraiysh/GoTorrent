@@ -5,6 +5,7 @@ files=(
 	main.go
 	parser/*.go
 	tracker/*.go
+	torrent/*.go
 )
 
 

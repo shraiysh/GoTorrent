@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"io"
 	"math/rand"
-	"testing"
 	"net/url"
+	"testing"
 )
 
 func getTorrentFileList() []string {
@@ -116,7 +116,7 @@ func getRandomTorrent() parser.TorrentFile {
 
 func getRandomClientReport() (report *ClientStatusReport) {
 
-	torrent,_ := parser.ParseFromFile(getTorrentFileList()[0])
+	torrent, _ := parser.ParseFromFile(getTorrentFileList()[0])
 	report = &ClientStatusReport{}
 	report.TorrentFile = torrent
 	report.PeerID = string(getRandomByteArr(20))
@@ -220,7 +220,7 @@ func TestParseAnnounceResp(t *testing.T) {
 	assert.Equal(t, transactionID, announceResponse.TransactionID, getErrorMsg("transactionID", "TestParseAnnounceResp"))
 	assert.Equal(t, interval, announceResponse.Interval, getErrorMsg("interval", "TestParseAnnounceResp"))
 	assert.Equal(t, leechers, announceResponse.Leechers, getErrorMsg("leechers", "TestParseAnnounceResponse"))
-	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders","TestParseAnnounceResponse" ))
+	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders", "TestParseAnnounceResponse"))
 
 	// Checking: Number of peers received is same
 	assert.Equal(t, len(peers), len(announceResponse.Peers), getErrorMsg("LengthNotEqual", "TestParseAnnounceResponse"))
