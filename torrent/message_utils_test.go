@@ -77,7 +77,7 @@ func TestBuildChoke(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	// Length of choke byte array = 5
+	// Length of choke buffer
 	assert.Equal(t, 5, len(choke.Bytes()))
 
 	chokeReader := bytes.NewReader(choke.Bytes())
@@ -98,7 +98,7 @@ func TestBuildUnchoke(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	// Length of unchoke byte array = 5
+	// Length of unchoke buffer
 	assert.Equal(t, 5, len(unchoke.Bytes()))
 
 	unchokeReader := bytes.NewReader(unchoke.Bytes())
@@ -121,7 +121,7 @@ func TestBuildInterested(t *testing.T) {
 	interested, err := BuildInterested()
 
 	assert.Nil(err)
-	// Length of interested byte array = 5
+	// Length of interested buffer
 	assert.Equal(5, len(interested.Bytes()))
 
 	interestedReader := bytes.NewReader(interested.Bytes())
@@ -144,7 +144,7 @@ func TestBuildUninterested(t *testing.T) {
 	uninterested, err := BuildUninterested()
 
 	assert.Nil(err)
-	// Length of uninterested byte array = 5
+	// Length of uninterested buffer
 	assert.Equal(5, len(uninterested.Bytes()))
 
 	uninterestedReader := bytes.NewReader(uninterested.Bytes())
@@ -167,7 +167,7 @@ func TestBuildHave(t *testing.T) {
 	have, err := BuildHave(payload)
 
 	assert.Nil(err)
-	// Length of have byte array = 5
+	// Length of have buffer
 	assert.Equal(9, len(have.Bytes()))
 
 	haveReader := bytes.NewReader(have.Bytes())
@@ -186,4 +186,152 @@ func TestBuildHave(t *testing.T) {
 	var payloadRead uint32
 	assert.Nil(binary.Read(haveReader, binary.BigEndian, &payloadRead))
 	assert.Equal(payload, payloadRead)
+}
+
+func TestBuildRequest(t *testing.T) {
+	assert := assert.New(t)
+
+	piece := GetRandomPiece()
+
+	request, err := BuildRequest(piece)
+
+	assert.Nil(err)
+
+	// Length of request buffer
+	assert.Equal(17, len(request.Bytes()))
+
+	requestReader := bytes.NewReader(request.Bytes())
+
+	// Read length of message
+	var length uint32
+	assert.Nil(binary.Read(requestReader, binary.BigEndian, &length))
+	assert.Equal(uint32(13), length)
+
+	// Read message type
+	var messageType uint8
+	assert.Nil(binary.Read(requestReader, binary.BigEndian, &messageType))
+	assert.Equal(uint8(6), messageType)
+
+	// Read piece index
+	var pieceIndex uint32
+	assert.Nil(binary.Read(requestReader, binary.BigEndian, &pieceIndex))
+	assert.Equal(piece.Index, pieceIndex)
+
+	// Read piece begin point
+	var pieceBegin uint32
+	assert.Nil(binary.Read(requestReader, binary.BigEndian, &pieceBegin))
+	assert.Equal(piece.Begin, pieceBegin)
+
+	// Read piece length
+	var pieceLength uint32
+	assert.Nil(binary.Read(requestReader, binary.BigEndian, &pieceLength))
+	assert.Equal(piece.Length, pieceLength)
+}
+
+func TestBuildPiece(t *testing.T) {
+	assert := assert.New(t)
+
+	samplePiece := GetRandomPiece()
+
+	builtPiece, err := BuildPiece(samplePiece)
+
+	assert.Nil(err)
+
+	// Length of piece buffer
+	assert.Equal(len(samplePiece.Block.Bytes())+13, len(builtPiece.Bytes()))
+
+	pieceReader := bytes.NewReader(builtPiece.Bytes())
+
+	// Read length of message
+	var length uint32
+	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &length))
+	assert.Equal(uint32(len(samplePiece.Block.Bytes())+9), length)
+
+	// Read message type
+	var messageType uint8
+	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &messageType))
+	assert.Equal(uint8(7), messageType)
+
+	// Read piece index
+	var pieceIndexRead uint32
+	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceIndexRead))
+	assert.Equal(samplePiece.Index, pieceIndexRead)
+
+	// Read Begin
+	var pieceBeginRead uint32
+	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceBeginRead))
+	assert.Equal(samplePiece.Begin, pieceBeginRead)
+
+	// Read Buffer
+	blockRead := make([]byte, len(samplePiece.Block.Bytes()))
+	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &blockRead))
+	assert.Equal(samplePiece.Block.Bytes(), blockRead)
+}
+
+func TestBuildCancel(t *testing.T) {
+	assert := assert.New(t)
+
+	samplePiece := GetRandomPiece()
+
+	cancel, err := BuildCancel(samplePiece)
+
+	assert.Nil(err)
+
+	// Length of cancel buffer
+	assert.Equal(17, len(cancel.Bytes()))
+
+	cancelReader := bytes.NewReader(cancel.Bytes())
+
+	// Read length of message
+	var length uint32
+	assert.Nil(binary.Read(cancelReader, binary.BigEndian, &length))
+	assert.Equal(uint32(13), length)
+
+	// Message type = 8
+	var messageType uint8
+	assert.Nil(binary.Read(cancelReader, binary.BigEndian, &messageType))
+	assert.Equal(uint8(8), messageType)
+
+	// piece index
+	var pieceIndex uint32
+	assert.Nil(binary.Read(cancelReader, binary.BigEndian, &pieceIndex))
+	assert.Equal(samplePiece.Index, pieceIndex)
+
+	// piece begin
+	var pieceBegin uint32
+	assert.Nil(binary.Read(cancelReader, binary.BigEndian, &pieceBegin))
+	assert.Equal(samplePiece.Begin, pieceBegin)
+
+	// piece length
+	var pieceLength uint32
+	assert.Nil(binary.Read(cancelReader, binary.BigEndian, &pieceLength))
+	assert.Equal(samplePiece.Length, pieceLength)
+}
+
+func TestBuildPort(t *testing.T) {
+	assert := assert.New(t)
+	port := uint16(rand.Intn(90000) + 10000)
+
+	portBuf, err := BuildPort(port)
+	assert.Nil(err)
+
+	// Length of port buffer
+	assert.Equal(7, len(portBuf.Bytes()))
+
+	portBufReader := bytes.NewReader(portBuf.Bytes())
+
+	// Length of message
+	var length uint32
+	assert.Nil(binary.Read(portBufReader, binary.BigEndian, &length))
+	assert.Equal(uint32(3), length)
+
+	// Message type = 9
+	var messageType uint8
+	assert.Nil(binary.Read(portBufReader, binary.BigEndian, &messageType))
+	assert.Equal(uint8(9), messageType)
+
+	// port
+	var portReadFromBuf uint16
+	assert.Nil(binary.Read(portBufReader, binary.BigEndian, &portReadFromBuf))
+	assert.Equal(port, portReadFromBuf)
 }
