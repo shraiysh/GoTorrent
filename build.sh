@@ -8,11 +8,13 @@ files=(
 	torrent/*.go
 )
 
-
 # script for formatting 
 for i in "${files[@]}"; do
 	gofmt -w "$i"
 done 
+
+# script for running test files
+go test ./... -v
 
 #checking goreportcard-cli for issues
 set -e
@@ -24,11 +26,8 @@ if [ $issuecount == "0" ]; then
         echo "goreportcard-cli passed"
 fi
 if [ $issuecount != 0 ]; then
-        echo $issuecount" issues. Run \`goreportcard-cli -v\` to check"
-        exit 1
+        echo $issuecount" issues. Run \`goreportcard-cli -v\` to check. Ignore the issues from \`vendor\` directory"
+	exit 1
 fi
-
-# script for running test files
-go test ./...
 
 echo "Build Successful!"

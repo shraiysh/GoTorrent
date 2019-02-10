@@ -17,8 +17,7 @@ type FileMetaData struct {
 //InfoMetaData contains MetaData about the torrent.
 type InfoMetaData struct {
 	PieceLength uint64             `bencode:"piece length"`
-	PiecesByteArr []byte             `bencode:"pieces"`
-	Pieces      []Piece
+	Piece       []byte             `bencode:"pieces"`
 	Name        string             `bencode:"name"`
 	Length      uint64             `bencode:"length"`
 	Files       bencode.RawMessage `bencode:"files"`
@@ -57,5 +56,5 @@ type TorrentFile struct {
 	InfoHash  string
 	Length    uint64
 	Files     []*File
-	Piece     []Piece
+	Pieces    []Piece
 }
