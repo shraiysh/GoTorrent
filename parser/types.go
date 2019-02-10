@@ -1,9 +1,9 @@
 package parser
 
 import (
-	"time"
-
+	"bytes"
 	"github.com/zeebo/bencode"
+	"time"
 )
 
 //Struct Tags help bencode in identifying which fields to fill.
@@ -17,7 +17,7 @@ type FileMetaData struct {
 //InfoMetaData contains MetaData about the torrent.
 type InfoMetaData struct {
 	PieceLength uint64             `bencode:"piece length"`
-	Pieces      []byte             `bencode:"pieces"`
+	Piece       []byte             `bencode:"pieces"`
 	Name        string             `bencode:"name"`
 	Length      uint64             `bencode:"length"`
 	Files       bencode.RawMessage `bencode:"files"`
@@ -39,6 +39,14 @@ type File struct {
 	Length uint64
 }
 
+// Piece contains a piece of the torrent
+type Piece struct {
+	Index  uint32
+	Begin  uint32
+	Length uint32
+	Block  bytes.Buffer
+}
+
 //TorrentFile contains information about the torrent.
 type TorrentFile struct {
 	Announce  []string
@@ -48,4 +56,5 @@ type TorrentFile struct {
 	InfoHash  string
 	Length    uint64
 	Files     []*File
+	Pieces    []Piece
 }

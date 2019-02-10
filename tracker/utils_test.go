@@ -12,47 +12,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"io"
 	"math/rand"
-	"testing"
 	"net/url"
+	"testing"
 )
-
-func getTorrentFileList() []string {
-	return []string{"../test_torrents/ubuntu.iso.torrent", "../test_torrents/big-buck-bunny.torrent"}
-}
 
 func getErrorMsg(varName, functionName string) string {
 	return varName + ": not set properly in " + functionName + ". Tip: You might want to check if your network allows torrenting!"
-}
-
-func getMockConnectResponseBuf(transactionID uint32, connectionID uint64) bytes.Buffer {
-	var mockConnectResponseBuf bytes.Buffer
-	writer := bufio.NewWriter(&mockConnectResponseBuf)
-
-	binary.Write(writer, binary.BigEndian, uint32(0)) // action=0 for connect response
-	binary.Write(writer, binary.BigEndian, transactionID)
-	binary.Write(writer, binary.BigEndian, connectionID)
-	writer.Flush()
-
-	return mockConnectResponseBuf
-}
-
-func getMockAnnounceResponseBuf(transactionID, interval, leechers, seeders uint32, peers []Peer) bytes.Buffer {
-	var mockAnnounceResponseBuf bytes.Buffer
-	writer := bufio.NewWriter(&mockAnnounceResponseBuf)
-
-	binary.Write(writer, binary.BigEndian, uint32(1)) // action=1 for announce response
-	binary.Write(writer, binary.BigEndian, transactionID)
-	binary.Write(writer, binary.BigEndian, interval)
-	binary.Write(writer, binary.BigEndian, leechers)
-	binary.Write(writer, binary.BigEndian, seeders)
-
-	for i := 0; i < len(peers); i++ {
-		binary.Write(writer, binary.BigEndian, peers[i].IPAdress)
-		binary.Write(writer, binary.BigEndian, peers[i].Port)
-	}
-
-	writer.Flush()
-	return mockAnnounceResponseBuf
 }
 
 func TestBuildConnReq(t *testing.T) {
@@ -78,7 +43,7 @@ func TestRespType(t *testing.T) {
 	assert.Equal(t, respType(mockResponseBuf), "announce", "Unable to detect \"announce\" response when action=1")
 
 	// Mock connect response
-	mockResponseBuf = getMockConnectResponseBuf(rand.Uint32(), rand.Uint64())
+	mockResponseBuf = GetMockConnectResponseBuf(rand.Uint32(), rand.Uint64())
 	assert.Equal(t, respType(mockResponseBuf), "connect", "Unable to detect \"connect\" response when action=0")
 
 	mockResponseBuf.Reset()
@@ -100,7 +65,7 @@ func TestParseConnResp(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : parseConnResp(): ")
 	trID := rand.Uint32()
 	connID := rand.Uint64()
-	mockConnRespBuf := getMockConnectResponseBuf(trID, connID)
+	mockConnRespBuf := GetMockConnectResponseBuf(trID, connID)
 
 	mockConnResp := parseConnResp(mockConnRespBuf) // Object of type ConnectResponse
 
@@ -114,23 +79,11 @@ func getRandomTorrent() parser.TorrentFile {
 	return parser.TorrentFile{}
 }
 
-func getRandomClientReport() (report *ClientStatusReport) {
-
-	torrent,_ := parser.ParseFromFile(getTorrentFileList()[0])
-	report = &ClientStatusReport{}
-	report.TorrentFile = torrent
-	report.PeerID = string(getRandomByteArr(20))
-	report.Left = torrent.Length
-	report.Port = uint16(6464)
-	report.Event = ""
-	return report
-}
-
 func TestBuildAnnounceReq(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : buildAnnounceReq(): ")
 
 	connID := rand.Uint64()
-	report := getRandomClientReport()
+	report := GetRandomClientReport()
 
 	announceReqBuf, _ := buildAnnounceReq(connID, report)
 
@@ -212,7 +165,7 @@ func TestParseAnnounceResp(t *testing.T) {
 		peers[i].Port = uint16(rand.Intn(9000) + 1000)
 	}
 
-	mockAnnounceResponseBuf := getMockAnnounceResponseBuf(transactionID, interval, leechers, seeders, peers)
+	mockAnnounceResponseBuf := GetMockAnnounceResponseBuf(transactionID, interval, leechers, seeders, peers)
 
 	announceResponse := parseAnnounceResp(mockAnnounceResponseBuf)
 
@@ -220,7 +173,7 @@ func TestParseAnnounceResp(t *testing.T) {
 	assert.Equal(t, transactionID, announceResponse.TransactionID, getErrorMsg("transactionID", "TestParseAnnounceResp"))
 	assert.Equal(t, interval, announceResponse.Interval, getErrorMsg("interval", "TestParseAnnounceResp"))
 	assert.Equal(t, leechers, announceResponse.Leechers, getErrorMsg("leechers", "TestParseAnnounceResponse"))
-	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders","TestParseAnnounceResponse" ))
+	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg("seeders", "TestParseAnnounceResponse"))
 
 	// Checking: Number of peers received is same
 	assert.Equal(t, len(peers), len(announceResponse.Peers), getErrorMsg("LengthNotEqual", "TestParseAnnounceResponse"))
@@ -239,7 +192,7 @@ func TestGetPeers(t *testing.T) {
 
 	fmt.Print("Testing tracker/utils.go : GetPeers(): ")
 
-	for _, torrentfileName := range getTorrentFileList() {
+	for _, torrentfileName := range GetTorrentFileList() {
 		//torrentfile := getRandomTorrent();
 		torrentfile, _ := parser.ParseFromFile(torrentfileName)
 		passes := false
