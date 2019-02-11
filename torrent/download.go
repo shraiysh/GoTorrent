@@ -6,8 +6,10 @@ import (
 	"net"
 )
 
+type handler func([]byte)
+
 // onWholeMessage sends complete messages to callback function
-func onWholeMessage(conn *net.IPConn) { // TODO add an extra argument for callback function i.e msgHandler
+func onWholeMessage(conn *net.IPConn, msgHandler handler) { // TODO add an extra argument for callback function i.e msgHandler
 	buffer := new(bytes.Buffer)
 	handshake := true
 	resp := make([]byte, 100)
@@ -37,8 +39,9 @@ func onWholeMessage(conn *net.IPConn) { // TODO add an extra argument for callba
 		}
 
 		for len(buffer.Bytes()) >= 4 && len(buffer.Bytes()) >= msgLen {
-			// TODO call a function that will be passes as a parameter
-			buffer = bytes.NewBuffer((buffer.Bytes())[:msgLen])
+			// TODO implement msgHandler
+			msgHandler((buffer.Bytes())[:msgLen])
+			buffer = bytes.NewBuffer((buffer.Bytes())[msgLen:])
 			handshake = false
 		}
 	}
