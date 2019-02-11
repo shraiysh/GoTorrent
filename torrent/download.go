@@ -10,8 +10,17 @@ import (
 func onWholeMessage(conn *net.IPConn) { // TODO add an extra argument for callback function i.e msgHandler
 	buffer := new(bytes.Buffer)
 	handshake := true
+	resp := make([]byte, 100)
 
 	for {
+
+		respLen, err := conn.Read(resp)
+
+		if err != nil {
+			// TODO : close the connection and return
+		}
+
+		binary.Write(buffer, binary.BigEndian, resp[:respLen])
 
 		var msgLen int
 
