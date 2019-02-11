@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"io"
 	"math/rand"
-	"net/url"
+	// "net/url"
 	"testing"
 )
 
@@ -188,6 +188,7 @@ func TestParseAnnounceResp(t *testing.T) {
 	fmt.Println("PASS")
 }
 
+/*
 func TestGetPeers(t *testing.T) {
 
 	fmt.Print("Testing tracker/utils.go : GetPeers(): ")
@@ -217,4 +218,4 @@ func TestGetPeers(t *testing.T) {
 		assert.Equal(t, true, passes, getErrorMsg("torrentfile", "TestGetPeers"))
 	}
 	fmt.Println("PASS")
-}
+} */
