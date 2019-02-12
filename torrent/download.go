@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"net"
-	//"fmt"
 )
 
 type handler func([]byte)
@@ -16,11 +15,11 @@ func onWholeMessage(conn net.Conn, msgHandler handler, test bool) { // TODO add 
 	resp := make([]byte, 100)
 
 	for {
-
 		respLen, err := conn.Read(resp)
 
 		if err != nil {
-			// TODO : close the connection and return
+			conn.Close() // TODO maybe better implementation
+			return
 		}
 
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
