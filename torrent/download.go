@@ -9,7 +9,7 @@ import (
 type handler func([]byte)
 
 // onWholeMessage sends complete messages to callback function
-func onWholeMessage(conn net.Conn, msgHandler handler) {
+func onWholeMessage(conn net.Conn, msgHandler handler) error {
 	buffer := new(bytes.Buffer)
 	handshake := true
 	resp := make([]byte, 100)
@@ -19,7 +19,7 @@ func onWholeMessage(conn net.Conn, msgHandler handler) {
 
 		if err != nil {
 			conn.Close() // TODO maybe a better implementation
-			return
+			return err
 		}
 
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
@@ -28,7 +28,7 @@ func onWholeMessage(conn net.Conn, msgHandler handler) {
 
 		if handshake {
 			length := uint8((buffer.Bytes())[0])
-			msgLen = int(length + 49)
+			msgLen = int(length) + 49
 		} else {
 
 			length := int32((buffer.Bytes())[0])

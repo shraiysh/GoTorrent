@@ -12,7 +12,8 @@ import (
 func TestOnWholeMessage(t *testing.T) {
 	fmt.Println("Testing torrent/download.go : onWholeMessage(*kwargs)")
 
-	length := rand.Intn(100) // generate random handshake message
+	//length := rand.Intn(100) // generate random handshake message
+	length := 220
 	message := make([]byte, length+49)
 	rand.Read(message)
 	message[0] = uint8(length)
@@ -24,10 +25,12 @@ func TestOnWholeMessage(t *testing.T) {
 		server.Close() // close after writing out all data
 	}()
 
-	onWholeMessage(client, func(b []byte) { // mock Message Handler
-		assert.Equal(t, len(b), int(b[0]+49), "length not equal")
+	err := onWholeMessage(client, func(b []byte) { // mock Message Handler
+		assert.Equal(t, len(b), int(b[0])+49, "length not equal")
 		assert.Equal(t, b, message, "message received not same")
-		fmt.Println("PASS")
 	})
+
+	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
+	fmt.Println("PASS")
 
 }
