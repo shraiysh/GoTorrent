@@ -28,6 +28,6 @@ func TestOnWholeMessage(t *testing.T) {
 		assert.Equal(t, len(b), int(b[0]+49), "length not equal")
 		assert.Equal(t, b, message, "message received not same")
 		fmt.Println("PASS")
-	}, false)
+	})
 
 }
