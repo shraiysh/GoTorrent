@@ -1,29 +1,38 @@
-package torrent
+package main
 
 import (
 	"bytes"
 	"encoding/binary"
+	url "net/url"
 	"net"
 	"fmt"
+	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
+	"io/ioutil"
 )
 
 type handler func([]byte)
 
 // MakeHandshake is this.
-func MakeHandshake(){
-	report := tracker.GetRandomClientReport()
-	_, err := BuildHandshake(*report)
+func MakeHandshake(u *url.URL, torrent parser.TorrentFile){
+	report := tracker.GetClientStatusReport(torrent, uint16(u.Port()))
+	buffer, err := BuildHandshake(*report)
 	if err!=nil{
 		return
 	}
-	service := "127.0.0.1:6000"
+	service := "46.182.109.197:64806"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	if err!=nil{
 		return
 	}
-	
+
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+	if err!=nil{
+		return
+	}
+	conn.Write(buffer.Bytes())
+	result, err := ioutil.ReadAll(conn)
+	fmt.Println(string(result))
 
 
 }
