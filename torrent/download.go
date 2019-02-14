@@ -40,6 +40,20 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 	//Build will fail without this.
 	onWholeMessage(conn, handler)
 }
+func msgHandler(msg []byte) [] byte{
+	/* handshake message condition please confirm. */ 
+	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
+		msgtosend, err := BuildInterested()
+		if err!=nil{
+			//return nil if error was found.
+			fmt.Println(err)
+			return nil
+		}
+	}
+	/* Other non-handshake functions should follow */
+	
+	
+}
 
 // onWholeMessage sends complete messages to callback function
 func onWholeMessage(conn *net.IPConn, msgHandler handler) { // TODO add an extra argument for callback function i.e msgHandler
