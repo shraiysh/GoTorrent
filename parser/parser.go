@@ -3,11 +3,15 @@ package parser
 import (
 	"io"
 	"io/ioutil"
+	"math"
 	"os"
 	"time"
 
 	bencode "github.com/zeebo/bencode"
 )
+
+// BLOCK_LEN is length  of block
+var BLOCK_LEN = uint64(math.Pow(2, 14))
 
 //Parse parses from a stream and returns a pointer to a TorrentFile.
 func Parse(reader io.Reader) (TorrentFile, error) {
@@ -72,13 +76,15 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 
 	//return the object containing the metadata.
 	return TorrentFile{
-		Announce:  announces,
-		Comment:   metadata.Comment,
-		CreatedBy: metadata.CreatedBy,
-		CreatedAt: time.Unix(metadata.CreatedAt, 0),
-		InfoHash:  toSHA1(metadata.Info),
-		Length:    Length,
-		Files:     files,
+		Announce:    announces,
+		Comment:     metadata.Comment,
+		CreatedBy:   metadata.CreatedBy,
+		CreatedAt:   time.Unix(metadata.CreatedAt, 0),
+		InfoHash:    toSHA1(metadata.Info),
+		Length:      Length,
+		Files:       files,
+		PieceLength: info.PieceLength,
+		Piece:       info.Piece,
 	}, nil
 }
 
@@ -92,4 +98,36 @@ func ParseFromFile(path string) (TorrentFile, error) {
 	defer file.Close()
 
 	return Parse(file)
+}
+
+// PieceLen returns the length of ith piece of file
+func PieceLen(torrent TorrentFile, index uint32) uint64 {
+	totalLength := torrent.Length
+	pieceLength := torrent.PieceLength
+	lastPieceLen := totalLength % pieceLength
+	lastPieceIndex := math.Floor(float64(totalLength / pieceLength))
+
+	if uint32(lastPieceIndex) == index {
+		return lastPieceLen
+	}
+	return pieceLength
+}
+
+// BlocksPerPiece returns number of blocks in a ith piece
+func BlocksPerPiece(torrent TorrentFile, index uint32) uint32 {
+	pieceLength := PieceLen(torrent, index)
+	return uint32(math.Ceil(float64(pieceLength) / float64(BLOCK_LEN)))
+}
+
+// BlockLen calculates length of ith block in jth piece
+func BlockLen(torrent TorrentFile, pieceIndex uint32, blockIndex uint32) uint64 {
+	pieceLength := PieceLen(torrent, pieceIndex)
+
+	lastPieceLength := pieceLength % BLOCK_LEN
+	lastPieceIndex := math.Floor(float64(pieceLength) / float64(BLOCK_LEN))
+
+	if blockIndex == uint32(lastPieceIndex) {
+		return lastPieceLength
+	}
+	return BLOCK_LEN
 }
