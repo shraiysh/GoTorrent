@@ -13,7 +13,6 @@ import (
 type handler func([]byte)
 
 
-
 // Download is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
 func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
@@ -42,9 +41,18 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 	onWholeMessage(conn, handler)
 }
 
-func msgHandler(msg []byte){
+func msgHandler(msg []byte) ([] byte){
+	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[:1], []byte("BitTorrent protocol"))) {
+		msgtosend, err := BuildInterested()
+		if err!=nil{
+			//return nil if error was found.
+			fmt.Println(err)
+			return nil
+		}
+	}
+	/* Other non-handshake functions should follow */
 	
-
+	
 }
 
 // onWholeMessage sends complete messages to callback function
