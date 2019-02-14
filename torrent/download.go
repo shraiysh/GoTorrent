@@ -5,31 +5,29 @@ import (
 	"encoding/binary"
 	"net"
 	"fmt"
-	"github.com/concurrency-8/parser"
+	//"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
-	"io/ioutil"
+	//"io/ioutil"
 )
 
 type handler func([]byte)
 
 // MakeHandshake is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
-func MakeHandshake(peer tracker.Peer, torrent parser.TorrentFile){
-	report := tracker.GetClientStatusReport(torrent, peer.Port)
+func MakeHandshake(peer tracker.Peer, report *tracker.ClientStatusReport){
 	buffer, err := BuildHandshake(*report)
 	if err!=nil{
 		return
 	}
     peerip := make([]byte, 4)
-    binary.LittleEndian.PutUint32(peerip, peer.IPAdress)
+    binary.BigEndian.PutUint32(peerip, peer.IPAdress)
 	service := net.TCPAddr{
 		IP: peerip,
 		Port: int(peer.Port),
 		Zone: "",
 	}
-	if err!=nil{
-		return
-	}
+
+	fmt.Println(service)
 	//check if peer supports tcp first. anyways, if it doesn't
 	// below expression will raise an error.
 	conn, err := net.DialTCP("tcp", nil, &service)
@@ -39,9 +37,11 @@ func MakeHandshake(peer tracker.Peer, torrent parser.TorrentFile){
 	//write the handshake content into the connection.
 	conn.Write(buffer.Bytes())
 	//read from the connection.
-	result, err := ioutil.ReadAll(conn)
+
+	resp:= make([]byte,68)
+	conn.Read(resp)
 	//Just to print and check stuff.
-	fmt.Println(string(result))
+	fmt.Println(resp)
 }
 
 // onWholeMessage sends complete messages to callback function
