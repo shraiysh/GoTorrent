@@ -56,19 +56,17 @@ func msgHandler(msg []byte) [] byte{
 }
 
 // onWholeMessage sends complete messages to callback function
-func onWholeMessage(conn *net.IPConn, msgHandler handler) { // TODO add an extra argument for callback function i.e msgHandler
+func onWholeMessage(conn net.Conn, msgHandler handler) error {
 	buffer := new(bytes.Buffer)
 	handshake := true
 	resp := make([]byte, 100)
 
 	for {
-
 		respLen, err := conn.Read(resp)
 
 		if err != nil {
-			// TODO : close the connection and return
-			conn.Close()
-			return
+			conn.Close() // TODO maybe a better implementation
+			return err
 		}
 
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
@@ -76,17 +74,13 @@ func onWholeMessage(conn *net.IPConn, msgHandler handler) { // TODO add an extra
 		var msgLen int
 
 		if handshake {
-
-			var length uint8
-			binary.Read(buffer, binary.BigEndian, &length)
-			msgLen = int(length + 49)
+			length := uint8((buffer.Bytes())[0])
+			msgLen = int(length) + 49
 		} else {
 
-			var length int32
-			binary.Read(buffer, binary.BigEndian, &length)
+			length := int32((buffer.Bytes())[0])
 			msgLen = int(length + 4)
 		}
-
 		for len(buffer.Bytes()) >= 4 && len(buffer.Bytes()) >= msgLen {
 			// TODO implement msgHandler
 			msgHandler((buffer.Bytes())[:msgLen])
@@ -94,5 +88,4 @@ func onWholeMessage(conn *net.IPConn, msgHandler handler) { // TODO add an extra
 			handshake = false
 		}
 	}
-
 }
