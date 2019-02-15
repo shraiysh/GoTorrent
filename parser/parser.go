@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"math"
@@ -101,33 +102,50 @@ func ParseFromFile(path string) (TorrentFile, error) {
 }
 
 // PieceLen returns the length of ith piece of file
-func PieceLen(torrent TorrentFile, index uint32) uint64 {
+func PieceLen(torrent TorrentFile, index uint32) (length uint64, err error) {
 	totalLength := torrent.Length
 	pieceLength := torrent.PieceLength
 	lastPieceLen := totalLength % pieceLength
 	lastPieceIndex := math.Floor(float64(totalLength / pieceLength))
 
 	if uint32(lastPieceIndex) == index {
-		return lastPieceLen
+		length = lastPieceLen
+	} else if uint32(lastPieceIndex) > index {
+		length = pieceLength
+	} else {
+		err = fmt.Errorf("Piece Index out of range")
 	}
-	return pieceLength
+	return
 }
 
 // BlocksPerPiece returns number of blocks in a ith piece
-func BlocksPerPiece(torrent TorrentFile, index uint32) uint32 {
-	pieceLength := PieceLen(torrent, index)
-	return uint32(math.Ceil(float64(pieceLength) / float64(BLOCK_LEN)))
+func BlocksPerPiece(torrent TorrentFile, index uint32) (blocks uint32, err error) {
+	pieceLength, err := PieceLen(torrent, index)
+
+	if err != nil {
+		return
+	}
+	blocks = uint32(math.Ceil(float64(pieceLength) / float64(BLOCK_LEN)))
+	return
 }
 
 // BlockLen calculates length of ith block in jth piece
-func BlockLen(torrent TorrentFile, pieceIndex uint32, blockIndex uint32) uint64 {
-	pieceLength := PieceLen(torrent, pieceIndex)
+func BlockLen(torrent TorrentFile, pieceIndex uint32, blockIndex uint32) (length uint64, err error) {
+	pieceLength, err := PieceLen(torrent, pieceIndex)
 
-	lastPieceLength := pieceLength % BLOCK_LEN
-	lastPieceIndex := math.Floor(float64(pieceLength) / float64(BLOCK_LEN))
-
-	if blockIndex == uint32(lastPieceIndex) {
-		return lastPieceLength
+	if err != nil {
+		return
 	}
-	return BLOCK_LEN
+
+	lastBlockLength := pieceLength % BLOCK_LEN
+	lastBlockIndex := math.Floor(float64(pieceLength) / float64(BLOCK_LEN))
+
+	if uint32(lastBlockIndex) == blockIndex {
+		length = lastBlockLength
+	} else if uint32(lastBlockIndex) > blockIndex {
+		length = BLOCK_LEN
+	} else {
+		err = fmt.Errorf("Block Index out of range")
+	}
+	return
 }

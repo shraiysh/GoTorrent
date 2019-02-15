@@ -1,6 +1,9 @@
 package queue
 
-import "github.com/concurrency-8/parser"
+import (
+	"fmt"
+	"github.com/concurrency-8/parser"
+)
 
 // Queue object for storing requested pieces
 type Queue struct {
@@ -16,24 +19,45 @@ func NewQueue(torrent parser.TorrentFile) (queue *Queue) {
 }
 
 // enqueue adds a piece to queue
-func (queue *Queue) enqueue(pieceIndex uint32) {
-	nBlocks := parser.BlocksPerPiece(queue.torrent, pieceIndex)
+func (queue *Queue) enqueue(pieceIndex uint32) (err error) {
+	nBlocks, err := parser.BlocksPerPiece(queue.torrent, pieceIndex)
+
+	if err != nil {
+		return
+	}
 
 	for i := 0; i < int(nBlocks); i++ {
-		pieceBlock := PieceBlock{pieceIndex, uint32(i) * uint32(parser.BLOCK_LEN), uint32(parser.BlockLen(queue.torrent, pieceIndex, uint32(i)))}
+		blocklen, err := parser.BlockLen(queue.torrent, pieceIndex, uint32(i))
+		if err != nil {
+			break
+		}
+
+		pieceBlock := PieceBlock{pieceIndex, uint32(i) * uint32(parser.BLOCK_LEN), uint32(blocklen), nBlocks}
 		queue.queue = append(queue.queue, pieceBlock)
 
 	}
+	return
 }
 
 // dequeue removes first piece block
-func (queue *Queue) dequeue() {
+func (queue *Queue) dequeue() error {
+	if queue.length() == 0 {
+		return fmt.Errorf("Queue empty : can't dequeue")
+	}
+
 	queue.queue = queue.queue[1:]
+	return nil
 }
 
 // peek returns first pieceblock
-func (queue *Queue) peek() PieceBlock {
-	return queue.queue[0]
+func (queue *Queue) peek() (block PieceBlock, err error) {
+
+	if queue.length() == 0 {
+		err = fmt.Errorf("Queue empty : can't peek")
+	} else {
+		block = queue.queue[0]
+	}
+	return
 }
 
 // length returns length of queue
