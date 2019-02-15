@@ -5,12 +5,10 @@ import (
 	"encoding/binary"
 	"net"
 	"fmt"
-	//"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
-	//"io/ioutil"
 )
 
-type handler func([]byte)
+type handler func([]byte , net.Conn) error
 
 // Download is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
@@ -38,20 +36,21 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 	//use onWholeMessage() to read safely from the conn.
 	//TODO: make a handler function and the paramter here.
 	//Build will fail without this.
-	onWholeMessage(conn, handler)
+	onWholeMessage(conn, msgHandler)
 }
-func msgHandler(msg []byte) [] byte{
+func msgHandler(msg []byte , conn net.Conn) error{
 	/* handshake message condition please confirm. */ 
 	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
-		msgtosend, err := BuildInterested()
+		message, err := BuildInterested()
 		if err!=nil{
 			//return nil if error was found.
 			fmt.Println(err)
-			return nil
+			return err
 		}
+		conn.Write(message.Bytes())
 	}
 	/* Other non-handshake functions should follow */
-	
+	return nil
 	
 }
 
@@ -83,7 +82,7 @@ func onWholeMessage(conn net.Conn, msgHandler handler) error {
 		}
 		for len(buffer.Bytes()) >= 4 && len(buffer.Bytes()) >= msgLen {
 			// TODO implement msgHandler
-			msgHandler((buffer.Bytes())[:msgLen])
+			msgHandler((buffer.Bytes())[:msgLen] , conn)
 			buffer = bytes.NewBuffer((buffer.Bytes())[msgLen:])
 			handshake = false
 		}

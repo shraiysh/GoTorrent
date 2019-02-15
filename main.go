@@ -25,6 +25,6 @@ func main() {
 		return
 	}
 
-	torrent.MakeHandshake(announce.Peers[0],clientReport)
+	torrent.Download(announce.Peers[0],clientReport)
 
 }
