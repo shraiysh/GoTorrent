@@ -41,7 +41,8 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 	onWholeMessage(conn, handler)
 }
 
-func msgHandler(msg []byte) ([] byte){
+func msgHandler(msg []byte) [] byte{
+	/* handshake message condition please confirm. */ 
 	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[:1], []byte("BitTorrent protocol"))) {
 		msgtosend, err := BuildInterested()
 		if err!=nil{
