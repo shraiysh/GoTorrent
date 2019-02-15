@@ -43,7 +43,6 @@ func msgHandler(msg []byte , conn net.Conn) error{
 	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
 		message, err := BuildInterested()
 		if err!=nil{
-			//return nil if error was found.
 			fmt.Println(err)
 			return err
 		}
