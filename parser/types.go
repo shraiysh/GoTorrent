@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"bytes"
 	"github.com/zeebo/bencode"
 	"time"
 )
@@ -16,7 +15,7 @@ type FileMetaData struct {
 
 //InfoMetaData contains MetaData about the torrent.
 type InfoMetaData struct {
-	PieceLength uint64             `bencode:"piece length"`
+	PieceLength uint32             `bencode:"piece length"`
 	Piece       []byte             `bencode:"pieces"`
 	Name        string             `bencode:"name"`
 	Length      uint64             `bencode:"length"`
@@ -39,22 +38,15 @@ type File struct {
 	Length uint64
 }
 
-// Piece contains a piece of the torrent
-type Piece struct {
-	Index  uint32
-	Begin  uint32
-	Length uint32
-	Block  bytes.Buffer
-}
-
 //TorrentFile contains information about the torrent.
 type TorrentFile struct {
-	Announce  []string
-	Comment   string
-	CreatedBy string
-	CreatedAt time.Time
-	InfoHash  string
-	Length    uint64
-	Files     []*File
-	Pieces    []Piece
+	Announce    []string
+	Comment     string
+	CreatedBy   string
+	CreatedAt   time.Time
+	InfoHash    string
+	Length      uint64
+	Files       []*File
+	PieceLength uint32
+	Piece       []byte
 }
