@@ -16,8 +16,8 @@ func getTorrentFile() parser.TorrentFile {
 
 // TestQueue tests the queue functionality
 func TestQueue(t *testing.T) {
-	torrent := getTorrentFile()                                         // get a torrent file
-	pieces := math.Floor(float64(torrent.Length / torrent.PieceLength)) // calculate number of pieces in file
+	torrent := getTorrentFile()                                                 // get a torrent file
+	pieces := math.Floor(float64(torrent.Length / uint64(torrent.PieceLength))) // calculate number of pieces in file
 
 	// tests when making a Queue object
 	queue := NewQueue(torrent)

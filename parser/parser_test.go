@@ -3,11 +3,11 @@ package parser
 import (
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
+	"math"
+	"math/rand"
 	"os"
 	"regexp"
 	"testing"
-	"math"
-	"math/rand"
 )
 
 func getTorrentFiles() ([]os.FileInfo, error) {
@@ -44,40 +44,80 @@ func TestParseFromFile(t *testing.T) {
 
 }
 
-func TestPieceLen(t *testing.T){
+// TestPieceLen tests PieceLen
+func TestPieceLen(t *testing.T) {
 	torrent := TorrentFile{}
 	torrent.Length = uint64(rand.Intn(100000000))
-	torrent.PieceLength =  1024
-	lastPieceIndex := uint32(math.Floor(float64(torrent.Length / uint64(torrent.PieceLength))))
+	torrent.PieceLength = 65536
+	lastPieceIndex := uint32(math.Ceil(float64(torrent.Length/uint64(torrent.PieceLength)))) - 1
 	lastPieceLen := uint32(torrent.Length % uint64(torrent.PieceLength))
 
-	for i:= 0 ; i<2 ;i++{
-		index := uint32(rand.Intn(int(2*lastPieceIndex)))
-		length , err := PieceLen(torrent,index)
+	if lastPieceLen == 0 {
+		lastPieceLen = torrent.PieceLength
+	}
+
+	for i := 0; i < 2; i++ {
+		index := uint32(rand.Intn(int(2 * lastPieceIndex)))
+		length, err := PieceLen(torrent, index)
 		if index < lastPieceIndex {
-			assert.Equal(t, err, nil , "Error not nil")
+			assert.Equal(t, err, nil, "Error not nil")
 			assert.Equal(t, length, torrent.PieceLength, "Piece Length not equal")
-		}else if index == lastPieceIndex {
-			assert.Equal(t, err, nil , "Error not nil")
-			assert.Equal(t, length, lastPieceLen , "Piece Length not equal")
-		}else{
-			assert.NotEqual(t, err, nil , "For large index length still exits")
+		} else if index == lastPieceIndex {
+			assert.Equal(t, err, nil, "Error not nil")
+			assert.Equal(t, length, lastPieceLen, "Piece Length not equal")
+		} else {
+			assert.NotEqual(t, err, nil, "For large index length still exits")
 		}
 	}
 }
 
-func TestBlocksPerPiece(t *testing.T){
+// TestBlocksPerPiece tests BlocksPerPiece
+func TestBlocksPerPiece(t *testing.T) {
 	torrent := TorrentFile{}
 	torrent.Length = uint64(rand.Intn(100000000))
-	torrent.PieceLength =  1024
-	lastPieceIndex := uint32(math.Floor(float64(torrent.Length / uint64(torrent.PieceLength))))
+	torrent.PieceLength = 65536
+	lastPieceIndex := uint32(math.Ceil(float64(torrent.Length/uint64(torrent.PieceLength)))) - 1
 
-	for i:= 0 ; i<2 ;i++{
+	for i := 0; i < 20; i++ {
 		index := uint32(rand.Intn(int(lastPieceIndex)))
-		length , err := PieceLen(torrent,index)
-		blocks , err := BlocksPerPiece(torrent,index)
-		assert.Equal(t, err, nil , "Error not nil")
-		assert.Equal(t, blocks, uint32(math.Ceil(float64(length) / float64(BLOCK_LEN))), "Block Length not equal")
+		length, err := PieceLen(torrent, index)
+		assert.Equal(t, err, nil, "Error not nil")
+		blocks, err := BlocksPerPiece(torrent, index)
+		assert.Equal(t, err, nil, "Error not nil")
+		assert.Equal(t, blocks, uint32(math.Ceil(float64(length)/float64(BLOCK_LEN))), "Block Length not equal")
 
 	}
+}
+
+// TestBlockLen tests BlockLen
+func TestBlockLen(t *testing.T) {
+	torrent := TorrentFile{}
+	torrent.Length = uint64(rand.Intn(100000000))
+	torrent.PieceLength = 65536
+	lastPieceIndex := uint32(math.Ceil(float64(torrent.Length/uint64(torrent.PieceLength)))) - 1
+	pieceIndex := uint32(rand.Intn(int(lastPieceIndex)))
+
+	pieceLength, err := PieceLen(torrent, pieceIndex)
+	assert.Equal(t, err, nil, "Error not nil")
+	lastBlockLength := pieceLength % BLOCK_LEN
+	lastBlockIndex := uint32(math.Ceil(float64(pieceLength)/float64(BLOCK_LEN))) - 1
+
+	if lastBlockLength == 0 {
+		lastBlockLength = BLOCK_LEN
+	}
+
+	for i := 0; i < 20; i++ {
+		index := uint32(rand.Intn(int(2 * lastBlockIndex)))
+		length, err := BlockLen(torrent, pieceIndex, index)
+		if index < lastBlockIndex {
+			assert.Equal(t, err, nil, "Error not nil")
+			assert.Equal(t, length, BLOCK_LEN, "Block Length not equal")
+		} else if index == lastBlockIndex {
+			assert.Equal(t, err, nil, "Error not nil")
+			assert.Equal(t, length, lastBlockLength, "Block Length not equal")
+		} else {
+			assert.NotEqual(t, err, nil, "For large index length still exits")
+		}
+	}
+
 }

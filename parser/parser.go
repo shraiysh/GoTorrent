@@ -106,7 +106,12 @@ func PieceLen(torrent TorrentFile, index uint32) (length uint32, err error) {
 	totalLength := torrent.Length
 	pieceLength := torrent.PieceLength
 	lastPieceLen := uint32(totalLength % uint64(pieceLength))
-	lastPieceIndex := uint32(math.Floor(float64(totalLength / uint64(pieceLength))))
+	lastPieceIndex := uint32(math.Ceil(float64(totalLength/uint64(pieceLength)))) - 1
+
+	if lastPieceLen == 0 {
+		lastPieceLen = pieceLength
+	}
+
 	if lastPieceIndex == index {
 		length = lastPieceLen
 	} else if lastPieceIndex > index {
@@ -137,7 +142,11 @@ func BlockLen(torrent TorrentFile, pieceIndex uint32, blockIndex uint32) (length
 	}
 
 	lastBlockLength := pieceLength % BLOCK_LEN
-	lastBlockIndex := uint32(math.Floor(float64(pieceLength) / float64(BLOCK_LEN)))
+	lastBlockIndex := uint32(math.Ceil(float64(pieceLength)/float64(BLOCK_LEN))) - 1
+
+	if lastBlockLength == 0 {
+		lastBlockLength = BLOCK_LEN
+	}
 
 	if lastBlockIndex == blockIndex {
 		length = lastBlockLength
