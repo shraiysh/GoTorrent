@@ -62,6 +62,7 @@ func onWholeMessage(conn net.Conn, msgHandler handler) error {
 	for {
 		respLen, err := conn.Read(resp)
 		//Please look for a better connection handling in the future.
+		//Maybe use defer?
 		if err != nil {
 			conn.Close()
 			return err

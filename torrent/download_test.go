@@ -33,6 +33,7 @@ func TestOnWholeMessage(t *testing.T) {
 		assert.Equal(t, b, message, "message received not same")
 		return assert.AnError
 	})
+	//exclude EOF errors, due to closing a connection.
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
 }
 func TestDownload(t *testing.T) {
