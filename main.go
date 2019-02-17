@@ -10,6 +10,7 @@ import (
 
 func main() {
 	torrentfile, _ := parser.ParseFromFile("./test_torrents/ubuntu.iso.torrent")
+	fmt.Println(torrentfile.PieceLength)
 	u, err := url.Parse(torrentfile.Announce[0])
 	fmt.Println(u)
 	if err != nil {
