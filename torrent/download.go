@@ -25,10 +25,7 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 		Port: int(peer.Port),
 		Zone: "",
 	}
-
-	fmt.Println(service)
-	conn, err := net.DialTCP("tcp", nil, &service)
-	conn.SetKeepAlive(true)
+	conn, err := net.Dial("tcp", service.String())
 	if err!=nil{
 		return
 	}

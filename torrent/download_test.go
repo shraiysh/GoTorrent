@@ -25,9 +25,10 @@ func TestOnWholeMessage(t *testing.T) {
 		server.Close() // close after writing out all data
 	}()
 
-	err := onWholeMessage(client, func(b []byte) { // mock Message Handler
+	err := onWholeMessage(client, func(b []byte, client net.Conn) error{ // mock Message Handler
 		assert.Equal(t, len(b), int(b[0])+49, "length not equal")
 		assert.Equal(t, b, message, "message received not same")
+		return assert.AnError
 	})
 
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
