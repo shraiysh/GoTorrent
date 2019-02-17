@@ -3,6 +3,9 @@ package torrent
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"github.com/concurrency-8/parser"
+	"github.com/concurrency-8/tracker"
+	"net/url"
 	"math/rand"
 	"net"
 	"testing"
@@ -33,5 +36,21 @@ func TestOnWholeMessage(t *testing.T) {
 
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
 	fmt.Println("PASS")
+
+}
+func TestDownload(t *testing.T) {
+	fmt.Println("Testing torrent/download.go : Download()")
+	torrentfile, err := parser.ParseFromFile("../test_torrents/ubuntu.iso.torrent")
+	assert.Nil(t, err, "Opening torrent file failed.")
+	u, err := url.Parse(torrentfile.Announce[0])
+	statusreport := tracker.GetRandomClientReport()
+	resp, err := tracker.GetPeers(u, statusreport)
+	assert.Nil(t, err, "GetPeers returned error %s", err.Error())
+	for _, peer := range resp.Peers{
+		err = Download(peer, statusreport)	
+		assert.Nil(t, err, )	
+	}
+
+
 
 }

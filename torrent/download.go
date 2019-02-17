@@ -13,10 +13,10 @@ type handler func([]byte , net.Conn) error
 
 // Download is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
-func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
+func Download(peer tracker.Peer, report *tracker.ClientStatusReport) error{
 	buffer, err := BuildHandshake(*report)
 	if err!=nil{
-		return
+		return err
 	}
     peerip := make([]byte, 4)
     binary.BigEndian.PutUint32(peerip, peer.IPAdress)
@@ -27,14 +27,14 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport){
 	}
 	conn, err := net.Dial("tcp", service.String())
 	if err!=nil{
-		return
+		return err
 	}
 	//write the handshake content into the connection.
 	conn.Write(buffer.Bytes())
 	//use onWholeMessage() to read safely from the conn.
 	//TODO: make a handler function and the paramter here.
 	//Build will fail without this.
-	onWholeMessage(conn, msgHandler)
+	return onWholeMessage(conn, msgHandler)
 }
 func msgHandler(msg []byte , conn net.Conn) error{
 	/* handshake message condition please confirm. */ 
