@@ -228,45 +228,45 @@ func TestBuildRequest(t *testing.T) {
 	assert.Equal(piece.Length, pieceLength)
 }
 
-func TestBuildPiece(t *testing.T) {
-	assert := assert.New(t)
+// func TestBuildPiece(t *testing.T) {
+// 	assert := assert.New(t)
 
-	samplePiece := GetRandomPiece()
+// 	samplePiece := GetRandomPiece()
 
-	builtPiece, err := BuildPiece(samplePiece)
+// 	builtPiece, err := BuildPiece(samplePiece)
 
-	assert.Nil(err)
+// 	assert.Nil(err)
 
-	// Length of piece buffer
-	assert.Equal(len(samplePiece.Block.Bytes())+13, len(builtPiece.Bytes()))
+// 	// Length of piece buffer
+// 	assert.Equal(len(samplePiece.Block.Bytes())+13, len(builtPiece.Bytes()))
 
-	pieceReader := bytes.NewReader(builtPiece.Bytes())
+// 	pieceReader := bytes.NewReader(builtPiece.Bytes())
 
-	// Read length of message
-	var length uint32
-	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &length))
-	assert.Equal(uint32(len(samplePiece.Block.Bytes())+9), length)
+// 	// Read length of message
+// 	var length uint32
+// 	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &length))
+// 	assert.Equal(uint32(len(samplePiece.Block.Bytes())+9), length)
 
-	// Read message type
-	var messageType uint8
-	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &messageType))
-	assert.Equal(uint8(7), messageType)
+// 	// Read message type
+// 	var messageType uint8
+// 	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &messageType))
+// 	assert.Equal(uint8(7), messageType)
 
-	// Read piece index
-	var pieceIndexRead uint32
-	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceIndexRead))
-	assert.Equal(samplePiece.Index, pieceIndexRead)
+// 	// Read piece index
+// 	var pieceIndexRead uint32
+// 	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceIndexRead))
+// 	assert.Equal(samplePiece.Index, pieceIndexRead)
 
-	// Read Begin
-	var pieceBeginRead uint32
-	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceBeginRead))
-	assert.Equal(samplePiece.Begin, pieceBeginRead)
+// 	// Read Begin
+// 	var pieceBeginRead uint32
+// 	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &pieceBeginRead))
+// 	assert.Equal(samplePiece.Begin, pieceBeginRead)
 
-	// Read Buffer
-	blockRead := make([]byte, len(samplePiece.Block.Bytes()))
-	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &blockRead))
-	assert.Equal(samplePiece.Block.Bytes(), blockRead)
-}
+// 	// Read Buffer
+// 	blockRead := make([]byte, len(samplePiece.Block.Bytes()))
+// 	assert.Nil(binary.Read(pieceReader, binary.BigEndian, &blockRead))
+// 	assert.Equal(samplePiece.Block.Bytes(), blockRead)
+// }
 
 func TestBuildCancel(t *testing.T) {
 	assert := assert.New(t)

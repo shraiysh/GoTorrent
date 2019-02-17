@@ -10,6 +10,7 @@ import (
 
 func main() {
 	torrentfile, _ := parser.ParseFromFile("./test_torrents/ubuntu.iso.torrent")
+	fmt.Println(torrentfile.PieceLength)
 	u, err := url.Parse(torrentfile.Announce[0])
 	fmt.Println(u)
 	if err != nil {
@@ -25,6 +26,6 @@ func main() {
 		return
 	}
 
-	torrent.MakeHandshake(announce.Peers[0],clientReport)
+	torrent.Download(announce.Peers[0],clientReport)
 
 }
