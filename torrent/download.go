@@ -30,18 +30,20 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport) error{
 		return err
 	}
 	//write the handshake content into the connection.
-	conn.Write(buffer.Bytes())
-	//use onWholeMessage() to read safely from the conn.
-	//TODO: make a handler function and the paramter here.
-	//Build will fail without this.
-	return onWholeMessage(conn, msgHandler)
+	_, err = conn.Write(buffer.Bytes())
+	if err!=nil{
+		return err
+	}
+	//safely handle reading using onWholeMessage
+	onWholeMessage(conn, msgHandler)
+	return err
 }
 func msgHandler(msg []byte , conn net.Conn) error{
-	/* handshake message condition please confirm. */ 
+
 	if (len(msg) == int(uint8(msg[0])) + 49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
 		message, err := BuildInterested()
 		if err!=nil{
-			fmt.Println(err)
+			fmt.Println("Error", err.Error())
 			return err
 		}
 		conn.Write(message.Bytes())
@@ -61,7 +63,7 @@ func onWholeMessage(conn net.Conn, msgHandler handler) error {
 		respLen, err := conn.Read(resp)
 
 		if err != nil {
-			conn.Close() // TODO maybe a better implementation
+			conn.Close()
 			return err
 		}
 

@@ -33,10 +33,7 @@ func TestOnWholeMessage(t *testing.T) {
 		assert.Equal(t, b, message, "message received not same")
 		return assert.AnError
 	})
-
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
-	fmt.Println("PASS")
-
 }
 func TestDownload(t *testing.T) {
 	fmt.Println("Testing torrent/download.go : Download()")
@@ -45,12 +42,14 @@ func TestDownload(t *testing.T) {
 	u, err := url.Parse(torrentfile.Announce[0])
 	statusreport := tracker.GetRandomClientReport()
 	resp, err := tracker.GetPeers(u, statusreport)
-	assert.Nil(t, err, "GetPeers returned error %s", err.Error())
-	for _, peer := range resp.Peers{
-		err = Download(peer, statusreport)	
-		assert.Nil(t, err, )	
+	assert.Nil(t, err, "GetPeers returned error")
+	assert.NotEmpty(t, resp.Peers, "Empty Peer list")
+	for _, peer := range resp.Peers {
+		err = Download(peer, statusreport)
+		fmt.Println(err)
+		assert.Nil(t, err, "Download returned error", err)
+		if err==nil{
+			break
+		}
 	}
-
-
-
 }
