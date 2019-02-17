@@ -51,7 +51,6 @@ func msgHandler(msg []byte , conn net.Conn) error{
 	
 }
 
-
 // onWholeMessage sends complete messages to callback function
 func onWholeMessage(conn net.Conn, msgHandler handler) error {
 	buffer := new(bytes.Buffer)
