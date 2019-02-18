@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
+	"github.com/concurrency-8/torrent"
 	"net/url"
 )
 
@@ -25,6 +26,6 @@ func main() {
 		return
 	}
 
-	fmt.Println(announce.Peers)
+	torrent.Download(announce.Peers[0],clientReport)
 
 }
