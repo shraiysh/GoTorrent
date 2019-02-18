@@ -47,8 +47,15 @@ func msgHandler(msg []byte , conn net.Conn) error{
 			return err
 		}
 		conn.Write(message.Bytes())
+	}else {
+
+		size,id,payload := ParseMsg(bytes.NewBuffer(msg))
+
+		if id == 0 {
+			ChokeHandler(conn)
+		}
 	}
-	/* Other non-handshake functions should follow */
+
 	return nil
 	
 }
@@ -88,3 +95,9 @@ func onWholeMessage(conn net.Conn, msgHandler handler) error {
 		}
 	}
 }
+
+func ChokeHandler(conn net.Conn){
+	conn.Close()
+}
+
+

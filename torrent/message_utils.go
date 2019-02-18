@@ -278,3 +278,28 @@ func BuildPort(port uint16) (portBuf *bytes.Buffer, err error) {
 	}
 	return
 }
+
+// ParseMsg parses a message
+func ParseMsg(msg *bytes.Buffer) (size int32 , id int8 , payload Payload){
+
+	binary.Read(msg,binary.BigEndian,&size);
+
+	if size > 0 {
+		binary.Read(msg , binary.BigEndian , &id);
+	}
+
+	if ( id == 6 || id ==7 || id==8){
+		rest = bytes.NewBuffer(msg.Bytes()[8:])
+		binary.Read(msg,binary.BigEndian,&payload.Index)
+		binary.Read(msg,binary.BigEndian,&payload.Begin)
+
+		if id == 7 {
+			payload.Block = rest
+		}else{
+			payload.Length = rest 
+		}
+	}
+
+	return
+
+}
