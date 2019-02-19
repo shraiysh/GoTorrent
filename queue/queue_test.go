@@ -28,7 +28,7 @@ func TestQueue(t *testing.T) {
 	indexs := make([]uint32, 0)
 	rand.Seed(56)
 	epochs := rand.Intn(10)
-	total_length := 0
+	totalLength := 0
 	for i := 0; i < epochs; i++ {
 		index := uint32(rand.Intn(int(pieces))) // generate index between numbe of pieces
 		err := queue.enqueue(index)
@@ -37,10 +37,10 @@ func TestQueue(t *testing.T) {
 		block, err := queue.peek()
 		assert.Equal(t, err, nil, "Error encountered while peeking ")
 		assert.Equal(t, block.Index, indexs[0], "Front element different in enqueue")
-		total_length = total_length + int(block.Nblocks)
+		totalLength = totalLength + int(block.Nblocks)
 	}
 
-	assert.Equal(t, queue.length(), total_length, "Queue length not full after enqueue") // ensure queue is of full length
+	assert.Equal(t, queue.length(), totalLength, "Queue length not full after enqueue") // ensure queue is of full length
 
 	// testing dequeue() function
 	for i := 0; i < epochs; i++ {
