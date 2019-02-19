@@ -157,3 +157,16 @@ func BlockLen(torrent TorrentFile, pieceIndex uint32, blockIndex uint32) (length
 	}
 	return
 }
+
+func BlockBegin(torrent TorrentFile, pieceIndex, blockIndex uint32) uint32{
+	begin := uint32(0)
+	for i := uint32(0); i < pieceIndex - 1; i++ {
+		blocksPerPiece, err := BlocksPerPiece(torrent, i)
+		if err != nil {
+			panic(err)
+		}
+		begin += BLOCK_LEN * blocksPerPiece
+	}
+	begin += BLOCK_LEN * blockIndex
+	return begin
+}

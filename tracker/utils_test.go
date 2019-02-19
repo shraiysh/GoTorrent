@@ -193,7 +193,7 @@ func TestGetPeers(t *testing.T) {
 
 	fmt.Print("Testing tracker/utils.go : GetPeers(): ")
 
-	for _, torrentfileName := range GetTorrentFileList() {
+	for _, torrentfileName := range parser.GetTorrentFileList() {
 		//torrentfile := getRandomTorrent();
 		torrentfile, _ := parser.ParseFromFile(torrentfileName)
 		passes := false

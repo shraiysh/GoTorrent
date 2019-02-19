@@ -2,12 +2,13 @@ package torrent
 
 import (
 	//"encoding/binary"
-	"github.com/concurrency-8/queue"
+	// "github.com/concurrency-8/queue"
+	"github.com/concurrency-8/parser"
 	"math/rand"
 )
 
 // GetRandomPiece returns a test piece object with random data.
-func GetRandomPiece() (piece queue.PieceBlock) {
+func GetRandomPiece() (piece parser.PieceBlock) {
 	rand.Seed(56)
 	piece.Length = rand.Uint32() % 1e6
 	piece.Index = rand.Uint32() % 1e6

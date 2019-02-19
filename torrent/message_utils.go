@@ -3,8 +3,9 @@ package torrent
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/concurrency-8/queue"
+	// "github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
+	"github.com/concurrency-8/parser"
 )
 
 // BuildHandshake returns a pointer to a buffer.
@@ -150,13 +151,13 @@ func BuildHave(payload uint32) (have *bytes.Buffer, err error) {
 	return
 }
 
-// BuildRequest returns pointer to a buffer. This takes queue.PieceBlock as an argument
+// BuildRequest returns pointer to a buffer. This takes parser.PieceBlock as an argument
 //	uint32	: length	- Length of remaining part(message) = 13
 //	uint8	: messageType	- for request, message = 5
-//	uint32	: piece index	- queue.PieceBlock.Index for payload
-//	uint32	: piece begin	- queue.PieceBlock.Begin for payload
-//	uint32	: piece length	- queue.PieceBlock.Length for payload
-func BuildRequest(payload queue.PieceBlock) (request *bytes.Buffer, err error) {
+//	uint32	: piece index	- parser.PieceBlock.Index for payload
+//	uint32	: piece begin	- parser.PieceBlock.Begin for payload
+//	uint32	: piece length	- parser.PieceBlock.Length for payload
+func BuildRequest(payload parser.PieceBlock) (request *bytes.Buffer, err error) {
 	request = new(bytes.Buffer)
 
 	// Length of message
@@ -183,13 +184,13 @@ func BuildRequest(payload queue.PieceBlock) (request *bytes.Buffer, err error) {
 	return
 }
 
-// BuildPiece returns pointer to a buffer having the piece. Takes the queue.PieceBlock object as an arg
+// BuildPiece returns pointer to a buffer having the piece. Takes the parser.PieceBlock object as an arg
 //	uint32	: length	- length of remaining part (message) = payload length + 9
 //	uint8	: messageType	- for piece, type = 7
-//	uint32	: piece index	- queue.PieceBlock.Index for payload
-//	uint32	: piece begin	- queue.PieceBlock.Begin for payload
-//	[]byte	: piece		- the data of the piece, queue.PieceBlock.Block for payload
-// func BuildPiece(payload queue.PieceBlock) (piece *bytes.Buffer, err error) {
+//	uint32	: piece index	- parser.PieceBlock.Index for payload
+//	uint32	: piece begin	- parser.PieceBlock.Begin for payload
+//	[]byte	: piece		- the data of the piece, parser.PieceBlock.Block for payload
+// func BuildPiece(payload parser.PieceBlock) (piece *bytes.Buffer, err error) {
 // 	piece = new(bytes.Buffer)
 
 // 	// Length of message (Has the piece)
@@ -220,13 +221,13 @@ func BuildRequest(payload queue.PieceBlock) (request *bytes.Buffer, err error) {
 // 	return
 // }
 
-// BuildCancel returns pointer to a buffer. Takes queue.PieceBlock object as arg
+// BuildCancel returns pointer to a buffer. Takes parser.PieceBlock object as arg
 //	uint32	: length	- Length of the remaining message = 13
 //	uint8	: messageType	- for cancel, messageType = 8
-//	uint32	: piece index	- queue.PieceBlock.Index for payload
-//	uint32	: piece begin	- queue.PieceBlock.Begin for payload
-//	uint32	: piece length	- queue.PieceBlock.Length for payload
-func BuildCancel(payload queue.PieceBlock) (cancelBuf *bytes.Buffer, err error) {
+//	uint32	: piece index	- parser.PieceBlock.Index for payload
+//	uint32	: piece begin	- parser.PieceBlock.Begin for payload
+//	uint32	: piece length	- parser.PieceBlock.Length for payload
+func BuildCancel(payload parser.PieceBlock) (cancelBuf *bytes.Buffer, err error) {
 	cancelBuf = new(bytes.Buffer)
 
 	// Length of Message

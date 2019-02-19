@@ -9,12 +9,12 @@ import (
 type Queue struct {
 	torrent parser.TorrentFile
 	choked  bool
-	queue   []PieceBlock
+	queue   []parser.PieceBlock
 }
 
 // NewQueue returns a fresh pointer to a Queue object
 func NewQueue(torrent parser.TorrentFile) (queue *Queue) {
-	queue = &Queue{torrent, true, make([]PieceBlock, 0)}
+	queue = &Queue{torrent, true, make([]parser.PieceBlock, 0)}
 	return
 }
 
@@ -32,7 +32,7 @@ func (queue *Queue) enqueue(pieceIndex uint32) (err error) {
 			break
 		}
 
-		pieceBlock := PieceBlock{pieceIndex, uint32(i) * parser.BLOCK_LEN, blocklen, nBlocks}
+		pieceBlock := parser.PieceBlock{pieceIndex, uint32(i) * parser.BLOCK_LEN, blocklen, nBlocks}
 		queue.queue = append(queue.queue, pieceBlock)
 
 	}
@@ -50,7 +50,7 @@ func (queue *Queue) dequeue() error {
 }
 
 // peek returns first pieceblock
-func (queue *Queue) peek() (block PieceBlock, err error) {
+func (queue *Queue) peek() (block parser.PieceBlock, err error) {
 
 	if queue.length() == 0 {
 		err = fmt.Errorf("Queue empty : can't peek")
