@@ -40,14 +40,6 @@ func (tracker *PieceTracker) AddReceived(block parser.PieceBlock) {
 	tracker.Received[block.Index][index] = true
 }
 
-func (tracker *PieceTracker) setRequested(array [][]bool) {
-	tracker.Requested = array
-}
-
-func (tracker *PieceTracker) setReceived(array [][]bool) {
-	tracker.Received = array
-}
-
 // Needed checks if we want a block. If we have already requested all,
 // we reset requested to be equal to received and request the remaining pieces
 func (tracker *PieceTracker) Needed(block parser.PieceBlock) bool {
