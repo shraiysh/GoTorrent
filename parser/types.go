@@ -2,6 +2,7 @@ package parser
 
 import (
 	"github.com/zeebo/bencode"
+	"math/rand"
 	"time"
 )
 
@@ -49,4 +50,37 @@ type TorrentFile struct {
 	Files       []*File
 	PieceLength uint32
 	Piece       []byte
+}
+
+// PieceBlock is struct for a block of a piece
+type PieceBlock struct {
+	Index   uint32
+	Begin   uint32
+	Length  uint32
+	Nblocks uint32
+}
+
+// RandomPieceBlock returns a random PieceBlock object from torrent
+func RandomPieceBlock(torrent TorrentFile) PieceBlock {
+	pieceIndex := rand.Uint32() % uint32(len(torrent.Piece)/20)
+	blocksPerPiece, err := BlocksPerPiece(torrent, pieceIndex)
+	if err != nil {
+		panic(err)
+	}
+	blockIndex := rand.Uint32() % blocksPerPiece
+	blockLength, err := BlockLen(torrent, pieceIndex, blockIndex)
+	if err != nil {
+		panic(err)
+	}
+	return PieceBlock{
+		Index:   pieceIndex,
+		Begin:   blockIndex * BLOCK_LEN,
+		Length:  blockLength,
+		Nblocks: blocksPerPiece,
+	}
+}
+
+// GetTorrentFileList gives the list of torrentfiles (these should be alive, in test_torrents)
+func GetTorrentFileList() []string {
+	return []string{"../test_torrents/ubuntu.iso.torrent", "../test_torrents/big-buck-bunny.torrent"}
 }

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/concurrency-8/parser"
-	"github.com/concurrency-8/tracker"
 	"github.com/concurrency-8/torrent"
+	"github.com/concurrency-8/tracker"
 	"net/url"
 )
 
@@ -26,6 +26,6 @@ func main() {
 		return
 	}
 
-	torrent.Download(announce.Peers[0],clientReport)
+	torrent.Download(announce.Peers[0], clientReport)
 
 }
