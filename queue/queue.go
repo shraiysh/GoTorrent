@@ -32,7 +32,11 @@ func (queue *Queue) enqueue(pieceIndex uint32) (err error) {
 			break
 		}
 
-		pieceBlock := parser.PieceBlock{pieceIndex, uint32(i) * parser.BLOCK_LEN, blocklen, nBlocks}
+		pieceBlock := parser.PieceBlock{
+			Index:   pieceIndex,
+			Begin:   uint32(i) * parser.BLOCK_LEN,
+			Length:  blocklen,
+			Nblocks: nBlocks}
 		queue.queue = append(queue.queue, pieceBlock)
 
 	}

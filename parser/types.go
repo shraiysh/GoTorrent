@@ -2,8 +2,8 @@ package parser
 
 import (
 	"github.com/zeebo/bencode"
-	"time"
 	"math/rand"
+	"time"
 )
 
 //Struct Tags help bencode in identifying which fields to fill.
@@ -52,6 +52,7 @@ type TorrentFile struct {
 	Piece       []byte
 }
 
+// PieceBlock is struct for a block of a piece
 type PieceBlock struct {
 	Index   uint32
 	Begin   uint32
@@ -59,6 +60,7 @@ type PieceBlock struct {
 	Nblocks uint32
 }
 
+// RandomPieceBlock returns a random PieceBlock object from torrent
 func RandomPieceBlock(torrent TorrentFile) PieceBlock {
 	pieceIndex := rand.Uint32() % uint32(len(torrent.Piece)/20)
 	blocksPerPiece, err := BlocksPerPiece(torrent, pieceIndex)
@@ -70,10 +72,10 @@ func RandomPieceBlock(torrent TorrentFile) PieceBlock {
 	if err != nil {
 		panic(err)
 	}
-	return PieceBlock {
-		Index: pieceIndex,
-		Begin: BlockBegin(torrent, pieceIndex, blockIndex),
-		Length: blockLength,
+	return PieceBlock{
+		Index:   pieceIndex,
+		Begin:   blockIndex * BLOCK_LEN,
+		Length:  blockLength,
 		Nblocks: blocksPerPiece,
 	}
 }

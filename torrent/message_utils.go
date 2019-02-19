@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	// "github.com/concurrency-8/queue"
-	"github.com/concurrency-8/tracker"
 	"github.com/concurrency-8/parser"
+	"github.com/concurrency-8/tracker"
 )
 
 // BuildHandshake returns a pointer to a buffer.

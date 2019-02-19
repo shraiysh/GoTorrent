@@ -1,10 +1,10 @@
 package tracker
 
 import (
-	"github.com/concurrency-8/parser"
+	"bufio"
 	"bytes"
 	"encoding/binary"
-	"bufio"
+	"github.com/concurrency-8/parser"
 )
 
 // ConnectResponse is struture to hoild details from ConnectResponse
