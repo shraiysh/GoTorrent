@@ -7,6 +7,7 @@ files=(
 	tracker/*.go
 	torrent/*.go
 	queue/*.go
+	piece/*.go
 )
 
 # script for formatting 
