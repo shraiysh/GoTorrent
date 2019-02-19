@@ -39,9 +39,51 @@ func (tracker PieceTracker) AddReceived(block parser.PieceBlock) {
 	tracker.Received[block.Index][index] = true
 }
 
-// Needed does something... Still working on it.
-func (tracker PieceTracker) Needed(block parser.PieceBlock) {
+func (tracker PieceTracker) setRequested(array [][]bool) {
+	tracker.Requested = array
+}
 
+func (tracker PieceTracker) setReceived(array [][]bool) {
+	tracker.Received = array
+}
+
+// Needed checks if we want a block. If we have already requested all,
+// we reset requested to be equal to received and request the remaining pieces
+func (tracker PieceTracker) Needed(block parser.PieceBlock) bool {
+
+	// Check if all have been requested...
+	allRequested := true
+	for _, i := range tracker.Requested {
+		if !allRequested {
+			break
+		}
+		for _, j := range i {
+			allRequested = allRequested && j
+		}
+	}
+
+	// If yes, copy received into request...
+	if allRequested {
+		// fmt.Println("Requested:", tracker.Requested)
+		// fmt.Println("Received:", tracker.Received)
+		tracker.Requested = clone(tracker.Received)
+		// fmt.Println("Requested:", tracker.Requested)
+		// fmt.Println("Received:", tracker.Received)
+	}
+
+	return !tracker.Requested[block.Index][block.Begin/parser.BLOCK_LEN]
+}
+
+// Deep clones 2-D bool array
+func clone(array [][]bool) (result [][]bool) {
+	for _, i := range array {
+		temp := make([]bool, len(i))
+		for index, j := range i {
+			temp[index] = j
+		}
+		result = append(result, temp)
+	}
+	return
 }
 
 // IsDone tells if the torrent file has been successfully received
