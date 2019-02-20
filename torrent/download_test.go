@@ -85,3 +85,12 @@ func TestDownload(t *testing.T) {
 	}
 }
 */
+
+func TestChokeHandler(t *testing.T){
+	client, _ := net.Pipe()
+
+	ChokeHandler(client)
+
+	_ , err :=  client.Read(make([]byte,4))
+	assert.Equal(t, err, fmt.Errorf("io: read/write on closed pipe"), "ChokeHandler failed")
+}
