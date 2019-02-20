@@ -290,7 +290,7 @@ func ParseMsg(msg *bytes.Buffer) (size int32 , id int8 , payload Payload){
 	}
 
 	if ( id == 6 || id ==7 || id==8){
-		rest = bytes.NewBuffer(msg.Bytes()[8:])
+		rest := bytes.NewBuffer(msg.Bytes()[8:])
 		binary.Read(msg,binary.BigEndian,&payload.Index)
 		binary.Read(msg,binary.BigEndian,&payload.Begin)
 

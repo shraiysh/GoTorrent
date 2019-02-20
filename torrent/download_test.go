@@ -2,39 +2,66 @@ package torrent
 
 import (
 	"fmt"
-	// "github.com/concurrency-8/parser"
-	// "github.com/concurrency-8/tracker"
+	"github.com/concurrency-8/tracker"
 	"github.com/stretchr/testify/assert"
+	"github.com/concurrency-8/piece"
+	"github.com/concurrency-8/queue"
+	"encoding/binary"
 	"math/rand"
 	"net"
-	// "net/url"
+	"bytes"
 	"testing"
 )
 
 // TestOnWholeMessage tests torrent/download.go : onWholeMessage(*kwargs)
 func TestOnWholeMessage(t *testing.T) {
 	fmt.Println("Testing torrent/download.go : onWholeMessage(*kwargs)")
+	num := 3
+	messages := make([][]byte , num)
+	wholeMessage := new(bytes.Buffer)
+	for i:=0 ; i < int(num) ;i++ {
+		rand.Seed(int64(i))
+		length := rand.Intn(256)
+		var message []byte
+		if i == 0 {
+			message = make([]byte, length+49)
+		}else {
+			message = make([]byte, length+4)
+		}
 
-	//length := rand.Intn(100) // generate random handshake message
-	length := 220
-	message := make([]byte, length+49)
-	rand.Read(message)
-	message[0] = uint8(length)
+		rand.Read(message)
+		message[0] = uint8(length)
+		binary.Write(wholeMessage ,binary.BigEndian ,message) 
+		messages[i] = message
+	}
 
 	client, server := net.Pipe() // create a client and server connection
 
 	go func() {
-		server.Write(message)
+		server.Write(wholeMessage.Bytes())
 		server.Close() // close after writing out all data
 	}()
 
-	err := onWholeMessage(client, func(b []byte, client net.Conn) error { // mock Message Handler
-		assert.Equal(t, len(b), int(b[0])+49, "length not equal")
-		assert.Equal(t, b, message, "message received not same")
+	i :=0 
+	err := onWholeMessage(client, func(b []byte, 
+										client net.Conn , 
+										pieces *piece.PieceTracker , 
+										queue *queue.Queue , 
+										report *tracker.ClientStatusReport) error { // mock Message Handler
+		if i==0 {
+			assert.Equal(t, len(b), int(messages[i][0])+49, "length not equal")
+		}else {
+			assert.Equal(t, len(b), int(messages[i][0])+4, "length not equal")
+		}
+
+		assert.Equal(t, b, messages[i], "message received not same")
+		i++
 		return assert.AnError
-	})
+	} , nil , nil , nil) // TODO add tests for other message handlers
+
 	//exclude EOF errors, due to closing a connection.
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
+	assert.Equal(t, i, int(num), "Number of messages received are not equal")
 }
 
 /*
