@@ -64,7 +64,7 @@ func msgHandler(msg []byte, conn net.Conn , pieces *piece.PieceTracker , queue *
 			HaveHandler(conn, pieces, queue , payload)
 		}
 		if id == 5 {
-			HaveHandler(conn, pieces, queue , payload)
+			BitFieldHandler(conn, pieces, queue , payload)
 		}
 		if id == 7 {
 			// TODO pieceHandler

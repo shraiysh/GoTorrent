@@ -94,3 +94,8 @@ func TestChokeHandler(t *testing.T){
 	_ , err :=  client.Read(make([]byte,4))
 	assert.Equal(t, err, fmt.Errorf("io: read/write on closed pipe"), "ChokeHandler failed")
 }
+
+// func TestmsgHandler(t *testing.T){
+
+// 	chokeMessage , err := BuildChoke() 
+// }
