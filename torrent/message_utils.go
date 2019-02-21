@@ -6,7 +6,10 @@ import (
 	// "github.com/concurrency-8/queue"
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
+	//"fmt"
 )
+
+type Payload map[string]interface{}
 
 // BuildHandshake returns a pointer to a buffer.
 // Buffer looks like:
@@ -278,4 +281,36 @@ func BuildPort(port uint16) (portBuf *bytes.Buffer, err error) {
 		return
 	}
 	return
+}
+
+// ParseMsg parses a message
+func ParseMsg(msg *bytes.Buffer) (size int32, id int8, payload Payload) {
+	payload = make(Payload)
+	binary.Read(msg, binary.BigEndian, &size)
+	if size > 0 {
+		binary.Read(msg, binary.BigEndian, &id)
+	}
+
+	if size > 1 {
+
+		if id == 6 || id == 7 || id == 8 {
+			rest := bytes.NewBuffer(msg.Bytes()[8:])
+			var index, begin int32
+			binary.Read(msg, binary.BigEndian, &index)
+			binary.Read(msg, binary.BigEndian, &begin)
+			payload["index"] = index
+			payload["begin"] = begin
+
+			if id == 7 {
+				payload["block"] = rest
+			} else {
+				payload["length"] = rest
+			}
+		} else {
+			payload["payload"] = msg
+		}
+	}
+
+	return
+
 }
