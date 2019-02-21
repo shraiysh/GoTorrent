@@ -335,3 +335,80 @@ func TestBuildPort(t *testing.T) {
 	assert.Nil(binary.Read(portBufReader, binary.BigEndian, &portReadFromBuf))
 	assert.Equal(port, portReadFromBuf)
 }
+
+// ParseMsg test message parser
+func TestParseMsg(t *testing.T) {
+
+	// BuildChoke
+	chokeMessage, _ := BuildChoke()
+	size, id, payload := ParseMsg(chokeMessage)
+	assert.Equal(t, size, int32(1), "choke : Size not equal")
+	assert.Equal(t, id, int8(0), "choke : Message ID different")
+	assert.Equal(t, len(payload), 0, "choke : length of payload not zero")
+
+	//BuildUnchoke
+	unchokeMessage, _ := BuildUnchoke()
+	size, id, payload = ParseMsg(unchokeMessage)
+	assert.Equal(t, size, int32(1), "unchoke : Size not equal")
+	assert.Equal(t, id, int8(1), "unchoke : Message ID different")
+	assert.Equal(t, len(payload), 0, "unchoke : length of payload not zero")
+
+	// BuildInterested
+	interestedMessage, _ := BuildInterested()
+	size, id, payload = ParseMsg(interestedMessage)
+	assert.Equal(t, size, int32(1), "Interested : Size not equal")
+	assert.Equal(t, id, int8(2), "Interested : Message ID different")
+	assert.Equal(t, len(payload), 0, "Interested: length of payload not zero")
+
+	// BuildUninerested
+	uninterestedMessage, _ := BuildUninterested()
+	size, id, payload = ParseMsg(uninterestedMessage)
+	assert.Equal(t, size, int32(1), "UnInterested: Size not equal")
+	assert.Equal(t, id, int8(3), "Unterested: Message ID different")
+	assert.Equal(t, len(payload), 0, "UnInterested: length of payload not zero")
+
+	// BuildHave
+	p1 := rand.Uint32()
+	haveMessage, _ := BuildHave(p1)
+	size, id, payload = ParseMsg(haveMessage)
+	assert.Equal(t, size, int32(5), "Have: Size not equal")
+	assert.Equal(t, id, int8(4), "Have: Message ID different")
+	var p2 uint32
+	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &p2)
+	assert.Equal(t, p2, p1, "Have: length of payload not zero")
+
+	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+	pieceBlock := parser.RandomPieceBlock(file)
+
+	// BuildRequest
+	requestMessage, _ := BuildRequest(pieceBlock)
+	size, id, payload = ParseMsg(requestMessage)
+	assert.Equal(t, size, int32(13), "Request: Size not equal")
+	assert.Equal(t, id, int8(6), "Request: Message ID different")
+	assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Request: index field of payload not same")
+	assert.Equal(t, uint32(payload["begin"].(int32)), pieceBlock.Begin, "Request: begin field of payload not same")
+	var length uint32
+	binary.Read(payload["length"].(*bytes.Buffer), binary.BigEndian, &length)
+	assert.Equal(t, length, pieceBlock.Length, "Request: length field of payload not same")
+
+	// BuildCancel
+	cancelMessage, _ := BuildCancel(pieceBlock)
+	size, id, payload = ParseMsg(cancelMessage)
+	assert.Equal(t, size, int32(13), "Cancel: Size not equal")
+	assert.Equal(t, id, int8(8), "Cancel: Message ID different")
+	assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Cancel: index field of payload not same")
+	assert.Equal(t, uint32(payload["begin"].(int32)), pieceBlock.Begin, "Cancel: begin field of payload not same")
+	binary.Read(payload["length"].(*bytes.Buffer), binary.BigEndian, &length)
+	assert.Equal(t, length, pieceBlock.Length, "Cancel: length field of payload not same")
+
+	// BuildPort
+	port1 := uint16(rand.Uint32())
+	portMessage, _ := BuildPort(port1)
+	size, id, payload = ParseMsg(portMessage)
+	assert.Equal(t, size, int32(3), "Port: Size not equal")
+	assert.Equal(t, id, int8(9), "Port Message ID different")
+	var port2 uint16
+	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &port2)
+	assert.Equal(t, p2, p1, "Port: length of payload not zero")
+
+}

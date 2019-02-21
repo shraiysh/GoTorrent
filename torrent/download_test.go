@@ -1,40 +1,68 @@
 package torrent
 
 import (
+	"bytes"
+	"encoding/binary"
 	"fmt"
-	// "github.com/concurrency-8/parser"
-	// "github.com/concurrency-8/tracker"
+	"github.com/concurrency-8/parser"
+	"github.com/concurrency-8/piece"
+	"github.com/concurrency-8/queue"
+	"github.com/concurrency-8/tracker"
 	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"net"
-	// "net/url"
 	"testing"
 )
 
 // TestOnWholeMessage tests torrent/download.go : onWholeMessage(*kwargs)
 func TestOnWholeMessage(t *testing.T) {
 	fmt.Println("Testing torrent/download.go : onWholeMessage(*kwargs)")
+	num := 20
+	messages := make([][]byte, num)
+	wholeMessage := new(bytes.Buffer)
+	for i := 0; i < int(num); i++ {
+		rand.Seed(int64(i))
+		length := rand.Intn(256)
+		var message []byte
+		if i == 0 {
+			message = make([]byte, length+49)
+		} else {
+			message = make([]byte, length+4)
+		}
 
-	//length := rand.Intn(100) // generate random handshake message
-	length := 220
-	message := make([]byte, length+49)
-	rand.Read(message)
-	message[0] = uint8(length)
+		rand.Read(message)
+		message[0] = uint8(length)
+		binary.Write(wholeMessage, binary.BigEndian, message)
+		messages[i] = message
+	}
 
 	client, server := net.Pipe() // create a client and server connection
 
 	go func() {
-		server.Write(message)
+		server.Write(wholeMessage.Bytes())
 		server.Close() // close after writing out all data
 	}()
 
-	err := onWholeMessage(client, func(b []byte, client net.Conn) error { // mock Message Handler
-		assert.Equal(t, len(b), int(b[0])+49, "length not equal")
-		assert.Equal(t, b, message, "message received not same")
+	i := 0
+	err := onWholeMessage(client, func(b []byte,
+		client net.Conn,
+		pieces *piece.PieceTracker,
+		queue *queue.Queue,
+		report *tracker.ClientStatusReport) error { // mock Message Handler
+		if i == 0 {
+			assert.Equal(t, len(b), int(messages[i][0])+49, "length not equal")
+		} else {
+			assert.Equal(t, len(b), int(messages[i][0])+4, "length not equal")
+		}
+
+		assert.Equal(t, b, messages[i], "message received not same")
+		i++
 		return assert.AnError
-	})
+	}, nil, nil, nil) // TODO add tests for other message handlers
+
 	//exclude EOF errors, due to closing a connection.
 	assert.Equal(t, err, fmt.Errorf("EOF"), "Not EOF error")
+	assert.Equal(t, i, int(num), "Number of messages received are not equal")
 }
 
 /*
@@ -58,3 +86,51 @@ func TestDownload(t *testing.T) {
 	}
 }
 */
+
+// TestChokeHandler tests handling choking protocol
+func TestChokeHandler(t *testing.T) {
+	client, _ := net.Pipe()
+
+	ChokeHandler(client)
+
+	_, err := client.Read(make([]byte, 4))
+	assert.Equal(t, err, fmt.Errorf("io: read/write on closed pipe"), "ChokeHandler failed")
+}
+
+// TestUnchokeHandler tests handling of unchoking protocol
+func TestUnChokeHandler(t *testing.T) {
+	queue := queue.NewQueue(parser.TorrentFile{})
+	UnchokeHandler(nil, nil, queue)
+	assert.Equal(t, queue.Choked, false, "Choked attribute not set properly")
+}
+
+// TestRequestPiece tests function RequestPiece
+func TestRequestPiece(t *testing.T) {
+
+	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+	pieces := piece.NewPieceTracker(file)
+	queue := queue.NewQueue(file)
+	queue.Choked = false
+	pieceBlock := parser.RandomPieceBlock(file)
+	queue.Enqueue(pieceBlock.Index)
+	length := queue.Length()
+	client, server := net.Pipe()
+	fmt.Println(pieceBlock)
+	go func() {
+		for i := 0; i < length; i++ {
+			RequestPiece(server, pieces, queue)
+		}
+		defer server.Close()
+	}()
+
+	for i := 0; i < length; i++ {
+		resp := make([]byte, 17)
+		respLen, _ := client.Read(resp)
+		assert.Equal(t, respLen, 17, "Full message not received")
+		size, id, payload := ParseMsg(bytes.NewBuffer(resp))
+		assert.Equal(t, size, int32(13), "Request: Size not equal")
+		assert.Equal(t, id, int8(6), "Request: Message ID different")
+		assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Request: index field of payload not same")
+		assert.Equal(t, uint32(payload["begin"].(int32)), uint32(i)*parser.BLOCK_LEN, "Request: begin field of payload not same")
+	}
+}
