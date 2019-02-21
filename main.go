@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/concurrency-8/parser"
+	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/torrent"
 	"github.com/concurrency-8/tracker"
-	"github.com/concurrency-8/piece"
 	"net/url"
 )
 
@@ -28,6 +28,6 @@ func main() {
 	}
 
 	pieces := piece.NewPieceTracker(torrentfile)
-	torrent.Download(announce.Peers[0], clientReport , piecse)
+	torrent.Download(announce.Peers[0], clientReport, pieces)
 
 }
