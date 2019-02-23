@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"net"
+
 	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
-	"net"
 )
 
 type handler func([]byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
@@ -130,9 +131,9 @@ func UnchokeHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queu
 // HaveHandler handles Have protocol
 func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
 	pieceIndex := payload["index"]
-	queueempty := (queue.Length()==0)
+	queueempty := (queue.Length() == 0)
 	queue.Enqueue(pieceIndex.(uint32))
-	if (queueempty){
+	if queueempty {
 		RequestPiece(conn, pieces, queue)
 	}
 	return
@@ -140,6 +141,20 @@ func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, 
 
 // BitFieldHandler handles bitfield protocol
 func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
+	queueempty := (queue.Length() == 0)
+	msg := payload["payload"]
+	for i, bytevalue := range msg.([]byte) {
+		for j:=7;j>=0;j-- {
+			if (1 == bytevalue&1) {
+				queue.Enqueue(uint32(i*8 + j))
+			}
+			bytevalue = bytevalue << 1
+		}
+	}
+	if (queueempty) {
+		RequestPiece(conn, pieces, queue)
+	}
+
 	return
 }
 
