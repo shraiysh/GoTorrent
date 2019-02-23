@@ -1,7 +1,7 @@
 # GoTorrent
 BitTorrent Client Implementation
 
-## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8)
+## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8) [![License: MIT](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE)
 - Able to parse torrent files.
 
 ## Setup
