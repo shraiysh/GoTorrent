@@ -28,6 +28,6 @@ func main() {
 	}
 
 	pieces := piece.NewPieceTracker(torrentfile)
-	torrent.Download(announce.Peers[0], clientReport, pieces)
+	torrent.Download(announce.Peers[1], clientReport, pieces)
 	fmt.Println("It's over")
 }

@@ -40,13 +40,19 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	files := make([]*File, 0)
 	// single file context
 	if info.Length > 0 {
+		filePointer, err := os.Create(string(info.Name))
+		if err != nil {
+			panic("Unable to create files")
+		}
 		files = append(files, &File{
-			Path:   []string{info.Name},
-			Length: info.Length,
+			Path:        []string{info.Name},
+			Length:      info.Length,
+			FilePointer: filePointer,
 		})
 		Length = info.Length
 	} else {
 		//multiple files are present.
+
 		metadataFiles := make([]*FileMetaData, 0)
 		err = bencode.DecodeBytes(info.Files, &metadataFiles)
 		if err != nil {
@@ -54,9 +60,14 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		}
 
 		for _, f := range metadataFiles {
+			filePointer, err := os.Create(string(info.Name))
+			if err != nil {
+				panic("Unable to create files")
+			}
 			files = append(files, &File{
-				Path:   append([]string{info.Name}, f.Path...),
-				Length: f.Length,
+				Path:        append([]string{info.Name}, f.Path...),
+				Length:      f.Length,
+				FilePointer: filePointer,
 			})
 			Length += f.Length
 		}

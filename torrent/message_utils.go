@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	// "github.com/concurrency-8/queue"
+	"fmt"
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
-	// "fmt"
 )
 
 // Payload - TODO Write comment
@@ -296,7 +296,7 @@ func ParseMsg(msg *bytes.Buffer) (size uint32, id uint8, payload Payload) {
 
 		if id == 6 || id == 7 || id == 8 {
 			rest := bytes.NewBuffer(msg.Bytes()[8:])
-			var index, begin int32
+			var index, begin uint32
 			binary.Read(msg, binary.BigEndian, &index)
 			binary.Read(msg, binary.BigEndian, &begin)
 			payload["index"] = index
@@ -304,6 +304,7 @@ func ParseMsg(msg *bytes.Buffer) (size uint32, id uint8, payload Payload) {
 
 			if id == 7 {
 				payload["block"] = rest
+				fmt.Println(rest.Bytes()[:10])
 			} else {
 				payload["length"] = rest
 			}

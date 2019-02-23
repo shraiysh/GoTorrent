@@ -3,6 +3,7 @@ package parser
 import (
 	"github.com/zeebo/bencode"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -35,8 +36,9 @@ type MetaData struct {
 
 //File contains length and path of a File in the torrent.
 type File struct {
-	Path   []string
-	Length uint64
+	Path        []string
+	Length      uint64
+	FilePointer *os.File
 }
 
 //TorrentFile contains information about the torrent.
@@ -59,6 +61,11 @@ type PieceBlock struct {
 	Length  uint32
 	Nblocks uint32
 	Bytes   []byte
+}
+
+// Piece Holds a piece
+type Piece struct {
+	Blocks []PieceBlock
 }
 
 // RandomPieceBlock returns a random PieceBlock object from torrent

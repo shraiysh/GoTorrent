@@ -1,8 +1,9 @@
 package torrent
 
 import (
-	"bufio"
+	// "bufio"
 	"bytes"
+	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
 	"github.com/concurrency-8/parser"
@@ -10,7 +11,7 @@ import (
 	"github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
 	"net"
-	"os"
+	// "os"
 )
 
 type handler func([]byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
@@ -18,7 +19,7 @@ type handler func([]byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.
 // Download is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
 func Download(peer tracker.Peer, report *tracker.ClientStatusReport, pieces *piece.PieceTracker) error {
-	fmt.Println("torrent::Download")
+	fmt.Println("peer:", peer, "Handshaking")
 	buffer, err := BuildHandshake(*report)
 	if err != nil {
 		return err
@@ -36,7 +37,6 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport, pieces *pie
 	}
 	//write the handshake content into the connection.
 	_, err = conn.Write(buffer.Bytes())
-	fmt.Println("Request(", len(buffer.Bytes()), "): ", buffer.Bytes())
 	if err != nil {
 		return err
 	}
@@ -49,41 +49,44 @@ func Download(peer tracker.Peer, report *tracker.ClientStatusReport, pieces *pie
 	return err
 }
 func msgHandler(msg []byte, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport) error {
-	fmt.Println("Message:", msg)
+	// fmt.Println("Message:", msg)
 
 	if (len(msg) == int(uint8(msg[0]))+49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
-		fmt.Println("Handshake")
+		fmt.Println("Handshake successful")
 		message, err := BuildInterested()
 		if err != nil {
-			fmt.Println("Error", err.Error())
+			// fmt.Println("Error", err.Error())
 			return err
 		}
 		conn.Write(message.Bytes())
-		fmt.Println("Request(", len(message.Bytes()), "): ", message.Bytes())
+		// fmt.Println("Request(", len(message.Bytes()), "): ", message.Bytes())
 	} else {
 
 		_, id, payload := ParseMsg(bytes.NewBuffer(msg))
 
 		if id == 0 {
-			fmt.Println("Choke")
+			// fmt.Println("Choke")
 			ChokeHandler(conn)
 		}
 		if id == 1 {
-			fmt.Println("Unchoke")
+			// fmt.Println("Unchoke")
 			UnchokeHandler(conn, pieces, queue)
 		}
 		if id == 4 {
-			fmt.Println("Have")
+			// fmt.Println("Have")
 			HaveHandler(conn, pieces, queue, payload)
 		}
 		if id == 5 {
-			fmt.Println("BitField")
+			// fmt.Println("BitField")
 			BitFieldHandler(conn, pieces, queue, payload)
 		}
 		if id == 7 {
-			fmt.Println("Piece")
-			fmt.Println(payload)
-			// PieceHandler(conn, pieces, queue, report.TorrentFile, payload)
+			// fmt.Println("Piece")
+			PieceHandler(conn, pieces, queue, report, parser.PieceBlock{
+				Index: payload["index"].(uint32),
+				Begin: payload["begin"].(uint32),
+				Bytes: payload["block"].(*bytes.Buffer).Bytes(),
+			})
 		}
 	}
 
@@ -95,13 +98,11 @@ func msgHandler(msg []byte, conn net.Conn, pieces *piece.PieceTracker, queue *qu
 func onWholeMessage(conn net.Conn, msgHandler handler, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport) error {
 	buffer := new(bytes.Buffer)
 	handshake := true
-	resp := make([]byte, 100)
+	resp := make([]byte, 1000)
 	for {
 		respLen, err := conn.Read(resp)
 		//Please look for a better connection handling in the future.
 		//Maybe use defer?
-		fmt.Println("Response(", respLen, "): ", resp[:respLen])
-		bufio.NewReader(os.Stdin).ReadBytes('\n')
 
 		if err != nil {
 			conn.Close()
@@ -118,20 +119,20 @@ func onWholeMessage(conn net.Conn, msgHandler handler, pieces *piece.PieceTracke
 			length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
 			// length := uint32((buffer.Bytes())[0:4])
 			msgLen = int(length) + 4
-			fmt.Println("Setting msgLen to", msgLen)
+			// fmt.Println("Setting msgLen to", msgLen)
 		}
 
 		for len(buffer.Bytes()) >= 4 && len(buffer.Bytes()) >= msgLen {
 			messageBytes := make([]byte, msgLen)
 			binary.Read(buffer, binary.BigEndian, messageBytes)
 			// fmt.Println("msgLen:", msgLen)
-			// fmt.Println("message:", messageBytes)
 			msgHandler(messageBytes, conn, pieces, queue, report)
 			handshake = false
-			if len(buffer.Bytes()) > 0 {
-				length := int32((buffer.Bytes())[0])
+			/*if len(buffer.Bytes()) > 0 {
+				length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
 				msgLen = int(length) + 4
-			}
+				fmt.Println("Setting msgLen to", msgLen)
+			}*/
 
 		}
 	}
@@ -156,15 +157,65 @@ func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, 
 // BitFieldHandler handles bitfield protocol
 func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
 	// RequestPiece(conn, pieces, queue)
+	for i := range pieces.Requested {
+		queue.Enqueue(uint32(i))
+	}
 	return
 }
 
 // PieceHandler - TODO Write comment
-func PieceHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, torrent *parser.TorrentFile, pieceResp *parser.PieceBlock) {
-	pieces.AddReceived(*pieceResp)
-	fmt.Println(pieceResp.Bytes)
+func PieceHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport, pieceResp parser.PieceBlock) {
+	pieces.AddReceived(pieceResp)
+
+	fmt.Println("Received piece[", pieceResp.Index, "] [", pieceResp.Begin/parser.BLOCK_LEN, "]")
+
+	offsetInFile := uint64(pieceResp.Index)*uint64(report.TorrentFile.PieceLength) + uint64(pieceResp.Begin)
+	file := report.TorrentFile.Files[0].FilePointer
+	for key, value := range report.TorrentFile.Files {
+		if offsetInFile > value.Length {
+			offsetInFile -= value.Length
+			file = report.TorrentFile.Files[key+1].FilePointer
+		} else {
+			break
+		}
+	}
+	report.Data[pieceResp.Index].Blocks[pieceResp.Begin/parser.BLOCK_LEN] = pieceResp
+	fmt.Println("Writing block to file ", file.Name())
+	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
+	file.Sync()
+
+	toSHA1 := func(data []byte) []byte {
+		hash := sha1.New()
+		hash.Write(data)
+		return hash.Sum(nil)
+	}
+	var piece []byte
+	if pieces.PieceIsDone(pieceResp.Index) {
+		for _, i := range report.Data[pieceResp.Index].Blocks {
+			piece = append(piece, i.Bytes...)
+		}
+
+		same := true
+		expected := report.TorrentFile.Piece[pieceResp.Index*20 : (pieceResp.Index+1)*20]
+		actual := toSHA1(piece)
+		for i := range expected {
+			same = same && expected[i] == actual[i]
+		}
+		if !same {
+			fmt.Println("Expected:\t", report.TorrentFile.Piece[pieceResp.Index*20:(pieceResp.Index+1)*20])
+			fmt.Println("Actual:\t", toSHA1(piece))
+			panic("Error downloading! SHA don't match")
+
+		} else {
+			fmt.Println("Piece[", pieceResp.Index, "] downloaded SUCCESSFULLY!")
+		}
+		fmt.Println(report.TorrentFile.Piece[:20])
+	}
 
 	if pieces.IsDone() {
+		for _, file := range report.TorrentFile.Files {
+			defer file.FilePointer.Close()
+		}
 		fmt.Println("Done")
 		conn.Close()
 	} else {
@@ -174,16 +225,12 @@ func PieceHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue,
 
 // RequestPiece requests a piece
 func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
-	fmt.Println("RequestPiece")
-	if (*queue).Choked {
-		fmt.Println("Queue is Choked!")
+	if queue.Choked {
 		err = fmt.Errorf("Queue is choked")
 		return
 	}
-	fmt.Println("Outside if")
 
 	for queue.Length() > 0 {
-		fmt.Println("Queue not empty")
 		pieceBlock, err := queue.Peek()
 
 		if err != nil {
@@ -196,17 +243,14 @@ func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue)
 			break
 		}
 
-		fmt.Println("Checking Piece:", pieceBlock.Index)
-
 		if pieces.Needed(pieceBlock) {
-			fmt.Println("Requesting piece:", pieceBlock.Index)
+			fmt.Println("Requesting piece[", pieceBlock.Index, "][", pieceBlock.Begin/parser.BLOCK_LEN, "]")
 			message, err := BuildRequest(pieceBlock)
 
 			if err != nil {
 				break
 			}
 			_, err = conn.Write(message.Bytes())
-			fmt.Println("Request(", len(message.Bytes()), "): ", message.Bytes())
 
 			if err != nil {
 				break
@@ -216,7 +260,5 @@ func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue)
 			break
 		}
 	}
-	fmt.Println("Outside for")
-
 	return
 }

@@ -75,6 +75,15 @@ func clone(array [][]bool) (result [][]bool) {
 	return
 }
 
+// PieceIsDone tells if the pieceIndex piece has been downloaded successfully
+func (tracker *PieceTracker) PieceIsDone(pieceIndex uint32) (result bool) {
+	result = true
+	for _, i := range tracker.Received[pieceIndex] {
+		result = result && i
+	}
+	return
+}
+
 // IsDone tells if the torrent file has been successfully received
 func (tracker *PieceTracker) IsDone() (result bool) {
 	result = true
