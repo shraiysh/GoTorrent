@@ -58,6 +58,7 @@ type PieceBlock struct {
 	Begin   uint32
 	Length  uint32
 	Nblocks uint32
+	Bytes   []byte
 }
 
 // RandomPieceBlock returns a random PieceBlock object from torrent
