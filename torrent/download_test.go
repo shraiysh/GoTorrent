@@ -226,7 +226,7 @@ func TestBitFieldHandler(t *testing.T){
 	for i, bytevalue := range msg{
 		for j := 7; j >= 0; j-- {
 			if 1 == bytevalue&1 {
-				assert.True(t, pieces.Requested[i*8 + j][0])
+				assert.True(t, pieces.Requested[i*8 + j][0], "Error: Wrong Piece Requested.")
 			}
 			bytevalue = bytevalue << 1
 		}
