@@ -155,7 +155,7 @@ func TestHaveHandler(t *testing.T) {
 		_, err = server.Write(actualsamplemsg.Bytes())
 		flag.Wait()
 		respLen, err := server.Read(resp)
-		assert.Nil(t, err, "Error in HaveHandler")
+		assert.Nil(t, err, "Error reading from server")
 		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
 		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
 		assert.Equal(t, int32(13), size, "Invalid size")
@@ -198,6 +198,12 @@ func TestBitFieldHandler(t *testing.T){
 		_, err := server.Write(msg)
 		flag.Wait()
 		assert.Nil(t, err, "Error writing to pipe.")
+		respLen, err := server.Read(resp)
+		assert.Nil(t, err, "Error reading from server")
+		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
+		assert.Equal(t, int8(5), id, "Invalid id after reading from pipe.")
+		assert.Equal(t, nbytes+1, size, "Invalid size")
+		defer server.Close()
 
 
 	}()
@@ -214,6 +220,14 @@ func TestBitFieldHandler(t *testing.T){
 	assert.Equal(t, int8(5), id, "Invalid id after reading from Pipe")
 	assert.Equal(t, int32(nbytes+1), size, "Invalid size")
 	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
-	
+	err = BitFieldHandler(client, pieces, queue, payload)
+	assert.Nil(t, err, "Error in BitFieldHandler")
+	for i:=uint32(0); i< npieces; i++{
+		index := i/8
+		offset := i%8
+		act := (1 == uint8(msg[index]) & uint8(math.Pow(2, float64(offset))))
+		assert.Equal(t, act, pieces.Requested[i][0], "%d, %d\n%d\n")
+
+	}
 
 }

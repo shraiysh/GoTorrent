@@ -146,7 +146,7 @@ func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, 
 func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error){
 	queueempty := (queue.Length() == 0)
 	msg := payload["payload"]
-	for i, bytevalue := range msg.([]byte) {
+	for i, bytevalue := range msg.(*bytes.Buffer).Bytes() {
 		for j := 7; j >= 0; j-- {
 			if 1 == bytevalue&1 {
 				err = queue.Enqueue(uint32(i*8 + j))
