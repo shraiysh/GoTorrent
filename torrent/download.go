@@ -130,7 +130,6 @@ func UnchokeHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queu
 
 // HaveHandler handles Have protocol
 func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (pieceIndex uint32, err error) {
-	fmt.Println("At the start of HaveHandler, queue.length()=", queue.Length())
 	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &pieceIndex)
 	queueempty := (queue.Length() == 0)
 	err = queue.Enqueue(pieceIndex)
@@ -138,7 +137,6 @@ func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, 
 		return
 	}
 	if queueempty {
-		fmt.Println("HaveHandler enqued piece", pieceIndex)
 		err = RequestPiece(conn, pieces, queue)
 	}
 	return
@@ -165,13 +163,11 @@ func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Que
 
 // RequestPiece requests a piece
 func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
-	a, _ := queue.Peek()
-	fmt.Println("Request piece recieved request for piece", a.Index)
 	if queue.Choked {
 		err = fmt.Errorf("Queue is choked")
 		return
 	}
-	fmt.Println("In Requset Piece, queue length is ",queue.Length())
+
 	for queue.Length() > 0 {
 		pieceBlock, err := queue.Peek()
 
@@ -186,31 +182,20 @@ func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue)
 		}
 
 		if pieces.Needed(pieceBlock) {
-			fmt.Println("Request Piece says", pieceBlock, "is needed.")
 			message, err := BuildRequest(pieceBlock)
 
 			if err != nil {
-				fmt.Println(err.Error())
 				break
 			}
 			_, err = conn.Write(message.Bytes())
-			fmt.Println("Request Piece finished writing.")
 
 			if err != nil {
-				fmt.Println(err.Error())
 				break
 			}
-			fmt.Println("RequestPiece requested", pieceBlock.Index)
 			pieces.AddRequested(pieceBlock)
-			fmt.Println("In Request Piece:")
-			fmt.Println(pieces.Requested[pieceBlock.Index])
 			break
 		}
 	}
-	if err!=nil{
-		fmt.Println(err.Error())
-	}
-	fmt.Println(err)
 
 	return
 }
