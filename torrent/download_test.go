@@ -217,7 +217,9 @@ func TestBitFieldHandler(t *testing.T){
 	assert.Nil(t, err, "Error reading from Pipe")
 	buffer := new(bytes.Buffer)
 	err = binary.Write(buffer, binary.BigEndian, int32(nbytes+1))
+	assert.Nil(t, err, "Error writing to buffer.")
 	err = binary.Write(buffer, binary.BigEndian, int8(5))
+	assert.Nil(t, err, "Error writing to buffer.")
 	err = binary.Write(buffer, binary.BigEndian, resp[:respLen])
 	assert.Nil(t, err, "Error writing to buffer.")
 	size, id, payload := ParseMsg(buffer)
@@ -226,14 +228,18 @@ func TestBitFieldHandler(t *testing.T){
 	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
 	err = BitFieldHandler(client, pieces, queue, payload)
 	assert.Nil(t, err, "Error in BitFieldHandler")
+	// For each item in the queue, assert into the recieved field.
 	for i :=0; queue.Length()>0 ; i++{
 		nextitem, err := queue.Peek()
 		assert.Nil(t, err, "Error peeking into queue")
 		err = queue.Dequeue()
 		assert.Nil(t, err, "Error Dequeueing from queue")
 		index := nextitem.Index/8
+		//index into the byte
 		offset := nextitem.Index%8
+		//offset in the byte
 		p := uint8(1 << (7-offset))
+		//p is used to perform bitwise and on the byte value.
 		assert.Equal(t, p, uint8(actualmsg[index])&p)
 	}
 
