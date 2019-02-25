@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"math/rand"
+	//"math"
 	"net"
 	"testing"
 	"sync"
@@ -141,7 +142,7 @@ func TestHaveHandler(t *testing.T) {
 	var flag sync.WaitGroup
 	flag.Add(1)
 	fmt.Println("Testing torrent/download.go : HaveHandler")
-	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[1])
+	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
 	pieces := piece.NewPieceTracker(file)
 	queue := queue.NewQueue(file)
 	queue.Choked = false
@@ -178,3 +179,18 @@ func TestHaveHandler(t *testing.T) {
 	assert.Equal(t, pieceBlock.Index, pieceIndex, "Piece Index doesn't match.")
 	assert.True(t, pieces.Requested[pieceBlock.Index][0], "Requested not set.")
 }
+
+// func TestBitFieldHandler(t *testing.T){
+// 	fmt.Println("Testing torrent/download.go : BitFieldHandler")
+// 	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+// 	//each piece has 20 byte hash, irrespective of size.
+// 	npieces := uint32(len(file.Piece)/20)
+// 	nbytes := math.Ceil(float64(npieces) / float64(8))
+// 	msg := getRandomByteArr(uint(nbytes))
+// 	pieces := piece.NewPieceTracker(file)
+// 	queue := queue.NewQueue(file)
+// 	queue.Choked = false
+// 	client, server := net.Pipe()
+	
+
+// }
