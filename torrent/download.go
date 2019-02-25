@@ -129,12 +129,16 @@ func UnchokeHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queu
 }
 
 // HaveHandler handles Have protocol
-func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
-	pieceIndex := payload["index"]
+func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error) {
+	var pieceIndex uint32
+	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &pieceIndex)
 	queueempty := (queue.Length() == 0)
-	queue.Enqueue(pieceIndex.(uint32))
+	err = queue.Enqueue(pieceIndex)
+	if err != nil {
+		return
+	}
 	if queueempty {
-		RequestPiece(conn, pieces, queue)
+		err = RequestPiece(conn, pieces, queue)
 	}
 	return
 }
