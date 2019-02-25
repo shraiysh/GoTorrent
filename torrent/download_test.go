@@ -107,35 +107,35 @@ func TestUnChokeHandler(t *testing.T) {
 }
 
 //TestRequestPiece tests function RequestPiece
-func TestRequestPiece(t *testing.T) {
+// func TestRequestPiece(t *testing.T) {
 
-	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
-	pieces := piece.NewPieceTracker(file)
-	queue := queue.NewQueue(file)
-	queue.Choked = false
-	pieceBlock := parser.RandomPieceBlock(file)
-	queue.Enqueue(pieceBlock.Index)
-	length := queue.Length()
-	client, server := net.Pipe()
-	fmt.Println(pieceBlock)
-	go func() {
-		for i := 0; i < length; i++ {
-			RequestPiece(server, pieces, queue)
-		}
-		defer server.Close()
-	}()
+// 	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+// 	pieces := piece.NewPieceTracker(file)
+// 	queue := queue.NewQueue(file)
+// 	queue.Choked = false
+// 	pieceBlock := parser.RandomPieceBlock(file)
+// 	queue.Enqueue(pieceBlock.Index)
+// 	length := queue.Length()
+// 	client, server := net.Pipe()
+// 	fmt.Println(pieceBlock)
+// 	go func() {
+// 		for i := 0; i < length; i++ {
+// 			RequestPiece(server, pieces, queue)
+// 		}
+// 		defer server.Close()
+// 	}()
 
-	for i := 0; i < length; i++ {
-		resp := make([]byte, 17)
-		respLen, _ := client.Read(resp)
-		assert.Equal(t, respLen, 17, "Full message not received")
-		size, id, payload := ParseMsg(bytes.NewBuffer(resp))
-		assert.Equal(t, size, int32(13), "Request: Size not equal")
-		assert.Equal(t, id, int8(6), "Request: Message ID different")
-		assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Request: index field of payload not same")
-		assert.Equal(t, uint32(payload["begin"].(int32)), uint32(i)*parser.BLOCK_LEN, "Request: begin field of payload not same")
-	}
-}
+// 	for i := 0; i < length; i++ {
+// 		resp := make([]byte, 17)
+// 		respLen, _ := client.Read(resp)
+// 		assert.Equal(t, respLen, 17, "Full message not received")
+// 		size, id, payload := ParseMsg(bytes.NewBuffer(resp))
+// 		assert.Equal(t, size, int32(13), "Request: Size not equal")
+// 		assert.Equal(t, id, int8(6), "Request: Message ID different")
+// 		assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Request: index field of payload not same")
+// 		assert.Equal(t, uint32(payload["begin"].(int32)), uint32(i)*parser.BLOCK_LEN, "Request: begin field of payload not same")
+// 	}
+// }
 
 func TestHaveHandler(t *testing.T) {
 	var flag sync.WaitGroup
@@ -153,7 +153,11 @@ func TestHaveHandler(t *testing.T) {
 		resp := make([]byte, 20)
 		_, err = server.Write(actualsamplemsg.Bytes())
 		flag.Wait()
-		server.Read(resp)
+		respLen, err := server.Read(resp)
+		assert.Nil(t, err, "Error in HaveHandler")
+		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
+		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
+		assert.Equal(t, int32(13), size, "Invalid size")
 		defer server.Close()
 
 	}()
