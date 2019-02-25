@@ -188,21 +188,22 @@ func TestBitFieldHandler(t *testing.T){
 	//each piece has 20 byte hash, irrespective of size.
 	npieces := uint32(len(file.Piece)/20)
 	nbytes := uint(math.Ceil(float64(npieces) / float64(8)))
-	msg := getRandomByteArr(nbytes)
+	msg := make([]byte, nbytes+1)
+	msg[0] = byte(1)
 	pieces := piece.NewPieceTracker(file)
 	queue := queue.NewQueue(file)
 	queue.Choked = false
 	client, server := net.Pipe()
 	go func(){
-		resp := make([]byte, nbytes+10)
+		resp := make([]byte, nbytes+1)
 		_, err := server.Write(msg)
 		flag.Wait()
 		assert.Nil(t, err, "Error writing to pipe.")
 		respLen, err := server.Read(resp)
 		assert.Nil(t, err, "Error reading from server")
 		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
-		assert.Equal(t, int8(5), id, "Invalid id after reading from pipe.")
-		assert.Equal(t, nbytes+1, size, "Invalid size")
+		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
+		assert.Equal(t, int32(13), size, "Invalid size")
 		defer server.Close()
 
 
@@ -222,11 +223,13 @@ func TestBitFieldHandler(t *testing.T){
 	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
 	err = BitFieldHandler(client, pieces, queue, payload)
 	assert.Nil(t, err, "Error in BitFieldHandler")
-	for i:=uint32(0); i< npieces; i++{
-		index := i/8
-		offset := i%8
-		act := (1 == uint8(msg[index]) & uint8(math.Pow(2, float64(offset))))
-		assert.Equal(t, act, pieces.Requested[i][0], "%d, %d\n%d\n")
+	for i, bytevalue := range msg{
+		for j := 7; j >= 0; j-- {
+			if 1 == bytevalue&1 {
+				assert.True(t, pieces.Requested[i*8 + j][0])
+			}
+			bytevalue = bytevalue << 1
+		}
 
 	}
 
