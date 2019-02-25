@@ -143,7 +143,7 @@ func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, 
 }
 
 // BitFieldHandler handles bitfield protocol
-func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error){
+func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error) {
 	queueempty := (queue.Length() == 0)
 	msg := payload["payload"]
 	for i, bytevalue := range msg.(*bytes.Buffer).Bytes() {
@@ -151,7 +151,7 @@ func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Que
 			if 1 == bytevalue&1 {
 				err = queue.Enqueue(uint32(i*8 + j))
 			}
-			bytevalue = bytevalue << 1
+			bytevalue = bytevalue >> 1
 		}
 	}
 	if queueempty {
