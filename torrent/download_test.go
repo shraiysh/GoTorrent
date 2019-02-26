@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"math/rand"
 	"math"
+	"math/rand"
 	"net"
-	"testing"
 	"sync"
+	"testing"
 
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/piece"
@@ -150,7 +150,7 @@ func TestHaveHandler(t *testing.T) {
 	client, server := net.Pipe()
 	actualsamplemsg, err := BuildHave(pieceBlock.Index)
 	assert.Nil(t, err, "error writing to Buffer in BuildHave")
-	go func(){
+	go func() {
 		resp := make([]byte, 20)
 		_, err = server.Write(actualsamplemsg.Bytes())
 		flag.Wait()
@@ -180,13 +180,13 @@ func TestHaveHandler(t *testing.T) {
 	assert.True(t, pieces.Requested[pieceBlock.Index][0], "Requested not set.")
 }
 
-func TestBitFieldHandler(t *testing.T){
+func TestBitFieldHandler(t *testing.T) {
 	var flag sync.WaitGroup
 	flag.Add(1)
 	fmt.Println("Testing torrent/download.go : BitFieldHandler")
 	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
 	//each piece has 20 byte hash, irrespective of size.
-	npieces := uint32(len(file.Piece)/20)
+	npieces := uint32(len(file.Piece) / 20)
 	nbytes := uint(math.Ceil(float64(npieces) / float64(8)))
 	msg := new(bytes.Buffer)
 	binary.Write(msg, binary.BigEndian, uint32(nbytes+1))
@@ -197,7 +197,7 @@ func TestBitFieldHandler(t *testing.T){
 	queue := queue.NewQueue(file)
 	queue.Choked = false
 	client, server := net.Pipe()
-	go func(){
+	go func() {
 		resp := make([]byte, nbytes+1)
 		_, err := server.Write(actualmsg)
 		flag.Wait()
@@ -208,7 +208,6 @@ func TestBitFieldHandler(t *testing.T){
 		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
 		assert.Equal(t, int32(13), size, "Invalid size")
 		defer server.Close()
-
 
 	}()
 	resp := make([]byte, nbytes+10)
@@ -228,17 +227,17 @@ func TestBitFieldHandler(t *testing.T){
 	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
 	err = BitFieldHandler(client, pieces, queue, payload)
 	assert.Nil(t, err, "Error in BitFieldHandler")
-	// For each item in the queue, assert into the recieved field.
-	for i :=0; queue.Length()>0 ; i++{
+	// For each item in the queue, assert into the received field.
+	for i := 0; queue.Length() > 0; i++ {
 		nextitem, err := queue.Peek()
 		assert.Nil(t, err, "Error peeking into queue")
 		err = queue.Dequeue()
 		assert.Nil(t, err, "Error Dequeueing from queue")
-		index := nextitem.Index/8
+		index := nextitem.Index / 8
 		//index into the byte
-		offset := nextitem.Index%8
+		offset := nextitem.Index % 8
 		//offset in the byte
-		p := uint8(1 << (7-offset))
+		p := uint8(1 << (7 - offset))
 		//p is used to perform bitwise and on the byte value.
 		assert.Equal(t, p, uint8(actualmsg[index])&p)
 	}
