@@ -1,2 +1,2 @@
 # ```package piece```
-This package defines a class that tells us which block of a piece is being requested nd which block is received .
+This package defines a class that tells us which block of a piece is being requested and which block is received .

@@ -9,9 +9,9 @@ BitTorrent Client Implementation
 	- Follow [this](https://golang.org/doc/install) link **OR**
 	- Run ```sudo apt-get install golang```
 	- Set the environment variables `GOPATH` and `GOBIN` as follows :
-		a. ```GOPATH="$HOME/go"```
-		b. ```GOBIN="$GOPATH/bin"```
-		c. ```PATH=$PATH:$GOBIN```
+		- ```GOPATH="$HOME/go"```
+		- ```GOBIN="$GOPATH/bin"```
+		- ```PATH=$PATH:$GOBIN```
 2. **Run the code**
 	
 	Get [dep](https://github.com/golang/dep) for installing the dependencies
