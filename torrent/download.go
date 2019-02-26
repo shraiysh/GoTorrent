@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"net"
+
 	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
-	"net"
 )
 
 type handler func([]byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
@@ -128,18 +129,40 @@ func UnchokeHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queu
 }
 
 // HaveHandler handles Have protocol
-func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
+func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (pieceIndex uint32, err error) {
+	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &pieceIndex)
+	queueempty := (queue.Length() == 0)
+	err = queue.Enqueue(pieceIndex)
+	if err != nil {
+		return
+	}
+	if queueempty {
+		err = RequestPiece(conn, pieces, queue)
+	}
 	return
 }
 
 // BitFieldHandler handles bitfield protocol
-func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
+func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error) {
+	queueempty := (queue.Length() == 0)
+	msg := payload["payload"]
+	for i, bytevalue := range msg.(*bytes.Buffer).Bytes() {
+		for j := 7; j >= 0; j-- {
+			if 1 == bytevalue&1 {
+				err = queue.Enqueue(uint32(i*8 + j))
+			}
+			bytevalue = bytevalue >> 1
+		}
+	}
+	if queueempty {
+		err = RequestPiece(conn, pieces, queue)
+	}
+
 	return
 }
 
 // RequestPiece requests a piece
 func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
-
 	if queue.Choked {
 		err = fmt.Errorf("Queue is choked")
 		return
@@ -167,9 +190,9 @@ func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue)
 			_, err = conn.Write(message.Bytes())
 
 			if err != nil {
+				fmt.Println(err.Error())
 				break
 			}
-
 			pieces.AddRequested(pieceBlock)
 			break
 		}

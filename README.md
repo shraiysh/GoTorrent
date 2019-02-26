@@ -52,7 +52,7 @@ BitTorrent Client Implementation
 	- Indent pre-formatted comments.
 	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
 8. **Documentation**
-	- You can refer to [this](http://13.71.92.90/pkg/concurrency-8) to see the documentation generated for the master branch.
+	- You can refer to [this](http://104.211.220.36/pkg/github.com/concurrency-8/) to see the documentation generated for the master branch.
 	- Documentation will be updated automatically upon a pull request into master.
 
 ### Resources and References

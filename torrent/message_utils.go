@@ -9,6 +9,7 @@ import (
 	//"fmt"
 )
 
+// Payload refers to the message payload that is to be sent.
 type Payload map[string]interface{}
 
 // BuildHandshake returns a pointer to a buffer.

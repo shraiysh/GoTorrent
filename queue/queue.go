@@ -18,7 +18,7 @@ func NewQueue(torrent parser.TorrentFile) (queue *Queue) {
 	return
 }
 
-// enqueue adds a piece to queue
+// Enqueue adds a piece to queue
 func (queue *Queue) Enqueue(pieceIndex uint32) (err error) {
 	nBlocks, err := parser.BlocksPerPiece(queue.torrent, pieceIndex)
 
@@ -44,7 +44,7 @@ func (queue *Queue) Enqueue(pieceIndex uint32) (err error) {
 	return
 }
 
-// dequeue removes first piece block
+// Dequeue removes first piece block
 func (queue *Queue) Dequeue() error {
 	if queue.Length() == 0 {
 		return fmt.Errorf("Queue empty : can't dequeue")
@@ -54,7 +54,7 @@ func (queue *Queue) Dequeue() error {
 	return nil
 }
 
-// peek returns first pieceblock
+// Peek returns first pieceblock
 func (queue *Queue) Peek() (block parser.PieceBlock, err error) {
 
 	if queue.Length() == 0 {
@@ -65,7 +65,7 @@ func (queue *Queue) Peek() (block parser.PieceBlock, err error) {
 	return
 }
 
-// length returns length of queue
+// Length returns length of queue
 func (queue *Queue) Length() int {
 	return len(queue.queue)
 }
