@@ -113,6 +113,7 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 	exitStatus := 1
 	var err error
 	for exitStatus == 1 && err == nil {
+		queue.Choked = true
 		conn, err := sendHandshake(peer, report)
 		if err != nil {
 			break
@@ -183,23 +184,23 @@ func msgHandler(peer tracker.Peer, msg []byte, conn net.Conn, pieces *piece.Piec
 		_, id, payload := ParseMsg(bytes.NewBuffer(msg))
 
 		if id == 0 {
-			// Info.Println("peer: <", peer, ">: Choke")
+			Info.Println("peer: <", peer, ">: Choke")
 			ChokeHandler(peer, conn, pieces, report)
 		}
 		if id == 1 {
-			// Info.Println("peer: <", peer, ">: Unchoke")
+			Info.Println("peer: <", peer, ">: Unchoke")
 			UnchokeHandler(peer, conn, pieces, queue)
 		}
 		if id == 4 {
-			// Info.Println("peer: <", peer, ">: Have")
+			Info.Println("peer: <", peer, ">: Have")
 			HaveHandler(peer, conn, pieces, queue, payload)
 		}
 		if id == 5 {
-			// Info.Println("peer: <", peer, ">: BitField")
+			Info.Println("peer: <", peer, ">: BitField")
 			BitFieldHandler(peer, conn, pieces, queue, payload)
 		}
 		if id == 7 {
-			// Info.Println("peer: <", peer, ">: Piece")
+			Info.Println("peer: <", peer, ">: Piece")
 			PieceHandler(peer, conn, pieces, queue, report, parser.PieceBlock{
 				Index: payload["index"].(uint32),
 				Begin: payload["begin"].(uint32),
@@ -299,9 +300,16 @@ func ChokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 
 // UnchokeHandler handles unchoking protocol
 func UnchokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) {
-	if queue.Choked {
+	if queue.Choked && queue.Length() != 0 {
 		queue.Choked = false
 		RequestPiece(peer, conn, pieces, queue)
+	} else if queue.Choked {
+		message, _ := BuildInterested()
+		// if err != nil {
+		// 	Info.Println("peer: <", peer, ">: Error", err.Error())
+		// 	return err
+		// }
+		conn.Write(message.Bytes())
 	}
 	// Info.Println("peer: <", peer, ">: RequestPiece : Called from Unchokehandler")
 }
@@ -342,6 +350,7 @@ func BitFieldHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracke
 // PieceHandler - TODO Write comment
 func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport, pieceResp parser.PieceBlock) {
 	pieces.AddReceived(pieceResp)
+	report.Data[pieceResp.Index].Blocks[pieceResp.Begin/parser.BLOCK_LEN] = pieceResp
 
 	toSHA1 := func(data []byte) []byte {
 		hash := sha1.New()
@@ -351,6 +360,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 	var piece []byte
 	if pieces.PieceIsDone(pieceResp.Index) {
 		for _, i := range report.Data[pieceResp.Index].Blocks {
+			Info.Println("Appending block, len=", len(i.Bytes))
 			piece = append(piece, i.Bytes...)
 		}
 
@@ -363,14 +373,18 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		if !same {
 			Info.Println("peer: <", peer, ">: Expected:\t", report.TorrentFile.Piece[pieceResp.Index*20:(pieceResp.Index+1)*20])
 			Info.Println("peer: <", peer, ">: Actual:\t", toSHA1(piece))
+			report.Data[pieceResp.Index].Blocks[pieceResp.Begin/parser.BLOCK_LEN] = parser.PieceBlock{}
+
 			pieces.Reset(pieceResp.Index)
 			queue.Enqueue(pieceResp.Index)
+			RequestPiece(peer, conn, pieces, queue)
 			return
 		}
 		Info.Println("peer: <", peer, ">: Piece[", pieceResp.Index, "] downloaded SUCCESSFULLY!")
 	}
 
 	Info.Println("peer: <", peer, ">: Received piece[", pieceResp.Index, "] [", pieceResp.Begin/parser.BLOCK_LEN, "]")
+	// Info.Println("Bytes Received : ", pieceResp.Bytes)
 
 	offsetInFile := uint64(pieceResp.Index)*uint64(report.TorrentFile.PieceLength) + uint64(pieceResp.Begin)
 	file := report.TorrentFile.Files[0].FilePointer
@@ -382,7 +396,6 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 			break
 		}
 	}
-	report.Data[pieceResp.Index].Blocks[pieceResp.Begin/parser.BLOCK_LEN] = pieceResp
 	Info.Println("peer: <", peer, ">: Writing block to file ", file.Name())
 	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
 	// file.Sync()
