@@ -82,25 +82,21 @@ func clone(array [][]bool) (result [][]bool) {
 
 // PieceIsDone tells if the pieceIndex piece has been downloaded successfully
 func (tracker *PieceTracker) PieceIsDone(pieceIndex uint32) (result bool) {
-	tracker.lock.Lock()
 	result = true
 	for _, i := range tracker.Received[pieceIndex] {
 		result = result && i
 	}
-	tracker.lock.Unlock()
 	return
 }
 
 // IsDone tells if the torrent file has been successfully received
 func (tracker *PieceTracker) IsDone() (result bool) {
-	tracker.lock.Lock()
 	result = true
 	for _, i := range tracker.Received {
 		for _, j := range i {
 			result = result && j
 		}
 	}
-	tracker.lock.Unlock()
 	return
 }
 
@@ -116,5 +112,15 @@ func (tracker *PieceTracker) PrintPercentageDone() {
 		}
 	}
 	percent := float64(downloaded*100) / float64(total)
-	fmt.Println("progress:", percent)
+	fmt.Print("progress:", percent, "\r")
+}
+
+// Reset the piece - Called when invalid SHA
+func (tracker *PieceTracker) Reset(index uint32) {
+	tracker.lock.Lock()
+	for i := range tracker.Requested[index] {
+		tracker.Requested[index][i] = false
+		tracker.Received[index][i] = false
+	}
+	tracker.lock.Lock()
 }
