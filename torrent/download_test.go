@@ -4,14 +4,17 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"math"
+	"math/rand"
+	"net"
+	"sync"
+	"testing"
+
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
 	"github.com/stretchr/testify/assert"
-	"math/rand"
-	"net"
-	"testing"
 )
 
 // TestOnWholeMessage tests torrent/download.go : onWholeMessage(*kwargs)
@@ -104,7 +107,7 @@ func TestUnChokeHandler(t *testing.T) {
 	assert.Equal(t, queue.Choked, false, "Choked attribute not set properly")
 }
 
-// TestRequestPiece tests function RequestPiece
+//TestRequestPiece tests function RequestPiece
 func TestRequestPiece(t *testing.T) {
 
 	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
@@ -133,4 +136,110 @@ func TestRequestPiece(t *testing.T) {
 		assert.Equal(t, uint32(payload["index"].(int32)), pieceBlock.Index, "Request: index field of payload not same")
 		assert.Equal(t, uint32(payload["begin"].(int32)), uint32(i)*parser.BLOCK_LEN, "Request: begin field of payload not same")
 	}
+}
+
+func TestHaveHandler(t *testing.T) {
+	var flag sync.WaitGroup
+	flag.Add(1)
+	fmt.Println("Testing torrent/download.go : HaveHandler")
+	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+	pieces := piece.NewPieceTracker(file)
+	queue := queue.NewQueue(file)
+	queue.Choked = false
+	pieceBlock := parser.RandomPieceBlock(file)
+	client, server := net.Pipe()
+	actualsamplemsg, err := BuildHave(pieceBlock.Index)
+	assert.Nil(t, err, "error writing to Buffer in BuildHave")
+	go func() {
+		resp := make([]byte, 20)
+		_, err = server.Write(actualsamplemsg.Bytes())
+		flag.Wait()
+		respLen, err := server.Read(resp)
+		assert.Nil(t, err, "Error reading from server")
+		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
+		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
+		assert.Equal(t, int32(13), size, "Invalid size")
+		defer server.Close()
+
+	}()
+	resp := make([]byte, 20)
+	buffer := new(bytes.Buffer)
+	respLen, err := client.Read(resp)
+	flag.Done()
+	assert.Nil(t, err, "Error reading from pipe")
+	err = binary.Write(buffer, binary.BigEndian, resp[:respLen])
+	assert.Nil(t, err, "Error writing to buffer.")
+	size, id, payload := ParseMsg(buffer)
+	assert.Equal(t, int8(4), id, "Invalid id after reading from pipe.")
+	assert.Equal(t, int32(5), size, "Invalid size")
+	assert.NotEmpty(t, payload["payload"], "Empty piece index in payload.")
+	var pieceIndex uint32
+	pieceIndex, err = HaveHandler(client, pieces, queue, payload)
+	assert.Nil(t, err, "Error in HaveHandler")
+	assert.Equal(t, pieceBlock.Index, pieceIndex, "Piece Index doesn't match.")
+	assert.True(t, pieces.Requested[pieceBlock.Index][0], "Requested not set.")
+}
+
+func TestBitFieldHandler(t *testing.T) {
+	var flag sync.WaitGroup
+	flag.Add(1)
+	fmt.Println("Testing torrent/download.go : BitFieldHandler")
+	file, _ := parser.ParseFromFile(parser.GetTorrentFileList()[0])
+	//each piece has 20 byte hash, irrespective of size.
+	npieces := uint32(len(file.Piece) / 20)
+	nbytes := uint(math.Ceil(float64(npieces) / float64(8)))
+	msg := new(bytes.Buffer)
+	binary.Write(msg, binary.BigEndian, uint32(nbytes+1))
+	binary.Write(msg, binary.BigEndian, uint8(5))
+	binary.Write(msg, binary.BigEndian, getRandomByteArr(nbytes))
+	actualmsg := msg.Bytes()
+	pieces := piece.NewPieceTracker(file)
+	queue := queue.NewQueue(file)
+	queue.Choked = false
+	client, server := net.Pipe()
+	go func() {
+		resp := make([]byte, nbytes+1)
+		_, err := server.Write(actualmsg)
+		flag.Wait()
+		assert.Nil(t, err, "Error writing to pipe.")
+		respLen, err := server.Read(resp)
+		assert.Nil(t, err, "Error reading from server")
+		size, id, _ := ParseMsg(bytes.NewBuffer(resp[:respLen]))
+		assert.Equal(t, int8(6), id, "Invalid id after reading from pipe.")
+		assert.Equal(t, int32(13), size, "Invalid size")
+		defer server.Close()
+
+	}()
+	resp := make([]byte, nbytes+10)
+	respLen, err := client.Read(resp)
+	flag.Done()
+	assert.Nil(t, err, "Error reading from Pipe")
+	buffer := new(bytes.Buffer)
+	err = binary.Write(buffer, binary.BigEndian, int32(nbytes+1))
+	assert.Nil(t, err, "Error writing to buffer.")
+	err = binary.Write(buffer, binary.BigEndian, int8(5))
+	assert.Nil(t, err, "Error writing to buffer.")
+	err = binary.Write(buffer, binary.BigEndian, resp[:respLen])
+	assert.Nil(t, err, "Error writing to buffer.")
+	size, id, payload := ParseMsg(buffer)
+	assert.Equal(t, int8(5), id, "Invalid id after reading from Pipe")
+	assert.Equal(t, int32(nbytes+1), size, "Invalid size")
+	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
+	err = BitFieldHandler(client, pieces, queue, payload)
+	assert.Nil(t, err, "Error in BitFieldHandler")
+	// For each item in the queue, assert into the received field.
+	for i := 0; queue.Length() > 0; i++ {
+		nextitem, err := queue.Peek()
+		assert.Nil(t, err, "Error peeking into queue")
+		err = queue.Dequeue()
+		assert.Nil(t, err, "Error Dequeueing from queue")
+		index := nextitem.Index / 8
+		//index into the byte
+		offset := nextitem.Index % 8
+		//offset in the byte
+		p := uint8(1 << (7 - offset))
+		//p is used to perform bitwise and on the byte value.
+		assert.Equal(t, p, uint8(actualmsg[index])&p)
+	}
+
 }

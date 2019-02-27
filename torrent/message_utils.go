@@ -3,13 +3,15 @@ package torrent
 import (
 	"bytes"
 	"encoding/binary"
+
 	// "github.com/concurrency-8/queue"
 	"fmt"
+
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
 )
 
-// Payload - TODO Write comment
+// Payload refers to the message payload that is to be sent.
 type Payload map[string]interface{}
 
 // BuildHandshake returns a pointer to a buffer.

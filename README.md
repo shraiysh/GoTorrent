@@ -1,14 +1,17 @@
 # GoTorrent
 BitTorrent Client Implementation
 
-## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8)
+## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE)
 - Able to parse torrent files.
 
 ## Setup
 1. **Install Golang**
 	- Follow [this](https://golang.org/doc/install) link **OR**
 	- Run ```sudo apt-get install golang```
-	- Set the environment variables `GOPATH` and `GOBIN`
+	- Set the environment variables `GOPATH` and `GOBIN` as follows :
+		- ```GOPATH="$HOME/go"```
+		- ```GOBIN="$GOPATH/bin"```
+		- ```PATH=$PATH:$GOBIN```
 2. **Run the code**
 	
 	Get [dep](https://github.com/golang/dep) for installing the dependencies
@@ -52,7 +55,7 @@ BitTorrent Client Implementation
 	- Indent pre-formatted comments.
 	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
 8. **Documentation**
-	- You can refer to [this](http://13.71.92.90/pkg/concurrency-8) to see the documentation generated for the master branch.
+	- You can refer to [this](http://104.211.220.36/pkg/github.com/concurrency-8/) to see the documentation generated for the master branch.
 	- Documentation will be updated automatically upon a pull request into master.
 
 ### Resources and References

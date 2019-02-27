@@ -5,13 +5,14 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
+	"net"
+	"net/url"
+	"sync"
+
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/queue"
 	"github.com/concurrency-8/tracker"
-	"net"
-	"net/url"
-	"sync"
 )
 
 type handler func(tracker.Peer, []byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
@@ -86,10 +87,14 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 		Port: int(peer.Port),
 		Zone: "",
 	}
-	conn, err := net.Dial("tcp", service.String())
+	d := net.Dialer{Timeout: 5 * time.Second}
+	conn, err := d.Dial("tcp", service.String())
 	if err != nil {
 		return err
 	}
+
+	err := conn.SetReadDeadline(time.Now().Add(5 * time.Second))	// Setting Read deadline from a connection
+
 	//write the handshake content into the connection.
 	_, err = conn.Write(buffer.Bytes())
 	if err != nil {
@@ -103,8 +108,10 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 	// }
 
 	fmt.Println("peer: <", peer, ">: ends!")
+	wg.Done()
 	return err
 }
+
 func msgHandler(peer tracker.Peer, msg []byte, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport) error {
 	// fmt.Println("peer: <", peer, ">: Message:", msg)
 
@@ -123,7 +130,7 @@ func msgHandler(peer tracker.Peer, msg []byte, conn net.Conn, pieces *piece.Piec
 
 		if id == 0 {
 			// fmt.Println("peer: <", peer, ">: Choke")
-			ChokeHandler(peer, conn)
+			ChokeHandler(peer, conn, pieces, report)
 		}
 		if id == 1 {
 			// fmt.Println("peer: <", peer, ">: Unchoke")
@@ -156,23 +163,28 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 	buffer := new(bytes.Buffer)
 	handshake := true
 	resp := make([]byte, 1000)
+	var msgLen *int = nil
 	for {
 		respLen, err := conn.Read(resp)
 		//Please look for a better connection handling in the future.
 		//Maybe use defer?
 
 		if err != nil {
-			conn.Close()
-			return err
+			if netErr, ok := err.(net.Error); ok && netErr.Timeout() && !handshake {
+				RequestPiece(conn, pieces, queue)
+				// time out
+			} else {
+				conn.Close();
+				DownloadFromPeer(peer, report, pieces)
+			}
 		}
 
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
 
-		var msgLen int
 		if handshake {
 			length := uint8((buffer.Bytes())[0])
 			msgLen = int(length) + 49
-		} else {
+		} else if msgLen == nil {
 			length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
 			// length := uint32((buffer.Bytes())[0:4])
 			msgLen = int(length) + 4
@@ -184,6 +196,7 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 			binary.Read(buffer, binary.BigEndian, messageBytes)
 			// fmt.Println("peer: <", peer, ">: msgLen:", msgLen)
 			msgHandler(peer, messageBytes, conn, pieces, queue, report)
+			msgLen = nil
 			handshake = false
 			if len(buffer.Bytes()) > 4 {
 				length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
@@ -196,9 +209,15 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 }
 
 // ChokeHandler handles choking protocol
-func ChokeHandler(peer tracker.Peer, conn net.Conn) {
-	fmt.Println("peer:<", peer, ">: Choke: close")
-	conn.Close()
+func ChokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, report *tracker.ClientStatusReport) {
+	fmt.Println("peer:<", peer, ">: Choke: Handshaking")
+	if pieces.IsDone() {
+		conn.Close()
+	}
+	else {
+		time.Sleep(2 * time.Second)		// Sleep for 2 seconds and try handshaking again
+		conn.Write(BuildHandshake(*report).Bytes())
+	}
 }
 
 // UnchokeHandler handles unchoking protocol
@@ -208,16 +227,35 @@ func UnchokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker
 }
 
 // HaveHandler handles Have protocol
-func HaveHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
+func HaveHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (pieceIndex uint32, err error) {
+	binary.Read(payload["payload"].(*bytes.Buffer), binary.BigEndian, &pieceIndex)
+	queueempty := (queue.Length() == 0)
+	err = queue.Enqueue(pieceIndex)
+	if err != nil {
+		return
+	}
+	if queueempty {
+		err = RequestPiece(conn, pieces, queue)
+	}
 	return
 }
 
 // BitFieldHandler handles bitfield protocol
-func BitFieldHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) {
-	// RequestPiece(conn, pieces, queue)
-	for i := range pieces.Requested {
-		queue.Enqueue(uint32(i))
+func BitFieldHandler(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error) {
+	queueempty := (queue.Length() == 0)
+	msg := payload["payload"]
+	for i, bytevalue := range msg.(*bytes.Buffer).Bytes() {
+		for j := 7; j >= 0; j-- {
+			if 1 == bytevalue&1 {
+				err = queue.Enqueue(uint32(i*8 + j))
+			}
+			bytevalue = bytevalue >> 1
+		}
 	}
+	if queueempty {
+		err = RequestPiece(conn, pieces, queue)
+	}
+
 	return
 }
 
@@ -281,7 +319,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 }
 
 // RequestPiece requests a piece
-func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
+func RequestPiece(conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
 	if queue.Choked {
 		err = fmt.Errorf("peer: <", peer, ">: Queue is choked")
 		return
@@ -310,9 +348,9 @@ func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 			_, err = conn.Write(message.Bytes())
 
 			if err != nil {
+				fmt.Println(err.Error())
 				break
 			}
-
 			pieces.AddRequested(pieceBlock)
 			break
 		}
