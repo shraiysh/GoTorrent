@@ -41,7 +41,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	// single file context
 	os.Mkdir(info.Name, os.ModePerm)
 	if info.Length > 0 {
-		filePointer, err := os.Create(string(info.Name))
+		filePointer, err := os.Create(info.Name + "/" + info.Name)
 		if err != nil {
 			panic("Unable to create files")
 		}
@@ -53,7 +53,6 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		Length = info.Length
 	} else {
 		//multiple files are present.
-
 		metadataFiles := make([]*FileMetaData, 0)
 		err = bencode.DecodeBytes(info.Files, &metadataFiles)
 		if err != nil {

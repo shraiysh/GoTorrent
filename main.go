@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/concurrency-8/torrent"
 )
 
 func main() {
 
-	torrent.DownloadFromFile("./test_torrents/big-buck-bunny.torrent", 6881)
+	torrent.DownloadFromFile("./test_torrents/Game of thrones - Spoils of war.torrent", 6881)
 	// torrentfile, _ := parser.ParseFromFile("./test_torrents/ubuntu.iso.torrent")
 	// fmt.Println(torrentfile.PieceLength)
 	// u, err := url.Parse(torrentfile.Announce[0])

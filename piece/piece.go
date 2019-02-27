@@ -2,6 +2,8 @@ package piece
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/concurrency-8/parser"
 )
 
@@ -11,6 +13,7 @@ type PieceTracker struct {
 	Torrent   parser.TorrentFile
 	Requested [][]bool
 	Received  [][]bool
+	lock      sync.Mutex
 }
 
 // NewPieceTracker returns a new PieceTracker object for the torrent
@@ -57,7 +60,9 @@ func (tracker *PieceTracker) Needed(block parser.PieceBlock) bool {
 
 	// If yes, copy received into request...
 	if allRequested {
+		tracker.lock.Lock()
 		tracker.Requested = clone(tracker.Received)
+		tracker.lock.Unlock()
 	}
 
 	return !tracker.Requested[block.Index][block.Begin/parser.BLOCK_LEN]
@@ -77,21 +82,25 @@ func clone(array [][]bool) (result [][]bool) {
 
 // PieceIsDone tells if the pieceIndex piece has been downloaded successfully
 func (tracker *PieceTracker) PieceIsDone(pieceIndex uint32) (result bool) {
+	tracker.lock.Lock()
 	result = true
 	for _, i := range tracker.Received[pieceIndex] {
 		result = result && i
 	}
+	tracker.lock.Unlock()
 	return
 }
 
 // IsDone tells if the torrent file has been successfully received
 func (tracker *PieceTracker) IsDone() (result bool) {
+	tracker.lock.Lock()
 	result = true
 	for _, i := range tracker.Received {
 		for _, j := range i {
 			result = result && j
 		}
 	}
+	tracker.lock.Unlock()
 	return
 }
 
@@ -107,5 +116,5 @@ func (tracker *PieceTracker) PrintPercentageDone() {
 		}
 	}
 	percent := float64(downloaded*100) / float64(total)
-	fmt.Print("progress:", percent, "\r")
+	fmt.Println("progress:", percent)
 }
