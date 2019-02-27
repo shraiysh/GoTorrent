@@ -5,8 +5,11 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
+	"log"
 	"net"
 	"net/url"
+	"os"
+	"path/filepath"
 	"sync"
 	"time"
 
@@ -18,24 +21,40 @@ import (
 
 type handler func(tracker.Peer, []byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
 
-// MAX_TRY is the maximum number of times we should try to connect to a tracker
-var MAX_TRY int = 5
+// MaxTry is the maximum number of times we should try to connect to a tracker
+var MaxTry int = 5
 
-// TCP_TIMEOUT is the maximum time for which one must wait for connection to a peer
-var TCP_TIMEOUT time.Duration = 15
+// TCPTimeout is the maximum time for which one must wait for connection to a peer
+var TCPTimeout time.Duration = 15
 
-// READ_TIMEOUT is the maximum time for which one must wait for the nect message from the peer. If no message arrives till this point, handshake again
-var READ_TIMEOUT time.Duration = 150
+// ReadTimeout is the maximum time for which one must wait for the nect message from the peer. If no message arrives till this point, handshake again
+var ReadTimeout time.Duration = 150
 
 var wg sync.WaitGroup
 
+// Info is logger for information
+var Info *log.Logger
+
+// Error is logger for errors
+var Error *log.Logger
+
 // DownloadFromFile downloads torrent from path using port
 func DownloadFromFile(path string, port int) {
+
+	// Set up logs
+	logFolder := filepath.Join("Logs", path)
+	os.MkdirAll(logFolder, os.ModePerm)
+	logFile, err := os.OpenFile(filepath.Join(logFolder, "Download.log"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	Info = log.New(logFile, "INFO", log.Ldate|log.Ltime|log.Lshortfile)
+	Error = log.New(logFile, "ERROR", log.Ldate|log.Ltime|log.Lshortfile)
+
 	torrentFile, err := parser.ParseFromFile(path)
 	if err != nil {
+		Error.Println("Unable to open torrentfile", err)
 		panic(err)
 	}
-	fmt.Println("TorrentFile parsed")
+	Info.Println("TorrentFile parsed")
 
 	// Generate client status report
 	clientReport := tracker.GetClientStatusReport(torrentFile, uint16(port))
@@ -47,15 +66,15 @@ func DownloadFromFile(path string, port int) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("Contacting tracker[", announceURL, "] for peer list...")
+		Info.Println("Contacting tracker[", announceURL, "] for peer list...")
 		count := 0
-		for count < MAX_TRY {
+		for count < MaxTry {
 			count++
 			announceResp, err = tracker.GetPeers(u, clientReport)
 			if err == nil {
 				break
 			}
-			fmt.Println("Failed(", err, "). Trying again...")
+			Info.Println("Failed(", err, "). Trying again...")
 		}
 		if err == nil {
 			break
@@ -70,14 +89,14 @@ func DownloadFromFile(path string, port int) {
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 	wg.Add(len(announceResp.Peers))
 	for _, peer := range announceResp.Peers {
-		fmt.Println("Spawning peer thread: peer<", peer, ">")
+		Info.Println("Spawning peer thread: peer<", peer, ">")
 		go DownloadFromPeer(peer, clientReport, pieceTracker)
 	}
 
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 
 	wg.Wait()
-	fmt.Println("All peer threads finished!")
+	Info.Println("All peer threads finished!")
 }
 
 // DownloadFromPeer is a function that handshakes with a peer specified by peer object.
@@ -94,14 +113,23 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 		Port: int(peer.Port),
 		Zone: "",
 	}
-	fmt.Println("peer: <", peer, ">: Dialing TCP connection")
-	d := net.Dialer{Timeout: TCP_TIMEOUT * time.Second}
-	conn, err := d.Dial("tcp", service.String())
-	if err != nil {
-		return err
+	Info.Println("peer: <", peer, ">: Dialing TCP connection")
+	d := net.Dialer{Timeout: TCPTimeout * time.Second}
+	var conn net.Conn
+	err = nil
+	count := 0
+	for count < MaxTry {
+		count++
+		conn, err = d.Dial("tcp", service.String())
+		if err != nil {
+			Info.Println("Unable to set up TCP connection: ", count)
+		} else {
+			Info.Println("Successfully connected to Peer")
+			break
+		}
 	}
 
-	fmt.Println("peer: <", peer, ">: Handshaking")
+	Info.Println("peer: <", peer, ">: Handshaking")
 
 	//write the handshake content into the connection.
 	_, err = conn.Write(buffer.Bytes())
@@ -115,45 +143,45 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 	onWholeMessage(peer, conn, msgHandler, pieces, queue, report)
 	// }
 
-	fmt.Println("peer: <", peer, ">: ends!")
+	Info.Println("peer: <", peer, ">: ends!")
 	wg.Done()
 	return err
 }
 
 func msgHandler(peer tracker.Peer, msg []byte, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport) error {
-	// fmt.Println("peer: <", peer, ">: Message:", msg)
+	// Info.Println("peer: <", peer, ">: Message:", msg)
 
 	if (len(msg) == int(uint8(msg[0]))+49) && (bytes.Equal(msg[1:20], []byte("BitTorrent protocol"))) {
-		fmt.Println("peer: <", peer, ">: Handshake successful")
+		Info.Println("peer: <", peer, ">: Handshake successful")
 		message, err := BuildInterested()
 		if err != nil {
-			fmt.Println("peer: <", peer, ">: Error", err.Error())
+			Info.Println("peer: <", peer, ">: Error", err.Error())
 			return err
 		}
 		conn.Write(message.Bytes())
-		// fmt.Println("peer: <", peer, ">: Request(", len(message.Bytes()), "): ", message.Bytes())
+		// Info.Println("peer: <", peer, ">: Request(", len(message.Bytes()), "): ", message.Bytes())
 	} else {
 
 		_, id, payload := ParseMsg(bytes.NewBuffer(msg))
 
 		if id == 0 {
-			// fmt.Println("peer: <", peer, ">: Choke")
+			// Info.Println("peer: <", peer, ">: Choke")
 			ChokeHandler(peer, conn, pieces, report)
 		}
 		if id == 1 {
-			// fmt.Println("peer: <", peer, ">: Unchoke")
+			// Info.Println("peer: <", peer, ">: Unchoke")
 			UnchokeHandler(peer, conn, pieces, queue)
 		}
 		if id == 4 {
-			// fmt.Println("peer: <", peer, ">: Have")
+			// Info.Println("peer: <", peer, ">: Have")
 			HaveHandler(peer, conn, pieces, queue, payload)
 		}
 		if id == 5 {
-			// fmt.Println("peer: <", peer, ">: BitField")
+			// Info.Println("peer: <", peer, ">: BitField")
 			BitFieldHandler(peer, conn, pieces, queue, payload)
 		}
 		if id == 7 {
-			// fmt.Println("peer: <", peer, ">: Piece")
+			// Info.Println("peer: <", peer, ">: Piece")
 			PieceHandler(peer, conn, pieces, queue, report, parser.PieceBlock{
 				Index: payload["index"].(uint32),
 				Begin: payload["begin"].(uint32),
@@ -173,7 +201,7 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 	resp := make([]byte, 1000)
 	msgLen := -1
 	for {
-		err := conn.SetReadDeadline(time.Now().Add(READ_TIMEOUT * time.Second)) // Setting Read deadline from a connection
+		err := conn.SetReadDeadline(time.Now().Add(ReadTimeout * time.Second)) // Setting Read deadline from a connection
 
 		if err != nil {
 			// Unable to set read deadline for connection
@@ -185,11 +213,11 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && netErr.Timeout() && !handshake {
-				fmt.Println("Timeout error")
+				Info.Println("Timeout error")
 
 				RequestPiece(peer, conn, pieces, queue)
 			} else {
-				fmt.Println("Not timeout error!")
+				Info.Println("Not timeout error!")
 				conn.Close()
 				DownloadFromPeer(peer, report, pieces)
 			}
@@ -199,27 +227,27 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
 
 		if handshake {
-			fmt.Println("Parsing handshake")
+			Info.Println("Parsing handshake")
 			length := uint8((buffer.Bytes())[0])
 			msgLen = int(length) + 49
 		} else if msgLen == -1 {
 			length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
 			// length := uint32((buffer.Bytes())[0:4])
 			msgLen = int(length) + 4
-			// fmt.Println("peer: <", peer, ">: Setting msgLen to", msgLen)
+			// Info.Println("peer: <", peer, ">: Setting msgLen to", msgLen)
 		}
 
 		for len(buffer.Bytes()) >= 4 && msgLen != -1 && len(buffer.Bytes()) >= msgLen {
 			messageBytes := make([]byte, msgLen)
 			binary.Read(buffer, binary.BigEndian, messageBytes)
-			// fmt.Println("peer: <", peer, ">: msgLen:", msgLen)
+			// Info.Println("peer: <", peer, ">: msgLen:", msgLen)
 			msgHandler(peer, messageBytes, conn, pieces, queue, report)
 			msgLen = -1
 			handshake = false
 			if len(buffer.Bytes()) > 4 {
 				length := binary.BigEndian.Uint32(buffer.Bytes()[0:4])
 				msgLen = int(length) + 4
-				// fmt.Println("peer: <", peer, ">: Setting msgLen to", msgLen)
+				// Info.Println("peer: <", peer, ">: Setting msgLen to", msgLen)
 			}
 
 		}
@@ -228,7 +256,7 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 
 // ChokeHandler handles choking protocol
 func ChokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, report *tracker.ClientStatusReport) {
-	fmt.Println("peer:<", peer, ">: Choke: Handshaking")
+	Info.Println("peer:<", peer, ">: Choke: Handshaking")
 	if pieces.IsDone() {
 		conn.Close()
 	} else {
@@ -285,7 +313,7 @@ func BitFieldHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracke
 func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport, pieceResp parser.PieceBlock) {
 	pieces.AddReceived(pieceResp)
 
-	fmt.Println("peer: <", peer, ">: Received piece[", pieceResp.Index, "] [", pieceResp.Begin/parser.BLOCK_LEN, "]")
+	Info.Println("peer: <", peer, ">: Received piece[", pieceResp.Index, "] [", pieceResp.Begin/parser.BLOCK_LEN, "]")
 
 	offsetInFile := uint64(pieceResp.Index)*uint64(report.TorrentFile.PieceLength) + uint64(pieceResp.Begin)
 	file := report.TorrentFile.Files[0].FilePointer
@@ -298,7 +326,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		}
 	}
 	report.Data[pieceResp.Index].Blocks[pieceResp.Begin/parser.BLOCK_LEN] = pieceResp
-	fmt.Println("peer: <", peer, ">: Writing block to file ", file.Name())
+	Info.Println("peer: <", peer, ">: Writing block to file ", file.Name())
 	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
 	file.Sync()
 
@@ -322,12 +350,12 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 			same = same && expected[i] == actual[i]
 		}
 		if !same {
-			fmt.Println("peer: <", peer, ">: Expected:\t", report.TorrentFile.Piece[pieceResp.Index*20:(pieceResp.Index+1)*20])
-			fmt.Println("peer: <", peer, ">: Actual:\t", toSHA1(piece))
+			Info.Println("peer: <", peer, ">: Expected:\t", report.TorrentFile.Piece[pieceResp.Index*20:(pieceResp.Index+1)*20])
+			Info.Println("peer: <", peer, ">: Actual:\t", toSHA1(piece))
 			panic("Error downloading! SHA don't match")
 
 		} else {
-			fmt.Println("peer: <", peer, ">: Piece[", pieceResp.Index, "] downloaded SUCCESSFULLY!")
+			Info.Println("peer: <", peer, ">: Piece[", pieceResp.Index, "] downloaded SUCCESSFULLY!")
 		}
 	}
 
@@ -335,7 +363,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		for _, file := range report.TorrentFile.Files {
 			defer file.FilePointer.Close()
 		}
-		fmt.Println("peer: <", peer, ">: Done")
+		Info.Println("peer: <", peer, ">: Done")
 		conn.Close()
 	} else {
 		RequestPiece(peer, conn, pieces, queue)
@@ -366,7 +394,7 @@ func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 
 		pieceTrackerLock.Lock()
 		if pieces.Needed(pieceBlock) {
-			fmt.Println("peer: <", peer, ">: Requesting piece[", pieceBlock.Index, "][", pieceBlock.Begin/parser.BLOCK_LEN, "]")
+			Info.Println("peer: <", peer, ">: Requesting piece[", pieceBlock.Index, "][", pieceBlock.Begin/parser.BLOCK_LEN, "]")
 			message, err := BuildRequest(pieceBlock)
 
 			if err != nil {
@@ -376,7 +404,7 @@ func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 			_, err = conn.Write(message.Bytes())
 
 			if err != nil {
-				fmt.Println(err.Error())
+				Info.Println(err.Error())
 				pieceTrackerLock.Unlock()
 				break
 			}
