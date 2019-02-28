@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/concurrency-8/args"
 	bencode "github.com/zeebo/bencode"
 )
 
@@ -41,9 +42,16 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	// single file context
 	os.Mkdir(info.Name, os.ModePerm)
 	if info.Length > 0 {
-		filePointer, err := os.Create(info.Name + "/" + info.Name)
+		var filePointer *os.File
+		if !args.ARGS.Resume {
+			filePointer, err = os.Create(info.Name + "/" + info.Name)
+		} else {
+			filePointer, err = os.OpenFile(info.Name+"/"+info.Name, os.O_APPEND|os.O_WRONLY, 0600)
+		}
+
 		if err != nil {
-			panic("Unable to create files")
+			fmt.Println(err)
+			panic(err)
 		}
 		files = append(files, &File{
 			Path:        []string{info.Name},
@@ -60,7 +68,12 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		}
 
 		for _, f := range metadataFiles {
-			filePointer, err := os.Create(info.Name + "/" + f.Path[0])
+			var filePointer *os.File
+			if !args.ARGS.Resume {
+				filePointer, err = os.Create(info.Name + "/" + f.Path[0])
+			} else {
+				filePointer, err = os.OpenFile(info.Name+"/"+f.Path[0], os.O_APPEND|os.O_WRONLY, 0600)
+			}
 			if err != nil {
 				fmt.Println(err)
 				panic("Unable to create files ")
@@ -89,6 +102,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 
 	//return the object containing the metadata.
 	return TorrentFile{
+		Name:        info.Name,
 		Announce:    announces,
 		Comment:     metadata.Comment,
 		CreatedBy:   metadata.CreatedBy,
