@@ -13,6 +13,7 @@ type PieceTracker struct {
 	Torrent   parser.TorrentFile
 	Requested [][]bool
 	Received  [][]bool
+	Trials    []int
 	lock      sync.Mutex
 }
 
@@ -21,11 +22,13 @@ func NewPieceTracker(torrent parser.TorrentFile) (tracker *PieceTracker) {
 	tracker = new(PieceTracker)
 	tracker.Torrent = torrent
 	numPieces := uint32(len(torrent.Piece) / 20)
+	fmt.Println("numPieces: ", numPieces)
 	for i := uint32(0); i < numPieces; i++ {
 		blocksPerPiece, _ := parser.BlocksPerPiece(torrent, i)
 		tracker.Requested = append(tracker.Requested, make([]bool, blocksPerPiece))
 		tracker.Received = append(tracker.Received, make([]bool, blocksPerPiece))
 	}
+	tracker.Trials = make([]int, numPieces)
 	return
 }
 
@@ -122,5 +125,5 @@ func (tracker *PieceTracker) Reset(index uint32) {
 		tracker.Requested[index][i] = false
 		tracker.Received[index][i] = false
 	}
-	tracker.lock.Lock()
+	tracker.lock.Unlock()
 }
