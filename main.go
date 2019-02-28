@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	torrent.DownloadFromFile("/home/shraiysh/Downloads/CBA8DE1D68607F71B1DBBDAB6319C9B3257A8E83.torrent", 6881)
+	torrent.DownloadFromFile("/home/shraiysh/go/src/github.com/concurrency-8/test_torrents/52 MB.torrent", 6881)
 	// torrentfile, _ := parser.ParseFromFile("./test_torrents/ubuntu.iso.torrent")
 	// fmt.Println(torrentfile.PieceLength)
 	// u, err := url.Parse(torrentfile.Announce[0])
