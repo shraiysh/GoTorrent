@@ -39,10 +39,16 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	var Length uint64
 	files := make([]*File, 0)
 	// single file context
+	os.Mkdir(info.Name, os.ModePerm)
 	if info.Length > 0 {
+		filePointer, err := os.Create(info.Name + "/" + info.Name)
+		if err != nil {
+			panic("Unable to create files")
+		}
 		files = append(files, &File{
-			Path:   []string{info.Name},
-			Length: info.Length,
+			Path:        []string{info.Name},
+			Length:      info.Length,
+			FilePointer: filePointer,
 		})
 		Length = info.Length
 	} else {
@@ -54,9 +60,15 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		}
 
 		for _, f := range metadataFiles {
+			filePointer, err := os.Create(info.Name + "/" + f.Path[0])
+			if err != nil {
+				fmt.Println(err)
+				panic("Unable to create files ")
+			}
 			files = append(files, &File{
-				Path:   append([]string{info.Name}, f.Path...),
-				Length: f.Length,
+				Path:        []string{info.Name + "/" + f.Path[0]},
+				Length:      f.Length,
+				FilePointer: filePointer,
 			})
 			Length += f.Length
 		}

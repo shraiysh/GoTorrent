@@ -9,6 +9,7 @@ import (
 	"github.com/concurrency-8/parser"
 	bencode "github.com/zeebo/bencode"
 	"io/ioutil"
+	"math"
 	"net"
 	"net/http"
 	"net/url"
@@ -352,6 +353,11 @@ func GetClientStatusReport(torrent parser.TorrentFile, port uint16) (report *Cli
 	report.Left = torrent.Length
 	report.Port = port
 	report.Event = ""
+	report.Data = make([]parser.Piece, len(torrent.Piece)/20)
+
+	for i := range report.Data {
+		report.Data[i].Blocks = make([]parser.PieceBlock, int(math.Ceil(float64(torrent.PieceLength)/float64(parser.BLOCK_LEN))))
+	}
 
 	return
 }
