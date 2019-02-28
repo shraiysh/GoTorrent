@@ -18,3 +18,4 @@ goreportcard.db
 *.swp
 
 vendor/
+main
