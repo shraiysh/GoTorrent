@@ -8,4 +8,4 @@ type Args struct {
 	Verbose bool
 }
 
-var ARGS = &Args { make([]string, 0) ,"", true , true, true}
+var ARGS = &Args { make([]string, 0) ,"", true , false, true}
