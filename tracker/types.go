@@ -75,6 +75,7 @@ type ClientStatusReport struct {
 	Uploaded    uint64
 	Downloaded  uint64
 	Left        uint64
+	Data        []parser.Piece // This is for seeding
 }
 
 // GetRandomClientReport gives a test ClientStatusReport object pointer.
