@@ -1,0 +1,521 @@
+INFO 2019/02/28 23:15:54 download.go:57: TorrentFile parsed
+INFO 2019/02/28 23:15:54 download.go:69: Contacting tracker[ udp://tracker.leechers-paradise.org:6969 ] for peer list...
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {86464460 55011} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {711921963 6881} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {2927009132 43382} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {2015183729 20604} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1841928202 11942} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1781732357 59031} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1446058711 57877} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1309947516 26286} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1309516963 34336} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {1232341757 26022} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {798038109 11388} >
+INFO 2019/02/28 23:15:55 download.go:92: Spawning peer thread: peer< {623566701 33107} >
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {623566701 33107} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {2015183729 20604} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {86464460 55011} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1841928202 11942} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {2927009132 43382} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1446058711 57877} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1781732357 59031} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1232341757 26022} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1309947516 26286} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {798038109 11388} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {1309516963 34336} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:139: peer: < {711921963 6881} >: Dialing TCP connection
+INFO 2019/02/28 23:15:55 download.go:147: peer: < {1841928202 11942} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:15:55 download.go:155: peer: < {1841928202 11942} >: Could not connect to peer!
+INFO 2019/02/28 23:15:55 download.go:123: peer: < {1841928202 11942} >: ends!
+INFO 2019/02/28 23:15:55 download.go:147: peer: < {86464460 55011} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:15:55 download.go:155: peer: < {86464460 55011} >: Could not connect to peer!
+INFO 2019/02/28 23:15:55 download.go:123: peer: < {86464460 55011} >: ends!
+INFO 2019/02/28 23:15:55 download.go:147: peer: < {1309947516 26286} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:15:55 download.go:155: peer: < {1309947516 26286} >: Could not connect to peer!
+INFO 2019/02/28 23:15:55 download.go:123: peer: < {1309947516 26286} >: ends!
+INFO 2019/02/28 23:15:55 download.go:149: peer: < {1446058711 57877} >: Successfully connected to Peer
+INFO 2019/02/28 23:15:55 download.go:158: peer: < {1446058711 57877} >: Handshaking
+INFO 2019/02/28 23:15:56 download.go:149: peer: < {1232341757 26022} >: Successfully connected to Peer
+INFO 2019/02/28 23:15:56 download.go:158: peer: < {1232341757 26022} >: Handshaking
+ERROR 2019/02/28 23:15:56 download.go:245: peer: < {1446058711 57877} >: Peer does not respond. Stop contacting this peer.
+INFO 2019/02/28 23:15:56 download.go:123: peer: < {1446058711 57877} >: ends!
+INFO 2019/02/28 23:15:56 download.go:149: peer: < {1309516963 34336} >: Successfully connected to Peer
+INFO 2019/02/28 23:15:56 download.go:158: peer: < {1309516963 34336} >: Handshaking
+INFO 2019/02/28 23:15:56 download.go:253: peer: < {1232341757 26022} >: First message from peer afte connection starts - Must be handshake
+INFO 2019/02/28 23:15:56 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 68
+INFO 2019/02/28 23:15:56 download.go:173: peer: < {1232341757 26022} >: Handshake successful
+INFO 2019/02/28 23:15:56 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:56 download.go:276: peer: < {1232341757 26022} >: New message was in previous one - msgLen = 6
+INFO 2019/02/28 23:15:56 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 6
+INFO 2019/02/28 23:15:56 download.go:198: peer: < {1232341757 26022} >: BitField
+INFO 2019/02/28 23:15:56 download.go:352: peer: < {1232341757 26022} >: BitFieldHandler: Queue was empty. Requesting pieces
+ERROR 2019/02/28 23:15:56 download.go:439: peer: < {1232341757 26022} >: Queue is choked
+INFO 2019/02/28 23:15:56 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:56 download.go:276: peer: < {1232341757 26022} >: New message was in previous one - msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:194: peer: < {1232341757 26022} >: Have
+INFO 2019/02/28 23:15:57 download.go:333: peer: < {1232341757 26022} >: HaveHandler: Queue was empty. Requesting pieces.
+ERROR 2019/02/28 23:15:57 download.go:439: peer: < {1232341757 26022} >: Queue is choked
+INFO 2019/02/28 23:15:57 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:57 download.go:276: peer: < {1232341757 26022} >: New message was in previous one - msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:194: peer: < {1232341757 26022} >: Have
+INFO 2019/02/28 23:15:57 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:57 download.go:276: peer: < {1232341757 26022} >: New message was in previous one - msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 9
+INFO 2019/02/28 23:15:57 download.go:194: peer: < {1232341757 26022} >: Have
+INFO 2019/02/28 23:15:57 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:57 download.go:253: peer: < {1309516963 34336} >: First message from peer afte connection starts - Must be handshake
+INFO 2019/02/28 23:15:57 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 68
+INFO 2019/02/28 23:15:57 download.go:173: peer: < {1309516963 34336} >: Handshake successful
+INFO 2019/02/28 23:15:57 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:57 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 5
+INFO 2019/02/28 23:15:57 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 5
+INFO 2019/02/28 23:15:57 download.go:190: peer: < {1232341757 26022} >: Unchoke
+INFO 2019/02/28 23:15:57 download.go:305: peer:< {1232341757 26022} > Unchoke: queue was choked, but queue was non-empty
+INFO 2019/02/28 23:15:57 download.go:307: peer:< {1232341757 26022} >: Requesting next piece
+INFO 2019/02/28 23:15:57 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 0 ]
+INFO 2019/02/28 23:15:57 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:15:58 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:15:59 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 6
+INFO 2019/02/28 23:15:59 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 6
+INFO 2019/02/28 23:15:59 download.go:198: peer: < {1309516963 34336} >: BitField
+INFO 2019/02/28 23:15:59 download.go:352: peer: < {1309516963 34336} >: BitFieldHandler: Queue was empty. Requesting pieces
+ERROR 2019/02/28 23:15:59 download.go:439: peer: < {1309516963 34336} >: Queue is choked
+INFO 2019/02/28 23:15:59 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:03 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 5
+INFO 2019/02/28 23:16:03 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 5
+INFO 2019/02/28 23:16:03 download.go:190: peer: < {1309516963 34336} >: Unchoke
+INFO 2019/02/28 23:16:03 download.go:305: peer:< {1309516963 34336} > Unchoke: queue was choked, but queue was non-empty
+INFO 2019/02/28 23:16:03 download.go:307: peer:< {1309516963 34336} >: Requesting next piece
+INFO 2019/02/28 23:16:03 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 0 ]
+INFO 2019/02/28 23:16:03 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:04 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:06 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:06 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:06 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 0 ]
+INFO 2019/02/28 23:16:06 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:06 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:06 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 1 ]
+INFO 2019/02/28 23:16:06 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:07 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {623566701 33107} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {623566701 33107} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {623566701 33107} >: ends!
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {2015183729 20604} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {2015183729 20604} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {2015183729 20604} >: ends!
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {2927009132 43382} >: Unable to set up TCP connection:  1
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {1781732357 59031} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {2927009132 43382} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {2927009132 43382} >: ends!
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {1781732357 59031} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {1781732357 59031} >: ends!
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {798038109 11388} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {798038109 11388} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {798038109 11388} >: ends!
+INFO 2019/02/28 23:16:10 download.go:147: peer: < {711921963 6881} >: Unable to set up TCP connection:  1
+ERROR 2019/02/28 23:16:10 download.go:155: peer: < {711921963 6881} >: Could not connect to peer!
+INFO 2019/02/28 23:16:10 download.go:123: peer: < {711921963 6881} >: ends!
+INFO 2019/02/28 23:16:11 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:11 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:11 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 1 ]
+INFO 2019/02/28 23:16:11 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:11 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:11 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 2 ]
+INFO 2019/02/28 23:16:11 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:11 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:11 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:11 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 0 ]
+INFO 2019/02/28 23:16:11 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:11 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:11 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 1 ]
+INFO 2019/02/28 23:16:11 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:11 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:12 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:13 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:13 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:13 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 2 ]
+INFO 2019/02/28 23:16:13 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:13 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:13 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 3 ]
+INFO 2019/02/28 23:16:13 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:14 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:14 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:14 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:14 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 1 ]
+INFO 2019/02/28 23:16:14 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:14 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:14 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 2 ]
+INFO 2019/02/28 23:16:14 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:15 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:15 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:15 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 3 ]
+INFO 2019/02/28 23:16:15 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:15 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:15 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 4 ]
+INFO 2019/02/28 23:16:15 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:15 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:15 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:20 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:20 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:20 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 4 ]
+INFO 2019/02/28 23:16:20 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:20 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:20 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 5 ]
+INFO 2019/02/28 23:16:20 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:21 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:24 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:24 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:24 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 5 ]
+INFO 2019/02/28 23:16:24 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:24 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:24 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 6 ]
+INFO 2019/02/28 23:16:24 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:24 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:26 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:26 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:26 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 2 ]
+INFO 2019/02/28 23:16:26 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:26 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:26 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 3 ]
+INFO 2019/02/28 23:16:26 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:26 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:26 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:26 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 6 ]
+INFO 2019/02/28 23:16:26 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:26 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:26 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 7 ]
+INFO 2019/02/28 23:16:26 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:26 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:27 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:34 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:34 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:34 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 7 ]
+INFO 2019/02/28 23:16:34 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:34 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:34 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 8 ]
+INFO 2019/02/28 23:16:34 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:35 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:35 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:35 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:35 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 3 ]
+INFO 2019/02/28 23:16:35 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:35 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:35 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 4 ]
+INFO 2019/02/28 23:16:35 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:36 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:38 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:38 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:38 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 8 ]
+INFO 2019/02/28 23:16:38 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:38 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:38 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 9 ]
+INFO 2019/02/28 23:16:38 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:38 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:38 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:38 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 4 ]
+INFO 2019/02/28 23:16:38 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:38 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:38 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 5 ]
+INFO 2019/02/28 23:16:38 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:38 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:39 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:40 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:40 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:40 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 5 ]
+INFO 2019/02/28 23:16:40 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:40 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:40 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 6 ]
+INFO 2019/02/28 23:16:40 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:40 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:41 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:41 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:41 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 9 ]
+INFO 2019/02/28 23:16:41 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:41 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:41 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 10 ]
+INFO 2019/02/28 23:16:41 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:42 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:43 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:43 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:43 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 6 ]
+INFO 2019/02/28 23:16:43 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:43 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:43 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 7 ]
+INFO 2019/02/28 23:16:43 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:44 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:44 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:44 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 10 ]
+INFO 2019/02/28 23:16:44 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:44 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:44 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 11 ]
+INFO 2019/02/28 23:16:44 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:44 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:45 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:45 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:45 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:45 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 11 ]
+INFO 2019/02/28 23:16:45 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:45 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:45 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 12 ]
+INFO 2019/02/28 23:16:45 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:46 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:50 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:50 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:50 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 12 ]
+INFO 2019/02/28 23:16:50 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:50 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:50 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 13 ]
+INFO 2019/02/28 23:16:50 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:50 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:50 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:50 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 7 ]
+INFO 2019/02/28 23:16:50 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:50 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:50 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 2 ][ 8 ]
+INFO 2019/02/28 23:16:50 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:50 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:51 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 6778
+INFO 2019/02/28 23:16:52 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 6778
+INFO 2019/02/28 23:16:52 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:52 download.go:363: peer: < {1309516963 34336} >: Received piece[ 2 ] [ 8 ]
+INFO 2019/02/28 23:16:52 download.go:401: peer: < {1309516963 34336} >: Piece[ 2 ] downloaded SUCCESSFULLY!
+INFO 2019/02/28 23:16:52 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:52 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:52 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 0 ]
+INFO 2019/02/28 23:16:52 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:53 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:54 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:54 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:16:54 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 13 ]
+INFO 2019/02/28 23:16:54 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:54 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:16:54 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 14 ]
+INFO 2019/02/28 23:16:54 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:54 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:54 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:54 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 0 ]
+INFO 2019/02/28 23:16:54 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:54 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:54 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 1 ]
+INFO 2019/02/28 23:16:54 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:54 download.go:260: peer: < {1232341757 26022} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:55 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:55 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:55 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:55 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 1 ]
+INFO 2019/02/28 23:16:55 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:55 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:55 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 2 ]
+INFO 2019/02/28 23:16:55 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:56 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:16:57 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:16:57 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:16:57 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 2 ]
+INFO 2019/02/28 23:16:57 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:16:57 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:16:57 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 3 ]
+INFO 2019/02/28 23:16:57 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:16:58 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:03 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:03 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:03 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 3 ]
+INFO 2019/02/28 23:17:03 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:03 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:03 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 4 ]
+INFO 2019/02/28 23:17:03 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:04 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:05 download.go:265: peer: < {1232341757 26022} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:05 download.go:202: peer: < {1232341757 26022} >: Piece
+INFO 2019/02/28 23:17:05 download.go:363: peer: < {1232341757 26022} >: Received piece[ 0 ] [ 14 ]
+INFO 2019/02/28 23:17:05 download.go:416: peer: < {1232341757 26022} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:05 download.go:429: peer< {1232341757 26022}  >: Called from piecehandler
+INFO 2019/02/28 23:17:05 download.go:460: peer: < {1232341757 26022} >: Requesting piece[ 0 ][ 15 ]
+INFO 2019/02/28 23:17:05 download.go:270: peer: < {1232341757 26022} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:06 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:06 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:06 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 4 ]
+INFO 2019/02/28 23:17:06 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:06 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:06 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 5 ]
+INFO 2019/02/28 23:17:06 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+ERROR 2019/02/28 23:17:07 download.go:245: peer: < {1232341757 26022} >: Peer does not respond. Stop contacting this peer.
+INFO 2019/02/28 23:17:07 download.go:123: peer: < {1232341757 26022} >: ends!
+INFO 2019/02/28 23:17:07 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:11 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:11 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:11 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 5 ]
+INFO 2019/02/28 23:17:11 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:11 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:11 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 6 ]
+INFO 2019/02/28 23:17:11 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:12 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:14 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:14 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:14 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 6 ]
+INFO 2019/02/28 23:17:14 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:14 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:14 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 7 ]
+INFO 2019/02/28 23:17:14 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:15 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:16 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:16 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:16 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 7 ]
+INFO 2019/02/28 23:17:16 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:16 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:16 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 8 ]
+INFO 2019/02/28 23:17:16 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:17 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:18 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:18 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:18 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 8 ]
+INFO 2019/02/28 23:17:18 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:18 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:18 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 9 ]
+INFO 2019/02/28 23:17:18 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:18 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:19 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:19 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:19 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 9 ]
+INFO 2019/02/28 23:17:19 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:19 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:19 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 10 ]
+INFO 2019/02/28 23:17:19 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:20 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:20 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:20 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:20 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 10 ]
+INFO 2019/02/28 23:17:20 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:20 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:20 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 11 ]
+INFO 2019/02/28 23:17:20 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:21 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:22 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:22 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:22 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 11 ]
+INFO 2019/02/28 23:17:22 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:22 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:22 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 12 ]
+INFO 2019/02/28 23:17:22 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:22 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:23 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:23 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:23 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 12 ]
+INFO 2019/02/28 23:17:23 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:23 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:23 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 13 ]
+INFO 2019/02/28 23:17:23 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:24 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:25 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:25 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:25 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 13 ]
+INFO 2019/02/28 23:17:25 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:25 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:25 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 14 ]
+INFO 2019/02/28 23:17:25 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:26 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:29 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:29 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:29 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 14 ]
+INFO 2019/02/28 23:17:29 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:29 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:29 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 15 ]
+INFO 2019/02/28 23:17:29 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:32 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:32 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:32 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:32 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 15 ]
+INFO 2019/02/28 23:17:32 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:32 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:32 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 16 ]
+INFO 2019/02/28 23:17:32 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:33 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:34 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:34 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:34 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 16 ]
+INFO 2019/02/28 23:17:34 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:34 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:34 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 17 ]
+INFO 2019/02/28 23:17:34 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:34 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:35 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:35 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:35 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 17 ]
+INFO 2019/02/28 23:17:35 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:35 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:35 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 18 ]
+INFO 2019/02/28 23:17:35 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:35 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:36 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:36 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:36 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 18 ]
+INFO 2019/02/28 23:17:36 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:36 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:36 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 19 ]
+INFO 2019/02/28 23:17:36 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:37 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:37 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:37 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:37 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 19 ]
+INFO 2019/02/28 23:17:37 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:37 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:37 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 20 ]
+INFO 2019/02/28 23:17:37 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:38 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:45 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:45 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:45 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 20 ]
+INFO 2019/02/28 23:17:45 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:45 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:45 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 21 ]
+INFO 2019/02/28 23:17:45 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:46 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:47 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:47 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:47 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 21 ]
+INFO 2019/02/28 23:17:47 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:47 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:47 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 22 ]
+INFO 2019/02/28 23:17:47 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:48 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:51 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:51 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:51 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 22 ]
+INFO 2019/02/28 23:17:51 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:51 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:51 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 23 ]
+INFO 2019/02/28 23:17:51 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:51 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:52 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:52 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:52 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 23 ]
+INFO 2019/02/28 23:17:52 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:52 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:52 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 24 ]
+INFO 2019/02/28 23:17:52 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:17:53 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 16397
+INFO 2019/02/28 23:17:59 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:17:59 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:17:59 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 24 ]
+INFO 2019/02/28 23:17:59 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:17:59 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:17:59 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 25 ]
+INFO 2019/02/28 23:17:59 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:18:00 download.go:260: peer: < {1309516963 34336} >: New message reception started, len = 4
+INFO 2019/02/28 23:18:00 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 4
+INFO 2019/02/28 23:18:00 download.go:186: peer: < {1309516963 34336} >: Choke
+INFO 2019/02/28 23:18:00 download.go:286: peer:< {1309516963 34336} >: Choke
+INFO 2019/02/28 23:18:00 download.go:291: peer: < {1309516963 34336} >: Handshaking again
+INFO 2019/02/28 23:18:00 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+INFO 2019/02/28 23:18:00 download.go:276: peer: < {1309516963 34336} >: New message was in previous one - msgLen = 16397
+INFO 2019/02/28 23:18:00 download.go:265: peer: < {1309516963 34336} >: Message received, msgLen = 16397
+INFO 2019/02/28 23:18:00 download.go:202: peer: < {1309516963 34336} >: Piece
+INFO 2019/02/28 23:18:00 download.go:363: peer: < {1309516963 34336} >: Received piece[ 1 ] [ 25 ]
+INFO 2019/02/28 23:18:00 download.go:416: peer: < {1309516963 34336} >: Writing block to file  Comics Will Break Your Heart by Faith Erin Hicks EPUB/Comics Will Break Your Heart by Faith Erin Hicks.epub
+INFO 2019/02/28 23:18:00 download.go:429: peer< {1309516963 34336}  >: Called from piecehandler
+INFO 2019/02/28 23:18:00 download.go:460: peer: < {1309516963 34336} >: Requesting piece[ 1 ][ 26 ]
+INFO 2019/02/28 23:18:00 download.go:270: peer: < {1309516963 34336} >: Message handled - setting msgLen = -1
+ERROR 2019/02/28 23:18:01 download.go:245: peer: < {1309516963 34336} >: Peer does not respond. Stop contacting this peer.
+INFO 2019/02/28 23:18:01 download.go:123: peer: < {1309516963 34336} >: ends!
+INFO 2019/02/28 23:18:01 download.go:100: All peer threads finished!

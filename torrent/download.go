@@ -123,6 +123,9 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 			break
 		}
 		exitStatus, err = onWholeMessage(peer, conn, msgHandler, pieces, queue, report)
+		if err != nil {
+			break
+		}
 	}
 
 	Info.Println("peer: <", peer, ">: ends!")
