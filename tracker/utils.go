@@ -363,11 +363,12 @@ func GetClientStatusReport(torrent parser.TorrentFile, port uint16) (report *Cli
 }
 func GetRandomTorrent() (parser.TorrentFile) {
 	root = "././test_torrents"
+	//Read the directory
     files, err := ioutil.ReadDir(root)
     if err != nil {
         log.Fatal(err)
     }
-
+    //store in the list
     for _, f := range files {
         torrents = append(torrents, f.Name())
     }
