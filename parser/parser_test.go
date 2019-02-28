@@ -49,7 +49,7 @@ func TestPieceLen(t *testing.T) {
 	torrent := TorrentFile{}
 	torrent.Length = uint64(rand.Intn(100000000))
 	torrent.PieceLength = 65536
-	lastPieceIndex := uint32(math.Ceil(float64(torrent.Length/uint64(torrent.PieceLength)))) - 1
+	lastPieceIndex := uint32(len(torrent.Piece)/20 - 1)
 	lastPieceLen := uint32(torrent.Length % uint64(torrent.PieceLength))
 
 	if lastPieceLen == 0 {
