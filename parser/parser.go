@@ -7,10 +7,10 @@ import (
 	"math"
 	"os"
 	"time"
+	"github.com/concurrency-8/args"
 	bencode "github.com/zeebo/bencode"
 )
 
-var RESUME = true
 // BLOCK_LEN is length  of block
 var BLOCK_LEN = uint32(math.Pow(2, 14))
 
@@ -42,14 +42,14 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	os.Mkdir(info.Name, os.ModePerm)
 	if info.Length > 0 {
 		var filePointer *os.File
-		if !RESUME {
+		if !args.ARGS.Resume {
 			filePointer, err = os.Create(info.Name + "/" + info.Name)
 		}else{
 			filePointer, err =  os.OpenFile(info.Name + "/" + info.Name, os.O_APPEND|os.O_WRONLY, 0600)
 		}
 
 		if err != nil {
-			panic("Unable to create files")
+			fmt.Println(err)
 		}
 		files = append(files, &File{
 			Path:        []string{info.Name},
@@ -67,7 +67,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 
 		for _, f := range metadataFiles {
 			var filePointer *os.File
-			if !RESUME {
+			if !args.ARGS.Resume {
 				filePointer, err = os.Create(info.Name + "/" + f.Path[0])
 			}else{
 				filePointer, err =  os.OpenFile(info.Name + "/" + f.Path[0], os.O_APPEND|os.O_WRONLY, 0600)

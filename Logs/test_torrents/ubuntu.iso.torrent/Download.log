@@ -1,0 +1,679 @@
+INFO 2019/02/28 21:52:44 download.go:60: TorrentFile parsed
+INFO 2019/02/28 21:52:44 download.go:72: Contacting tracker[ http://torrent.ubuntu.com:6969/announce ] for peer list...
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {781357494 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3281711771 6790} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2991025571 25141} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2609548846 51107} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1552732722 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3113572930 51538} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1179595967 9000} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2430185611 50790} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {781357494 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1481016721 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {779489958 21601} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1539137301 6936} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {908511577 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {622951059 16881} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3166953483 6881} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2892120914 29770} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2050646049 60666} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1179595967 9000} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2050646049 60666} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2430185611 50790} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2991025571 25141} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2609548846 51107} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3281711771 6790} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1552732722 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1481016721 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3113572930 51538} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {779489958 21601} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1199789172 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3343174123 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {96185553 56233} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1603945130 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1487448292 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {908511577 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1487448292 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {622951059 16881} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1199789172 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3166953483 6881} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3343174123 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2892120914 29770} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {96185553 56233} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1314655896 53541} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1298824713 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2892120914 38900} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1539137301 6936} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2960232958 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1603945130 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2960232958 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2892120914 38900} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {92778613 5881} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {628665172 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1314655896 53541} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {628665172 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1298824713 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2906158251 49935} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {92778613 5881} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2906158251 49935} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1045142726 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {856665374 45000} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {633038355 57342} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1758320946 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1294315712 22414} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3105216846 55507} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3572327674 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1045142726 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1758320946 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {387773767 6881} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1610252163 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1545808373 48364} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2151963627 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1294315712 22414} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1581331275 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {633038097 54321} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3096726748 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3311752029 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1839829516 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1222874440 20585} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {856665374 45000} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {792054941 35907} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1488846105 51413} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {2071354244 64162} >
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {1475398391 51413} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3105216846 55507} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1475398391 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {792054941 35907} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1488846105 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1581331275 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3572327674 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2071354244 64162} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {387773767 6881} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {633038097 54321} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1610252163 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3096726748 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1545808373 48364} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3311752029 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {2151963627 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1839829516 51413} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {633038355 57342} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {1222874440 20585} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:98: Spawning peer thread: peer< {3281708556 40982} >
+INFO 2019/02/28 21:52:45 download.go:143: peer: < {3281708556 40982} >: Dialing TCP connection
+INFO 2019/02/28 21:52:45 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:45 download.go:162: peer: < {3113572930 51538} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1481016721 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {628665172 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {622951059 16881} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2991025571 25141} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1552732722 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {96185553 56233} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2960232958 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {779489958 21601} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {792054941 35907} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {781357494 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3572327674 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1314655896 53541} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3105216846 55507} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1545808373 48364} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1539137301 6936} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1475398391 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {908511577 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1298824713 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1294315712 22414} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2151963627 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1045142726 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {856665374 45000} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {92778613 5881} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3166953483 6881} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {633038355 57342} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1610252163 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3281708556 40982} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1603945130 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {633038097 54321} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2430185611 50790} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2609548846 51107} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2906158251 49935} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1199789172 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2050646049 60666} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1581331275 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3343174123 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1179595967 9000} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2892120914 38900} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1222874440 20585} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3096726748 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {387773767 6881} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1487448292 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {2892120914 29770} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1488846105 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {3311752029 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1758320946 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {3113572930 51538} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:46 download.go:162: peer: < {1839829516 51413} >: Handshaking
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {2991025571 25141} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {96185553 56233} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {3105216846 55507} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {779489958 21601} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {1545808373 48364} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {1539137301 6936} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {1294315712 22414} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {1481016721 51413} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {3572327674 51413} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {781357494 51413} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {92778613 5881} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {856665374 45000} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {1475398391 51413} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:46 download.go:177: peer: < {3166953483 6881} >: Handshake successful
+INFO 2019/02/28 21:52:46 download.go:202: peer: < {3166953483 6881} >: BitField
+INFO 2019/02/28 21:52:47 download.go:127: peer: < {2906158251 49935} >: ends!
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {633038097 54321} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1298824713 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {3281708556 40982} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {3166953483 6881} >: Have
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1552732722 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {3113572930 51538} >: BitField
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {908511577 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1314655896 53541} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {2609548846 51107} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {792054941 35907} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1603945130 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {628665172 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1222874440 20585} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1199789172 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1045142726 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {2960232958 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {3105216846 55507} >: BitField
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {2991025571 25141} >: BitField
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {2991025571 25141} >: Have
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {2151963627 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {779489958 21601} >: BitField
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {779489958 21601} >: Have
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {1545808373 48364} >: BitField
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {1481016721 51413} >: BitField
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {1581331275 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:202: peer: < {1294315712 22414} >: BitField
+INFO 2019/02/28 21:52:47 download.go:194: peer: < {1539137301 6936} >: Unchoke
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1539137301 6936} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:198: peer: < {1294315712 22414} >: Have
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {2892120914 29770} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {3096726748 51413} >: Handshake successful
+INFO 2019/02/28 21:52:47 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:47 download.go:177: peer: < {2892120914 38900} >: Handshake successful
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1298824713 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {633038097 54321} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {3281708556 40982} >: BitField
+INFO 2019/02/28 21:52:48 download.go:194: peer: < {3166953483 6881} >: Unchoke
+INFO 2019/02/28 21:52:48 download.go:449: peer: < {3166953483 6881} >: Requesting piece[ 7 ][ 0 ]
+INFO 2019/02/28 21:52:48 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:48 download.go:177: peer: < {1839829516 51413} >: Handshake successful
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1552732722 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {792054941 35907} >: BitField
+INFO 2019/02/28 21:52:48 download.go:194: peer: < {792054941 35907} >: Unchoke
+INFO 2019/02/28 21:52:48 download.go:449: peer: < {792054941 35907} >: Requesting piece[ 7 ][ 1 ]
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {628665172 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1314655896 53541} >: BitField
+INFO 2019/02/28 21:52:48 download.go:194: peer: < {2991025571 25141} >: Unchoke
+INFO 2019/02/28 21:52:48 download.go:449: peer: < {2991025571 25141} >: Requesting piece[ 7 ][ 2 ]
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {908511577 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {2609548846 51107} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1603945130 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1222874440 20585} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {2151963627 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:194: peer: < {3105216846 55507} >: Unchoke
+INFO 2019/02/28 21:52:48 download.go:449: peer: < {3105216846 55507} >: Requesting piece[ 7 ][ 3 ]
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1045142726 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1199789172 51413} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {96185553 56233} >: BitField
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:198: peer: < {96185553 56233} >: Have
+INFO 2019/02/28 21:52:48 download.go:194: peer: < {96185553 56233} >: Unchoke
+INFO 2019/02/28 21:52:48 download.go:449: peer: < {96185553 56233} >: Requesting piece[ 7 ][ 4 ]
+INFO 2019/02/28 21:52:48 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:48 download.go:177: peer: < {2430185611 50790} >: Handshake successful
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {2430185611 50790} >: BitField
+INFO 2019/02/28 21:52:48 download.go:202: peer: < {1475398391 51413} >: BitField
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {3113572930 51538} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {3113572930 51538} >: Requesting piece[ 7 ][ 5 ]
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {633038097 54321} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {633038097 54321} >: Requesting piece[ 7 ][ 6 ]
+INFO 2019/02/28 21:52:49 download.go:202: peer: < {2892120914 38900} >: BitField
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {628665172 51413} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {628665172 51413} >: Requesting piece[ 7 ][ 7 ]
+INFO 2019/02/28 21:52:49 download.go:202: peer: < {781357494 51413} >: BitField
+INFO 2019/02/28 21:52:49 download.go:202: peer: < {1839829516 51413} >: BitField
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {1222874440 20585} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {1222874440 20585} >: Requesting piece[ 7 ][ 8 ]
+INFO 2019/02/28 21:52:49 download.go:153: Successfully connected to Peer
+INFO 2019/02/28 21:52:49 download.go:162: peer: < {2071354244 64162} >: Handshaking
+INFO 2019/02/28 21:52:49 download.go:202: peer: < {856665374 45000} >: BitField
+INFO 2019/02/28 21:52:49 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:49 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {2430185611 50790} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {2430185611 50790} >: Requesting piece[ 7 ][ 9 ]
+INFO 2019/02/28 21:52:49 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:49 download.go:177: peer: < {633038355 57342} >: Handshake successful
+INFO 2019/02/28 21:52:49 download.go:177: peer: < {1487448292 51413} >: Handshake successful
+INFO 2019/02/28 21:52:49 download.go:177: peer: < {3343174123 51413} >: Handshake successful
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {1294315712 22414} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {1294315712 22414} >: Requesting piece[ 7 ][ 10 ]
+INFO 2019/02/28 21:52:49 download.go:194: peer: < {856665374 45000} >: Unchoke
+INFO 2019/02/28 21:52:49 download.go:449: peer: < {856665374 45000} >: Requesting piece[ 7 ][ 11 ]
+INFO 2019/02/28 21:52:50 download.go:194: peer: < {781357494 51413} >: Unchoke
+INFO 2019/02/28 21:52:50 download.go:449: peer: < {781357494 51413} >: Requesting piece[ 7 ][ 12 ]
+INFO 2019/02/28 21:52:50 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:50 download.go:177: peer: < {3311752029 51413} >: Handshake successful
+INFO 2019/02/28 21:52:50 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:50 download.go:177: peer: < {1179595967 9000} >: Handshake successful
+INFO 2019/02/28 21:52:50 download.go:202: peer: < {1179595967 9000} >: BitField
+INFO 2019/02/28 21:52:50 download.go:194: peer: < {1179595967 9000} >: Unchoke
+INFO 2019/02/28 21:52:50 download.go:449: peer: < {1179595967 9000} >: Requesting piece[ 7 ][ 13 ]
+INFO 2019/02/28 21:52:50 download.go:190: peer: < {1179595967 9000} >: Choke
+INFO 2019/02/28 21:52:50 download.go:290: peer:< {1179595967 9000} >: Choke: Handshaking
+INFO 2019/02/28 21:52:50 download.go:202: peer: < {3096726748 51413} >: BitField
+INFO 2019/02/28 21:52:50 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:50 download.go:177: peer: < {1758320946 51413} >: Handshake successful
+INFO 2019/02/28 21:52:50 download.go:202: peer: < {1758320946 51413} >: BitField
+INFO 2019/02/28 21:52:50 download.go:202: peer: < {633038355 57342} >: BitField
+INFO 2019/02/28 21:52:51 download.go:202: peer: < {3343174123 51413} >: BitField
+INFO 2019/02/28 21:52:51 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:51 download.go:177: peer: < {2050646049 60666} >: Handshake successful
+INFO 2019/02/28 21:52:51 download.go:202: peer: < {2050646049 60666} >: BitField
+INFO 2019/02/28 21:52:51 download.go:194: peer: < {2609548846 51107} >: Unchoke
+INFO 2019/02/28 21:52:51 download.go:449: peer: < {2609548846 51107} >: Requesting piece[ 7 ][ 14 ]
+INFO 2019/02/28 21:52:51 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:51 download.go:177: peer: < {622951059 16881} >: Handshake successful
+INFO 2019/02/28 21:52:51 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:51 download.go:177: peer: < {2071354244 64162} >: Handshake successful
+INFO 2019/02/28 21:52:51 download.go:194: peer: < {1314655896 53541} >: Unchoke
+INFO 2019/02/28 21:52:51 download.go:449: peer: < {1314655896 53541} >: Requesting piece[ 7 ][ 15 ]
+INFO 2019/02/28 21:52:52 download.go:194: peer: < {633038355 57342} >: Unchoke
+INFO 2019/02/28 21:52:52 download.go:449: peer: < {633038355 57342} >: Requesting piece[ 7 ][ 16 ]
+INFO 2019/02/28 21:52:52 download.go:194: peer: < {1179595967 9000} >: Unchoke
+INFO 2019/02/28 21:52:52 download.go:198: peer: < {1539137301 6936} >: Have
+INFO 2019/02/28 21:52:52 download.go:194: peer: < {779489958 21601} >: Unchoke
+INFO 2019/02/28 21:52:52 download.go:449: peer: < {779489958 21601} >: Requesting piece[ 7 ][ 17 ]
+INFO 2019/02/28 21:52:52 download.go:194: peer: < {3281708556 40982} >: Unchoke
+INFO 2019/02/28 21:52:52 download.go:449: peer: < {3281708556 40982} >: Requesting piece[ 7 ][ 18 ]
+INFO 2019/02/28 21:52:52 download.go:202: peer: < {2960232958 51413} >: BitField
+INFO 2019/02/28 21:52:52 download.go:202: peer: < {92778613 5881} >: BitField
+INFO 2019/02/28 21:52:52 download.go:194: peer: < {92778613 5881} >: Unchoke
+INFO 2019/02/28 21:52:52 download.go:449: peer: < {92778613 5881} >: Requesting piece[ 7 ][ 19 ]
+INFO 2019/02/28 21:52:53 download.go:194: peer: < {1552732722 51413} >: Unchoke
+INFO 2019/02/28 21:52:53 download.go:449: peer: < {1552732722 51413} >: Requesting piece[ 7 ][ 20 ]
+INFO 2019/02/28 21:52:53 download.go:202: peer: < {1487448292 51413} >: BitField
+INFO 2019/02/28 21:52:53 download.go:202: peer: < {2892120914 29770} >: BitField
+INFO 2019/02/28 21:52:53 download.go:194: peer: < {1545808373 48364} >: Unchoke
+INFO 2019/02/28 21:52:53 download.go:449: peer: < {1545808373 48364} >: Requesting piece[ 7 ][ 21 ]
+INFO 2019/02/28 21:52:53 download.go:194: peer: < {2960232958 51413} >: Unchoke
+INFO 2019/02/28 21:52:53 download.go:449: peer: < {2960232958 51413} >: Requesting piece[ 7 ][ 22 ]
+INFO 2019/02/28 21:52:53 download.go:202: peer: < {3311752029 51413} >: BitField
+INFO 2019/02/28 21:52:53 download.go:194: peer: < {908511577 51413} >: Unchoke
+INFO 2019/02/28 21:52:53 download.go:449: peer: < {908511577 51413} >: Requesting piece[ 7 ][ 23 ]
+INFO 2019/02/28 21:52:54 download.go:202: peer: < {622951059 16881} >: BitField
+INFO 2019/02/28 21:52:54 download.go:194: peer: < {1487448292 51413} >: Unchoke
+INFO 2019/02/28 21:52:54 download.go:449: peer: < {1487448292 51413} >: Requesting piece[ 7 ][ 24 ]
+INFO 2019/02/28 21:52:55 download.go:194: peer: < {2892120914 38900} >: Unchoke
+INFO 2019/02/28 21:52:55 download.go:449: peer: < {2892120914 38900} >: Requesting piece[ 7 ][ 25 ]
+INFO 2019/02/28 21:52:55 download.go:194: peer: < {3343174123 51413} >: Unchoke
+INFO 2019/02/28 21:52:55 download.go:449: peer: < {3343174123 51413} >: Requesting piece[ 7 ][ 26 ]
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {1475398391 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {1475398391 51413} >: Requesting piece[ 7 ][ 27 ]
+INFO 2019/02/28 21:52:56 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:56 download.go:177: peer: < {1488846105 51413} >: Handshake successful
+INFO 2019/02/28 21:52:56 download.go:202: peer: < {1488846105 51413} >: BitField
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {1603945130 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {1603945130 51413} >: Requesting piece[ 7 ][ 28 ]
+INFO 2019/02/28 21:52:56 download.go:206: peer: < {3166953483 6881} >: Piece
+INFO 2019/02/28 21:52:56 download.go:389: peer: < {3166953483 6881} >: Received piece[ 7 ] [ 0 ]
+INFO 2019/02/28 21:52:56 download.go:402: peer: < {3166953483 6881} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:52:56 download.go:418: peer< {3166953483 6881}  >: Called from piecehandler
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {3166953483 6881} >: Requesting piece[ 7 ][ 29 ]
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {2050646049 60666} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {2050646049 60666} >: Requesting piece[ 7 ][ 30 ]
+INFO 2019/02/28 21:52:56 download.go:202: peer: < {3572327674 51413} >: BitField
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {3572327674 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {3572327674 51413} >: Requesting piece[ 7 ][ 31 ]
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {2151963627 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {2151963627 51413} >: Requesting piece[ 6 ][ 0 ]
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {1481016721 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {1481016721 51413} >: Requesting piece[ 6 ][ 1 ]
+INFO 2019/02/28 21:52:56 download.go:194: peer: < {1839829516 51413} >: Unchoke
+INFO 2019/02/28 21:52:56 download.go:449: peer: < {1839829516 51413} >: Requesting piece[ 6 ][ 2 ]
+INFO 2019/02/28 21:52:57 download.go:194: peer: < {1199789172 51413} >: Unchoke
+INFO 2019/02/28 21:52:57 download.go:449: peer: < {1199789172 51413} >: Requesting piece[ 6 ][ 3 ]
+INFO 2019/02/28 21:52:57 download.go:206: peer: < {3105216846 55507} >: Piece
+INFO 2019/02/28 21:52:57 download.go:389: peer: < {3105216846 55507} >: Received piece[ 7 ] [ 3 ]
+INFO 2019/02/28 21:52:57 download.go:402: peer: < {3105216846 55507} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:52:57 download.go:418: peer< {3105216846 55507}  >: Called from piecehandler
+INFO 2019/02/28 21:52:57 download.go:449: peer: < {3105216846 55507} >: Requesting piece[ 6 ][ 4 ]
+INFO 2019/02/28 21:52:57 download.go:194: peer: < {1488846105 51413} >: Unchoke
+INFO 2019/02/28 21:52:57 download.go:449: peer: < {1488846105 51413} >: Requesting piece[ 6 ][ 5 ]
+INFO 2019/02/28 21:52:57 download.go:194: peer: < {1298824713 51413} >: Unchoke
+INFO 2019/02/28 21:52:57 download.go:449: peer: < {1298824713 51413} >: Requesting piece[ 6 ][ 6 ]
+INFO 2019/02/28 21:52:57 download.go:194: peer: < {2892120914 29770} >: Unchoke
+INFO 2019/02/28 21:52:57 download.go:449: peer: < {2892120914 29770} >: Requesting piece[ 6 ][ 7 ]
+INFO 2019/02/28 21:52:58 download.go:202: peer: < {2071354244 64162} >: BitField
+INFO 2019/02/28 21:52:58 download.go:194: peer: < {2071354244 64162} >: Unchoke
+INFO 2019/02/28 21:52:58 download.go:449: peer: < {2071354244 64162} >: Requesting piece[ 6 ][ 8 ]
+INFO 2019/02/28 21:52:58 download.go:198: peer: < {1539137301 6936} >: Have
+INFO 2019/02/28 21:52:59 download.go:261: Parsing handshake
+INFO 2019/02/28 21:52:59 download.go:177: peer: < {1610252163 51413} >: Handshake successful
+INFO 2019/02/28 21:52:59 download.go:194: peer: < {3096726748 51413} >: Unchoke
+INFO 2019/02/28 21:52:59 download.go:449: peer: < {3096726748 51413} >: Requesting piece[ 6 ][ 9 ]
+INFO 2019/02/28 21:52:59 download.go:206: peer: < {633038355 57342} >: Piece
+INFO 2019/02/28 21:52:59 download.go:389: peer: < {633038355 57342} >: Received piece[ 7 ] [ 16 ]
+INFO 2019/02/28 21:52:59 download.go:402: peer: < {633038355 57342} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:52:59 download.go:418: peer< {633038355 57342}  >: Called from piecehandler
+INFO 2019/02/28 21:52:59 download.go:449: peer: < {633038355 57342} >: Requesting piece[ 6 ][ 10 ]
+INFO 2019/02/28 21:52:59 download.go:194: peer: < {622951059 16881} >: Unchoke
+INFO 2019/02/28 21:52:59 download.go:449: peer: < {622951059 16881} >: Requesting piece[ 6 ][ 11 ]
+INFO 2019/02/28 21:53:00 download.go:151: Unable to set up TCP connection:  1
+ERROR 2019/02/28 21:53:00 download.go:159: Could not connect to peer!
+INFO 2019/02/28 21:53:00 download.go:127: peer: < {3281711771 6790} >: ends!
+INFO 2019/02/28 21:53:02 download.go:202: peer: < {1610252163 51413} >: BitField
+INFO 2019/02/28 21:53:02 download.go:194: peer: < {1610252163 51413} >: Unchoke
+INFO 2019/02/28 21:53:02 download.go:449: peer: < {1610252163 51413} >: Requesting piece[ 6 ][ 12 ]
+INFO 2019/02/28 21:53:02 download.go:198: peer: < {1539137301 6936} >: Have
+INFO 2019/02/28 21:53:03 download.go:261: Parsing handshake
+INFO 2019/02/28 21:53:03 download.go:177: peer: < {387773767 6881} >: Handshake successful
+INFO 2019/02/28 21:53:03 download.go:202: peer: < {387773767 6881} >: BitField
+INFO 2019/02/28 21:53:03 download.go:194: peer: < {1758320946 51413} >: Unchoke
+INFO 2019/02/28 21:53:03 download.go:449: peer: < {1758320946 51413} >: Requesting piece[ 6 ][ 13 ]
+INFO 2019/02/28 21:53:04 download.go:206: peer: < {1481016721 51413} >: Piece
+INFO 2019/02/28 21:53:04 download.go:389: peer: < {1481016721 51413} >: Received piece[ 6 ] [ 1 ]
+INFO 2019/02/28 21:53:04 download.go:402: peer: < {1481016721 51413} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:53:04 download.go:418: peer< {1481016721 51413}  >: Called from piecehandler
+INFO 2019/02/28 21:53:04 download.go:449: peer: < {1481016721 51413} >: Requesting piece[ 6 ][ 14 ]
+INFO 2019/02/28 21:53:05 download.go:206: peer: < {3105216846 55507} >: Piece
+INFO 2019/02/28 21:53:05 download.go:389: peer: < {3105216846 55507} >: Received piece[ 6 ] [ 4 ]
+INFO 2019/02/28 21:53:05 download.go:402: peer: < {3105216846 55507} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:53:05 download.go:418: peer< {3105216846 55507}  >: Called from piecehandler
+INFO 2019/02/28 21:53:05 download.go:449: peer: < {3105216846 55507} >: Requesting piece[ 6 ][ 15 ]
+INFO 2019/02/28 21:53:07 download.go:206: peer: < {1475398391 51413} >: Piece
+INFO 2019/02/28 21:53:07 download.go:389: peer: < {1475398391 51413} >: Received piece[ 7 ] [ 27 ]
+INFO 2019/02/28 21:53:07 download.go:402: peer: < {1475398391 51413} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:53:07 download.go:418: peer< {1475398391 51413}  >: Called from piecehandler
+INFO 2019/02/28 21:53:07 download.go:449: peer: < {1475398391 51413} >: Requesting piece[ 6 ][ 16 ]
+INFO 2019/02/28 21:53:09 download.go:198: peer: < {1539137301 6936} >: Have
+INFO 2019/02/28 21:53:10 download.go:206: peer: < {779489958 21601} >: Piece
+INFO 2019/02/28 21:53:10 download.go:389: peer: < {779489958 21601} >: Received piece[ 7 ] [ 17 ]
+INFO 2019/02/28 21:53:10 download.go:402: peer: < {779489958 21601} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:53:10 download.go:418: peer< {779489958 21601}  >: Called from piecehandler
+INFO 2019/02/28 21:53:10 download.go:449: peer: < {779489958 21601} >: Requesting piece[ 6 ][ 17 ]
+INFO 2019/02/28 21:53:12 download.go:206: peer: < {3105216846 55507} >: Piece
+INFO 2019/02/28 21:53:12 download.go:389: peer: < {3105216846 55507} >: Received piece[ 6 ] [ 15 ]
+INFO 2019/02/28 21:53:12 download.go:402: peer: < {3105216846 55507} >: Writing block to file  ubuntu-18.10-desktop-amd64.iso/ubuntu-18.10-desktop-amd64.iso
+INFO 2019/02/28 21:53:12 download.go:418: peer< {3105216846 55507}  >: Called from piecehandler
+INFO 2019/02/28 21:53:12 download.go:449: peer: < {3105216846 55507} >: Requesting piece[ 6 ][ 18 ]
