@@ -118,7 +118,7 @@ func PieceLen(torrent TorrentFile, index uint32) (length uint32, err error) {
 	totalLength := torrent.Length
 	pieceLength := torrent.PieceLength
 	lastPieceLen := uint32(totalLength % uint64(pieceLength))
-	lastPieceIndex := uint32(math.Ceil(float64(totalLength/uint64(pieceLength)))) - 1
+	lastPieceIndex := uint32(len(torrent.Piece)/20 - 1)
 
 	if lastPieceLen == 0 {
 		lastPieceLen = pieceLength
