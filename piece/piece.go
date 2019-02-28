@@ -21,6 +21,7 @@ func NewPieceTracker(torrent parser.TorrentFile) (tracker *PieceTracker) {
 	tracker = new(PieceTracker)
 	tracker.Torrent = torrent
 	numPieces := uint32(len(torrent.Piece) / 20)
+	fmt.Println("numPieces: ", numPieces)
 	for i := uint32(0); i < numPieces; i++ {
 		blocksPerPiece, _ := parser.BlocksPerPiece(torrent, i)
 		tracker.Requested = append(tracker.Requested, make([]bool, blocksPerPiece))
@@ -122,10 +123,11 @@ func (tracker *PieceTracker) Reset(index uint32) {
 		tracker.Requested[index][i] = false
 		tracker.Received[index][i] = false
 	}
-	tracker.lock.Lock()
+	tracker.lock.Unlock()
 }
 
-func (tracker *PieceTracker) Fill(index uint32){
+// Fill is used to revive the piecetracker while resuming the torrent
+func (tracker *PieceTracker) Fill(index uint32) {
 	for i := range tracker.Requested[index] {
 		tracker.Requested[index][i] = true
 		tracker.Received[index][i] = true
