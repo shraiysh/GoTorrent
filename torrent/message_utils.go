@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 
 	// "github.com/concurrency-8/queue"
-	"fmt"
 
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/tracker"
@@ -306,7 +305,7 @@ func ParseMsg(msg *bytes.Buffer) (size uint32, id uint8, payload Payload) {
 
 			if id == 7 {
 				payload["block"] = rest
-				fmt.Println(rest.Bytes()[:10])
+				// fmt.Println(rest.Bytes()[:10])
 			} else {
 				payload["length"] = rest
 			}
