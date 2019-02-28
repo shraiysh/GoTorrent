@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	torrent.DownloadFromFile("./test_torrents/13 MB.torrent", 6881)
+	torrent.DownloadFromFile("./test_torrents/ubuntu.iso.torrent", 6881)
 	// torrentfile, _ := parser.ParseFromFile("./test_torrents/ubuntu.iso.torrent")
 	// fmt.Println(torrentfile.PieceLength)
 	// u, err := url.Parse(torrentfile.Announce[0])

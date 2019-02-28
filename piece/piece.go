@@ -124,3 +124,10 @@ func (tracker *PieceTracker) Reset(index uint32) {
 	}
 	tracker.lock.Lock()
 }
+
+func (tracker *PieceTracker) Fill(index uint32){
+	for i := range tracker.Requested[index] {
+		tracker.Requested[index][i] = true
+		tracker.Received[index][i] = true
+	}
+}

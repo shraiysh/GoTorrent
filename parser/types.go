@@ -43,6 +43,7 @@ type File struct {
 
 //TorrentFile contains information about the torrent.
 type TorrentFile struct {
+	Name 		string
 	Announce    []string
 	Comment     string
 	CreatedBy   string
