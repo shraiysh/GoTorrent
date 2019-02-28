@@ -5,6 +5,10 @@ docker:
 - image: circleci/golang:1.9
 working_directory: /go/src/github.com/concurrency-8
 
+steps:
+- checkout
+- run : sudo apt-get update
+
 dependencies:
 - run : go get github.com/zeebo/bencode
 - run : go get github.com/alecthomas/gometalinter
