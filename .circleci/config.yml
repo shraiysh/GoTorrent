@@ -1,11 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - dev
-        - issue#56
     docker:
       - image: circleci/golang:1.9
     working_directory: /go/src/github.com/concurrency-8
