@@ -13,7 +13,7 @@ type PieceTracker struct {
 	Torrent   parser.TorrentFile
 	Requested [][]bool
 	Received  [][]bool
-	lock      sync.Mutex
+	Lock      sync.Mutex
 }
 
 // NewPieceTracker returns a new PieceTracker object for the torrent
@@ -21,12 +21,12 @@ func NewPieceTracker(torrent parser.TorrentFile) (tracker *PieceTracker) {
 	tracker = new(PieceTracker)
 	tracker.Torrent = torrent
 	numPieces := uint32(len(torrent.Piece) / 20)
-	fmt.Println("numPieces: ", numPieces)
 	for i := uint32(0); i < numPieces; i++ {
 		blocksPerPiece, _ := parser.BlocksPerPiece(torrent, i)
 		tracker.Requested = append(tracker.Requested, make([]bool, blocksPerPiece))
 		tracker.Received = append(tracker.Received, make([]bool, blocksPerPiece))
 	}
+
 	return
 }
 
@@ -46,6 +46,7 @@ func (tracker *PieceTracker) AddReceived(block parser.PieceBlock) {
 
 // Needed checks if we want a block. If we have already requested all,
 // we reset requested to be equal to received and request the remaining pieces
+// Not putting locks here, the caller must make sure that this runs at once by a single thread
 func (tracker *PieceTracker) Needed(block parser.PieceBlock) bool {
 
 	// Check if all have been requested...
@@ -61,9 +62,7 @@ func (tracker *PieceTracker) Needed(block parser.PieceBlock) bool {
 
 	// If yes, copy received into request...
 	if allRequested {
-		tracker.lock.Lock()
 		tracker.Requested = clone(tracker.Received)
-		tracker.lock.Unlock()
 	}
 
 	return !tracker.Requested[block.Index][block.Begin/parser.BLOCK_LEN]
@@ -83,26 +82,30 @@ func clone(array [][]bool) (result [][]bool) {
 
 // PieceIsDone tells if the pieceIndex piece has been downloaded successfully
 func (tracker *PieceTracker) PieceIsDone(pieceIndex uint32) (result bool) {
+	tracker.Lock.Lock()
 	result = true
 	for _, i := range tracker.Received[pieceIndex] {
 		result = result && i
 	}
+	tracker.Lock.Unlock()
 	return
 }
 
 // IsDone tells if the torrent file has been successfully received
 func (tracker *PieceTracker) IsDone() (result bool) {
+	tracker.Lock.Lock()
 	result = true
 	for _, i := range tracker.Received {
 		for _, j := range i {
 			result = result && j
 		}
 	}
+	tracker.Lock.Unlock()
 	return
 }
 
 // PrintPercentageDone prints the percentage of download completed on the screen
-func (tracker *PieceTracker) PrintPercentageDone() {
+func (tracker *PieceTracker) PrintPercentageDone() (percent float64) {
 	downloaded, total := 0.0, 0
 	for _, i := range tracker.Received {
 		for _, j := range i {
@@ -112,18 +115,19 @@ func (tracker *PieceTracker) PrintPercentageDone() {
 			}
 		}
 	}
-	percent := float64(downloaded*100) / float64(total)
-	fmt.Print("progress:", percent, "\r")
+	percent = float64(downloaded*100) / float64(total)
+	// fmt.Print("progress:", percent, "\r")
+	return
 }
 
 // Reset the piece - Called when invalid SHA
 func (tracker *PieceTracker) Reset(index uint32) {
-	tracker.lock.Lock()
+	tracker.Lock.Lock()
 	for i := range tracker.Requested[index] {
 		tracker.Requested[index][i] = false
 		tracker.Received[index][i] = false
 	}
-	tracker.lock.Unlock()
+	tracker.Lock.Unlock()
 }
 
 // Fill is used to revive the piecetracker while resuming the torrent
@@ -132,4 +136,16 @@ func (tracker *PieceTracker) Fill(index uint32) {
 		tracker.Requested[index][i] = true
 		tracker.Received[index][i] = true
 	}
+}
+
+// PrintLeft prints left
+func (tracker *PieceTracker) PrintLeft() {
+	for i := range tracker.Received {
+		for j := range tracker.Received[i] {
+			if !tracker.Received[i][j] {
+				fmt.Print("[", i, "][", j, "]\t")
+			}
+		}
+	}
+	fmt.Println()
 }
