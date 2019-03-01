@@ -36,7 +36,7 @@ if [ $gofmt != "100%" ]; then
 fi
 
 startindex=$(($(echo $report | grep -b -o "go_vet" | cut -d: -f1)+8))
-endindex=$(($(echo $report|grep -b -o "golint" | cut -d: -f1)-1))
+endindex=$(($(echo $report|grep -b -o "gocyclo" | cut -d: -f1)-1))
 go_vet=${report:$startindex:$endindex-$startindex}
 echo "go_vet: "$go_vet
 if [ $go_vet == "100%" ]; then
@@ -48,7 +48,7 @@ if [ $go_vet != "100%" ]; then
 fi
 
 startindex=$(($(echo $report | grep -b -o "golint" | cut -d: -f1)+8))
-endindex=$(($(echo $report|grep -b -o "gocyclo" | cut -d: -f1)-1))
+endindex=$(($(echo $report|grep -b -o "ineffassign" | cut -d: -f1)-1))
 golint=${report:$startindex:$endindex-$startindex}
 echo "go_lint: "$golint
 if [ $golint == "100%" ]; then
