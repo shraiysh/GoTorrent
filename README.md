@@ -7,7 +7,7 @@ Bit-torrent client implementation as part of CS2443 (Principles of Programming L
 * [Documentation](#Documentation)
 * [Setup](#Setup)
 * [Usage](#Usage)
-* [Guidelines for contribution](#Guidelines-for-contribution)
+* [Guidelines for contribution](#guidelines-for-contribution)
 * [Resources and References](#Resources-and-References)
 
 ## Description
