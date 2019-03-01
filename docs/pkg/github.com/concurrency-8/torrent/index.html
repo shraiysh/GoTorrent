@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>torrent - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../lib/godoc/style.css">
+
+<link rel="stylesheet" href="../../../../lib/godoc/jquery.treeview.css">
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../lib/godoc/jquery.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.edit.js" defer></script>
+
+
+<script>var goVersion = "go1.11.4";</script>
+<script src="../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="https://golang.org/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="https://golang.org">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="https://golang.org/search">
+<div id="menu">
+<a href="../index.html">Documents</a>
+<a href="../index.html">Packages</a>
+<a href="https://github.com/IITH-SBJoshi/concurrency-8">The Project</a>
+<a href="">Help</a>
+
+<a href="">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package torrent
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/concurrency-8/torrent"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BitFieldHandler">func BitFieldHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildCancel">func BuildCancel(payload parser.PieceBlock) (cancelBuf *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildChoke">func BuildChoke() (choke *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildHandshake">func BuildHandshake(report tracker.ClientStatusReport) (handshake *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildHave">func BuildHave(payload uint32) (have *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildInterested">func BuildInterested() (interested *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildKeepAlive">func BuildKeepAlive() (keepAlive *bytes.Buffer)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildPort">func BuildPort(port uint16) (portBuf *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildRequest">func BuildRequest(payload parser.PieceBlock) (request *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildUnchoke">func BuildUnchoke() (unchoke *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#BuildUninterested">func BuildUninterested() (uninterested *bytes.Buffer, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#ChokeHandler">func ChokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, report *tracker.ClientStatusReport)</a></dd>
+			
+				
+				<dd><a href="index.html#DownloadFromFile">func DownloadFromFile(path string, port int)</a></dd>
+			
+				
+				<dd><a href="index.html#DownloadFromPeer">func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pieces *piece.PieceTracker) error</a></dd>
+			
+				
+				<dd><a href="index.html#GetRandomPiece">func GetRandomPiece() (piece parser.PieceBlock)</a></dd>
+			
+				
+				<dd><a href="index.html#HaveHandler">func HaveHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, payload Payload) (pieceIndex uint32, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#PieceHandler">func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue, report *tracker.ClientStatusReport, pieceResp parser.PieceBlock)</a></dd>
+			
+				
+				<dd><a href="index.html#RequestPiece">func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#UnchokeHandler">func UnchokeHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Payload">type Payload</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ParseMsg">func ParseMsg(msg *bytes.Buffer) (size uint32, id uint8, payload Payload)</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="../../../../src/github.com/concurrency-8/torrent/download.go">download.go</a>
+			
+				<a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go">message_utils.go</a>
+			
+				<a href="../../../../src/github.com/concurrency-8/torrent/test_utils.go">test_utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+Error is logger for errors
+</p>
+
+				<pre>var <span id="Error">Error</span> *<a href="https://golang.org/pkg/log/">log</a>.<a href="https://golang.org/pkg/log/#Logger">Logger</a></pre>
+			
+				<p>
+Info is logger for information
+</p>
+
+				<pre>var <span id="Info">Info</span> *<a href="https://golang.org/pkg/log/">log</a>.<a href="https://golang.org/pkg/log/#Logger">Logger</a></pre>
+			
+				<p>
+MaxTry is the maximum number of times we should try to connect to a tracker
+</p>
+
+				<pre>var <span id="MaxTry">MaxTry</span> <a href="https://golang.org/pkg/builtin/#int">int</a> = 1</pre>
+			
+				<p>
+ReadTimeout is the maximum time for which one must wait for the nect message from the peer. If no message arrives till this point, handshake again
+</p>
+
+				<pre>var <span id="ReadTimeout">ReadTimeout</span> <a href="https://golang.org/pkg/time/">time</a>.<a href="https://golang.org/pkg/time/#Duration">Duration</a> = 150</pre>
+			
+				<p>
+TCPTimeout is the maximum time for which one must wait for connection to a peer
+</p>
+
+				<pre>var <span id="TCPTimeout">TCPTimeout</span> <a href="https://golang.org/pkg/time/">time</a>.<a href="https://golang.org/pkg/time/#Duration">Duration</a> = 15</pre>
+			
+		
+		
+			
+			
+			<h2 id="BitFieldHandler">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">BitFieldHandler</a>
+				<a class="permalink" href="index.html#BitFieldHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BitFieldHandler(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, queue *<a href="../queue/index.html">queue</a>.<a href="../queue/index.html#Queue">Queue</a>, payload <a href="index.html#Payload">Payload</a>) (err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BitFieldHandler handles bitfield protocol
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildCancel">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildCancel</a>
+				<a class="permalink" href="index.html#BuildCancel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildCancel(payload <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#PieceBlock">PieceBlock</a>) (cancelBuf *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildCancel returns pointer to a buffer. Takes parser.PieceBlock object as arg
+</p>
+<pre>uint32	: length	- Length of the remaining message = 13
+uint8	: messageType	- for cancel, messageType = 8
+uint32	: piece index	- parser.PieceBlock.Index for payload
+uint32	: piece begin	- parser.PieceBlock.Begin for payload
+uint32	: piece length	- parser.PieceBlock.Length for payload
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildChoke">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildChoke</a>
+				<a class="permalink" href="index.html#BuildChoke">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildChoke() (choke *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildChoke returns pointer to a buffer.
+Buffer looks like:
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 1
+uint8	: messageType	- For choke, messageType = 0
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildHandshake">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildHandshake</a>
+				<a class="permalink" href="index.html#BuildHandshake">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildHandshake(report <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#ClientStatusReport">ClientStatusReport</a>) (handshake *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildHandshake returns a pointer to a buffer.
+Buffer looks like:
+</p>
+<pre>uint8		: pstrlen	- Length of pstr
+[pstrlen]byte	: pstr		- pstr, the string identifier of the protocol
+[8]byte		: reserved	- 8 reserved bytes
+[20]byte	: infohash	- SHA1 hash of the info key in the metainfo file. Same as the info hash transmitted in tracker requests
+[20]byte	: peerID	- 20 byte unique ID for the client. Usually the same peerID transmitted in tracker requests
+</pre>
+<p>
+In version 1.0 of the BitTorrent protocol, pstrlen = 19, and pstr = &#34;BitTorrent protocol&#34;
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildHave">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildHave</a>
+				<a class="permalink" href="index.html#BuildHave">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildHave(payload <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>) (have *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildHave returns pointer to a buffer. This takes uint32 payload(piece index) as an argument
+Buffer looks like:
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 5
+uint8	: messageType	- for have, messageType = 4
+uint32	: piece index	- payload
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildInterested">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildInterested</a>
+				<a class="permalink" href="index.html#BuildInterested">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildInterested() (interested *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildInterested returns pointer to a buffer.
+Buffer looks like:
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 1
+uint8	: messageType	- For interested, messageType = 2
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildKeepAlive">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildKeepAlive</a>
+				<a class="permalink" href="index.html#BuildKeepAlive">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildKeepAlive() (keepAlive *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>)</pre>
+			<p>
+BuildKeepAlive returns pointer to an empty buffer (4 bytes)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildPort">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildPort</a>
+				<a class="permalink" href="index.html#BuildPort">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildPort(port <a href="https://golang.org/pkg/builtin/#uint16">uint16</a>) (portBuf *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildPort returns a pointer to a buffer. Takes uint16 port as arg
+</p>
+<pre>uint32	: length	- length of remaining message = 3
+uint8	: messageType	- for port, messageType = 9
+uint16	: port		- the argument, port
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildRequest">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildRequest</a>
+				<a class="permalink" href="index.html#BuildRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildRequest(payload <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#PieceBlock">PieceBlock</a>) (request *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildRequest returns pointer to a buffer. This takes parser.PieceBlock as an argument
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 13
+uint8	: messageType	- for request, message = 5
+uint32	: piece index	- parser.PieceBlock.Index for payload
+uint32	: piece begin	- parser.PieceBlock.Begin for payload
+uint32	: piece length	- parser.PieceBlock.Length for payload
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildUnchoke">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildUnchoke</a>
+				<a class="permalink" href="index.html#BuildUnchoke">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildUnchoke() (unchoke *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildUnchoke returns pointer to a buffer.
+Buffer looks like:
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 1
+uint8	: messageType	- For unchoke, messageType = 1
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BuildUninterested">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">BuildUninterested</a>
+				<a class="permalink" href="index.html#BuildUninterested">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildUninterested() (uninterested *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildUninterested returns pointer to a buffer.
+Buffer looks like:
+</p>
+<pre>uint32	: length	- Length of remaining part(message) = 1
+uint8	: messageType	- For uninterested, messageType = 3
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ChokeHandler">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">ChokeHandler</a>
+				<a class="permalink" href="index.html#ChokeHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ChokeHandler(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, report *<a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#ClientStatusReport">ClientStatusReport</a>)</pre>
+			<p>
+ChokeHandler handles choking protocol
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DownloadFromFile">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">DownloadFromFile</a>
+				<a class="permalink" href="index.html#DownloadFromFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DownloadFromFile(path <a href="https://golang.org/pkg/builtin/#string">string</a>, port <a href="https://golang.org/pkg/builtin/#int">int</a>)</pre>
+			<p>
+DownloadFromFile downloads torrent from path using port
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DownloadFromPeer">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">DownloadFromPeer</a>
+				<a class="permalink" href="index.html#DownloadFromPeer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DownloadFromPeer(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, report *<a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#ClientStatusReport">ClientStatusReport</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>) <a href="https://golang.org/pkg/builtin/#error">error</a></pre>
+			<p>
+DownloadFromPeer is a function that handshakes with a peer specified by peer object.
+Concurrently call this function to establish parallel connections to many peers.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRandomPiece">func <a href="../../../../src/github.com/concurrency-8/torrent/test_utils.go.html">GetRandomPiece</a>
+				<a class="permalink" href="index.html#GetRandomPiece">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRandomPiece() (piece <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#PieceBlock">PieceBlock</a>)</pre>
+			<p>
+GetRandomPiece returns a test piece object with random data.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HaveHandler">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">HaveHandler</a>
+				<a class="permalink" href="index.html#HaveHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HaveHandler(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, queue *<a href="../queue/index.html">queue</a>.<a href="../queue/index.html#Queue">Queue</a>, payload <a href="index.html#Payload">Payload</a>) (pieceIndex <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>, err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+HaveHandler handles Have protocol
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PieceHandler">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">PieceHandler</a>
+				<a class="permalink" href="index.html#PieceHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PieceHandler(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, queue *<a href="../queue/index.html">queue</a>.<a href="../queue/index.html#Queue">Queue</a>, report *<a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#ClientStatusReport">ClientStatusReport</a>, pieceResp <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#PieceBlock">PieceBlock</a>)</pre>
+			<p>
+PieceHandler - TODO Write comment
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RequestPiece">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">RequestPiece</a>
+				<a class="permalink" href="index.html#RequestPiece">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RequestPiece(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, queue *<a href="../queue/index.html">queue</a>.<a href="../queue/index.html#Queue">Queue</a>) (err <a href="https://golang.org/pkg/builtin/#error">error</a>)</pre>
+			<p>
+RequestPiece requests a piece
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnchokeHandler">func <a href="../../../../src/github.com/concurrency-8/torrent/download.go.html">UnchokeHandler</a>
+				<a class="permalink" href="index.html#UnchokeHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnchokeHandler(peer <a href="../tracker/index.html">tracker</a>.<a href="../tracker/index.html#Peer">Peer</a>, conn <a href="https://golang.org/pkg/net/">net</a>.<a href="https://golang.org/pkg/net/#Conn">Conn</a>, pieces *<a href="../piece/index.html">piece</a>.<a href="../piece/index.html#PieceTracker">PieceTracker</a>, queue *<a href="../queue/index.html">queue</a>.<a href="../queue/index.html#Queue">Queue</a>)</pre>
+			<p>
+UnchokeHandler handles unchoking protocol
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Payload">type <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">Payload</a>
+				<a class="permalink" href="index.html#Payload">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Payload refers to the message payload that is to be sent.
+</p>
+
+			<pre>type Payload map[<a href="https://golang.org/pkg/builtin/#string">string</a>]interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="ParseMsg">func <a href="../../../../src/github.com/concurrency-8/torrent/message_utils.go.html">ParseMsg</a>
+					<a class="permalink" href="index.html#ParseMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ParseMsg(msg *<a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a>) (size <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>, id <a href="https://golang.org/pkg/builtin/#uint8">uint8</a>, payload <a href="index.html#Payload">Payload</a>)</pre>
+				<p>
+ParseMsg parses a message
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.4.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under an <a href="../../../../src/github.com/concurrency-8/LICENSE.html">MIT license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

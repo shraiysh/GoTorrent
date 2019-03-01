@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>tracker - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../lib/godoc/style.css">
+
+<link rel="stylesheet" href="../../../../lib/godoc/jquery.treeview.css">
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../lib/godoc/jquery.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.edit.js" defer></script>
+
+
+<script>var goVersion = "go1.11.4";</script>
+<script src="../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="https://golang.org/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="https://golang.org">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="https://golang.org">
+<div id="menu">
+<a href="../index.html">Documents</a>
+<a href="../index.html">Packages</a>
+<a href="https://github.com/IITH-SBJoshi/concurrency-8">The Project</a>
+<a href="">Help</a>
+
+<a href="">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package tracker
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/concurrency-8/tracker"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetMockAnnounceResponseBuf">func GetMockAnnounceResponseBuf(transactionID, interval, leechers, seeders uint32, peers []Peer) bytes.Buffer</a></dd>
+			
+				
+				<dd><a href="index.html#GetMockConnectResponseBuf">func GetMockConnectResponseBuf(transactionID uint32, connectionID uint64) bytes.Buffer</a></dd>
+			
+				
+				<dd><a href="index.html#GetRandomTorrent">func GetRandomTorrent() parser.TorrentFile</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AnnounceResponse">type AnnounceResponse</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetPeers">func GetPeers(u *url.URL, report *ClientStatusReport) (tr *AnnounceResponse, err error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientStatusReport">type ClientStatusReport</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetClientStatusReport">func GetClientStatusReport(torrent parser.TorrentFile, port uint16) (report *ClientStatusReport)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetRandomClientReport">func GetRandomClientReport() (report *ClientStatusReport)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectResponse">type ConnectResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Peer">type Peer</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">types.go</a>
+			
+				<a href="../../../../src/github.com/concurrency-8/tracker/utils.go.html">utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+			
+			
+			<h2 id="GetMockAnnounceResponseBuf">func <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">GetMockAnnounceResponseBuf</a>
+				<a class="permalink" href="index.html#GetMockAnnounceResponseBuf">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetMockAnnounceResponseBuf(transactionID, interval, leechers, seeders <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>, peers []<a href="index.html#Peer">Peer</a>) <a href="">bytes</a>.<a href="">Buffer</a></pre>
+			<p>
+GetMockAnnounceResponseBuf returns a test buffer with input transactionID, interval, leechers and seeders
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetMockConnectResponseBuf">func <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html?m=text">GetMockConnectResponseBuf</a>
+				<a class="permalink" href="index.html#GetMockConnectResponseBuf">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetMockConnectResponseBuf(transactionID <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>, connectionID <a href="https://golang.org/pkg/builtin/#uint64">uint64</a>) <a href="https://golang.org/pkg/bytes/">bytes</a>.<a href="https://golang.org/pkg/bytes/#Buffer">Buffer</a></pre>
+			<p>
+GetMockConnectResponseBuf returns a test buffer with the input transactionID and connectionID
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRandomTorrent">func <a href="../../../../src/github.com/concurrency-8/tracker/utils.go.html">GetRandomTorrent</a>
+				<a class="permalink" href="index.html#GetRandomTorrent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRandomTorrent() <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#TorrentFile">TorrentFile</a></pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AnnounceResponse">type <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">AnnounceResponse</a>
+				<a class="permalink" href="index.html#AnnounceResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AnnounceResponse is structure to hold details from announce request sent to tracker
+</p>
+
+			<pre>type AnnounceResponse struct {
+<span id="AnnounceResponse.Action"></span>    Action        <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="AnnounceResponse.TransactionID"></span>    TransactionID <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="AnnounceResponse.Leechers"></span>    Leechers      <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="AnnounceResponse.Seeders"></span>    Seeders       <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="AnnounceResponse.Complete"></span>    Complete      <a href="https://golang.org/pkg/builtin/#uint32">uint</a>   `bencode:&#34;complete&#34;`
+<span id="AnnounceResponse.Downloaded"></span>    Downloaded    <a href="https://golang.org/pkg/builtin/#uint32">uint</a>   `bencode:&#34;downloaded&#34;`
+<span id="AnnounceResponse.Incomplete"></span>    Incomplete    <a href="https://golang.org/pkg/builtin/#uint32">uint</a>   `bencode:&#34;incomplete&#34;`
+<span id="AnnounceResponse.Interval"></span>    Interval      <a href="https://golang.org/pkg/builtin/#uint32">uint32</a> `bencode:&#34;interval&#34;`
+<span id="AnnounceResponse.MinInterval"></span>    MinInterval   <a href="https://golang.org/pkg/builtin/#uint32">uint</a>   `bencode:&#34;min interval&#34;`
+<span id="AnnounceResponse.PeerBytes"></span>    PeerBytes     []<a href="https://golang.org/pkg/builtin/#byte">byte</a> `bencode:&#34;peers&#34;`
+<span id="AnnounceResponse.Peers"></span>    Peers         []<a href="index.html#Peer">Peer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetPeers">func <a href="../../../../src/github.com/concurrency-8/tracker/utils.go.html">GetPeers</a>
+					<a class="permalink" href="index.html#GetPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetPeers(u *<a href="">url</a>.<a href="">URL</a>, report *<a href="index.html#ClientStatusReport">ClientStatusReport</a>) (tr *<a href="index.html#AnnounceResponse">AnnounceResponse</a>, err <a href="">error</a>)</pre>
+				<p>
+GetPeers returns the peer list given a valid udp/http announce url
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ClientStatusReport">type <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">ClientStatusReport</a>
+				<a class="permalink" href="index.html#ClientStatusReport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientStatusReport is a structure storing current status for client and relevant information
+</p>
+
+			<pre>type ClientStatusReport struct {
+<span id="ClientStatusReport.Event"></span>    Event       <a href="https://golang.org/pkg/builtin/#string">string</a>
+<span id="ClientStatusReport.TorrentFile"></span>    TorrentFile <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#TorrentFile">TorrentFile</a>
+<span id="ClientStatusReport.PeerID"></span>    PeerID      <a href="https://golang.org/pkg/builtin/#string">string</a>
+<span id="ClientStatusReport.Port"></span>    Port        <a href="https://golang.org/pkg/builtin/#uint16">uint16</a>
+<span id="ClientStatusReport.Uploaded"></span>    Uploaded    <a href="https://golang.org/pkg/builtin/#uint64">uint64</a>
+<span id="ClientStatusReport.Downloaded"></span>    Downloaded  <a href="https://golang.org/pkg/builtin/#uint64">uint64</a>
+<span id="ClientStatusReport.Left"></span>    Left        <a href="https://golang.org/pkg/builtin/#uint64">uint64</a>
+<span id="ClientStatusReport.Data"></span>    Data        []<a href="../parser/index.html">parser</a>.<a href="../parser/index.html#Piece">Piece</a> <span class="comment">// This is for seeding</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetClientStatusReport">func <a href="../../../../src/github.com/concurrency-8/tracker/utils.go.html">GetClientStatusReport</a>
+					<a class="permalink" href="index.html#GetClientStatusReport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetClientStatusReport(torrent <a href="../parser/index.html">parser</a>.<a href="../parser/index.html#TorrentFile">TorrentFile</a>, port <a href="https://golang.org/pkg/builtin/#uint16">uint16</a>) (report *<a href="index.html#ClientStatusReport">ClientStatusReport</a>)</pre>
+				<p>
+GetClientStatusReport returns the initial report of client
+</p>
+
+				
+				
+			
+				
+				<h3 id="GetRandomClientReport">func <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">GetRandomClientReport</a>
+					<a class="permalink" href="index.html#GetRandomClientReport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetRandomClientReport() (report *<a href="index.html#ClientStatusReport">ClientStatusReport</a>)</pre>
+				<p>
+GetRandomClientReport gives a test ClientStatusReport object pointer.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectResponse">type <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">ConnectResponse</a>
+				<a class="permalink" href="index.html#ConnectResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectResponse is struture to hoild details from ConnectResponse
+</p>
+
+			<pre>type ConnectResponse struct {
+<span id="ConnectResponse.Action"></span>    Action        <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="ConnectResponse.TransactionID"></span>    TransactionID <a href="https://golang.org/pkg/builtin/#uint32">uint32</a>
+<span id="ConnectResponse.ConnectionID"></span>    ConnectionID  <a href="https://golang.org/pkg/builtin/#uint32">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Peer">type <a href="../../../../src/github.com/concurrency-8/tracker/types.go.html">Peer</a>
+				<a class="permalink" href="index.html#Peer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Peer is a structure contains IP Address of a peer
+</p>
+
+			<pre>type Peer struct {
+<span id="Peer.IPAdress"></span>    IPAdress <a href="">uint32</a>
+<span id="Peer.Port"></span>    Port     <a href="">uint16</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.4.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under an <a href="../../../../src/github.com/concurrency-8/LICENSE.html">MIT license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

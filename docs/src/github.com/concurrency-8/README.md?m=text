@@ -1,7 +1,7 @@
 # GoTorrent
 BitTorrent Client Implementation
 
-## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE) [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8)
+## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE)
 - Able to parse torrent files.
 
 ## Setup
@@ -55,7 +55,8 @@ BitTorrent Client Implementation
 	- Indent pre-formatted comments.
 	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
 8. **Documentation**
-	- You can refer to [this](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8) link to see the documentation.
+	- You can refer to [this](http://104.211.220.36/pkg/github.com/concurrency-8/) to see the documentation generated for the master branch.
+	- Documentation will be updated automatically upon a pull request into master.
 
 ### Resources and References
 - [Bittorent Specifications](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)

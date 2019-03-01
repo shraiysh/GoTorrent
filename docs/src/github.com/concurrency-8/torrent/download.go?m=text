@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"encoding/gob"
+	"io"
 	"log"
 	"net"
 	"net/url"
@@ -22,20 +23,14 @@ import (
 
 type handler func(tracker.Peer, []byte, net.Conn, *piece.PieceTracker, *queue.Queue, *tracker.ClientStatusReport) error
 
-// MaxTryTracker is the maximum number of times we should try to connect to a tracker
-var MaxTryTracker = 3
-
-// MaxTryForTCP is maximum number of times we try to establish a TCP connection
-var MaxTryForTCP = 2
+// MaxTry is the maximum number of times we should try to connect to a tracker
+var MaxTry int = 1
 
 // TCPTimeout is the maximum time for which one must wait for connection to a peer
-var TCPTimeout time.Duration = 60
+var TCPTimeout time.Duration = 15
 
 // ReadTimeout is the maximum time for which one must wait for the nect message from the peer. If no message arrives till this point, handshake again
-var ReadTimeout time.Duration = 60
-
-// MaxTimeoutErrorCount is the maximum number of times we try to read from a conn before restarting it and get a timeout error(ReadTimeout)
-var MaxTimeoutErrorCount = 3
+var ReadTimeout time.Duration = 150
 
 var wg sync.WaitGroup
 
@@ -75,7 +70,7 @@ func DownloadFromFile(path string, port int) {
 		}
 		Info.Println("Contacting tracker[", announceURL, "] for peer list...")
 		count := 0
-		for count < MaxTryTracker {
+		for count < MaxTry {
 			count++
 			announceResp, err = tracker.GetPeers(u, clientReport)
 			if err == nil {
@@ -94,7 +89,7 @@ func DownloadFromFile(path string, port int) {
 
 	pieceTracker := piece.NewPieceTracker(torrentFile)
 	if args.ARGS.Resume {
-		readGob(torrentFile.Name+"/resume.gob", &pieceTracker.Received)
+		readGob(torrentFile.Name+"/resume.gob", pieceTracker)
 	}
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 	wg.Add(len(announceResp.Peers))
@@ -107,15 +102,6 @@ func DownloadFromFile(path string, port int) {
 
 	wg.Wait()
 	pieceTracker.PrintPercentageDone()
-
-	// Close all files
-	for _, file := range clientReport.TorrentFile.Files {
-		file.FilePointer.Close()
-	}
-
-	// Closing log files
-	logFile.Close()
-
 	Info.Println("All peer threads finished!")
 }
 
@@ -130,7 +116,7 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 
 	exitStatus := 1
 	var err error
-	for exitStatus == 1 && err == nil && !pieces.IsDone() {
+	for exitStatus == 1 && err == nil {
 		queue.Choked = true
 		conn, err := sendHandshake(peer, report)
 		if err != nil {
@@ -162,7 +148,7 @@ func sendHandshake(peer tracker.Peer, report *tracker.ClientStatusReport) (conn 
 	d := net.Dialer{Timeout: TCPTimeout * time.Second}
 	err = nil
 	count := 0
-	for count < MaxTryForTCP {
+	for count < MaxTry {
 		count++
 		conn, err = d.Dial("tcp", service.String())
 		if err != nil {
@@ -250,7 +236,7 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && netErr.Timeout() && !handshake {
 				count++
-				if count < MaxTimeoutErrorCount {
+				if count < MaxTry {
 					Info.Println("Timeout error - Try again")
 					continue
 				} else {
@@ -258,18 +244,21 @@ func onWholeMessage(peer tracker.Peer, conn net.Conn, msgHandler handler, pieces
 					conn.Close()
 					return 1, err
 				}
-			} else {
+			} else if err != io.EOF {
 				Error.Println("peer: <", peer, ">: Error while reading from connection: ", err)
 				Info.Println("peer: <", peer, ">: Restarting connection")
 				conn.Close()
-				return 1, nil
+				return 1, err
+			} else {
+				Error.Println("peer: <", peer, ">: Peer does not respond. Stop contacting this peer.")
+				return 0, err
 			}
 		}
 
 		binary.Write(buffer, binary.BigEndian, resp[:respLen])
 
 		if handshake {
-			Info.Println("peer: <", peer, ">: First message from peer after connection starts - Must be handshake")
+			Info.Println("peer: <", peer, ">: First message from peer afte connection starts - Must be handshake")
 			length := uint8((buffer.Bytes())[0])
 			msgLen = int(length) + 49
 		} else if msgLen == -1 {
@@ -434,9 +423,8 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 	Info.Println("peer: <", peer, ">: Writing block to file ", file.Name())
 	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
 	if args.ARGS.ResumeCapability {
-		writeGob(report.TorrentFile.Name+"/resume.gob", pieces.Received)
+		writeGob(report.TorrentFile.Name+"/resume.gob", pieces)
 	}
-
 	// file.Sync()
 	pieces.PrintPercentageDone()
 
@@ -451,6 +439,8 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		RequestPiece(peer, conn, pieces, queue)
 	}
 }
+
+var pieceTrackerLock sync.Mutex
 
 // RequestPiece requests a piece
 func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, queue *queue.Queue) (err error) {
@@ -472,27 +462,25 @@ func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 			break
 		}
 
-		pieces.Lock.Lock()
+		pieceTrackerLock.Lock()
 		if pieces.Needed(pieceBlock) {
 			pieces.AddRequested(pieceBlock)
-			pieces.Lock.Unlock()
+			pieceTrackerLock.Unlock()
 			Info.Println("peer: <", peer, ">: Requesting piece[", pieceBlock.Index, "][", pieceBlock.Begin/parser.BLOCK_LEN, "]")
 			message, err := BuildRequest(pieceBlock)
 
 			if err != nil {
-				queue.Enqueue(pieceBlock.Index)
 				break
 			}
 			_, err = conn.Write(message.Bytes())
 
 			if err != nil {
-				Info.Println("peer: <", peer, ">:", err.Error())
-				queue.Enqueue(pieceBlock.Index)
+				Info.Println(err.Error())
 				break
 			}
 			break
 		} else {
-			pieces.Lock.Unlock()
+			pieceTrackerLock.Unlock()
 		}
 	}
 	return
