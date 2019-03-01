@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/concurrency-8/args"
 	bencode "github.com/zeebo/bencode"
 )
 
@@ -39,10 +40,23 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 	var Length uint64
 	files := make([]*File, 0)
 	// single file context
+	os.Mkdir(info.Name, os.ModePerm)
 	if info.Length > 0 {
+		var filePointer *os.File
+		if !args.ARGS.Resume {
+			filePointer, err = os.Create(info.Name + "/" + info.Name)
+		} else {
+			filePointer, err = os.OpenFile(info.Name+"/"+info.Name, os.O_APPEND|os.O_WRONLY, 0600)
+		}
+
+		if err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
 		files = append(files, &File{
-			Path:   []string{info.Name},
-			Length: info.Length,
+			Path:        []string{info.Name},
+			Length:      info.Length,
+			FilePointer: filePointer,
 		})
 		Length = info.Length
 	} else {
@@ -54,9 +68,20 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		}
 
 		for _, f := range metadataFiles {
+			var filePointer *os.File
+			if !args.ARGS.Resume {
+				filePointer, err = os.Create(info.Name + "/" + f.Path[0])
+			} else {
+				filePointer, err = os.OpenFile(info.Name+"/"+f.Path[0], os.O_APPEND|os.O_WRONLY, 0600)
+			}
+			if err != nil {
+				fmt.Println(err)
+				panic("Unable to create files ")
+			}
 			files = append(files, &File{
-				Path:   append([]string{info.Name}, f.Path...),
-				Length: f.Length,
+				Path:        []string{info.Name + "/" + f.Path[0]},
+				Length:      f.Length,
+				FilePointer: filePointer,
 			})
 			Length += f.Length
 		}
@@ -77,6 +102,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 
 	//return the object containing the metadata.
 	return TorrentFile{
+		Name:        info.Name,
 		Announce:    announces,
 		Comment:     metadata.Comment,
 		CreatedBy:   metadata.CreatedBy,
@@ -106,7 +132,7 @@ func PieceLen(torrent TorrentFile, index uint32) (length uint32, err error) {
 	totalLength := torrent.Length
 	pieceLength := torrent.PieceLength
 	lastPieceLen := uint32(totalLength % uint64(pieceLength))
-	lastPieceIndex := uint32(math.Ceil(float64(totalLength/uint64(pieceLength)))) - 1
+	lastPieceIndex := uint32(len(torrent.Piece)/20 - 1)
 
 	if lastPieceLen == 0 {
 		lastPieceLen = pieceLength

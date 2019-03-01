@@ -2,6 +2,8 @@ package piece
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/concurrency-8/parser"
 )
 
@@ -11,6 +13,7 @@ type PieceTracker struct {
 	Torrent   parser.TorrentFile
 	Requested [][]bool
 	Received  [][]bool
+	lock      sync.Mutex
 }
 
 // NewPieceTracker returns a new PieceTracker object for the torrent
@@ -18,6 +21,7 @@ func NewPieceTracker(torrent parser.TorrentFile) (tracker *PieceTracker) {
 	tracker = new(PieceTracker)
 	tracker.Torrent = torrent
 	numPieces := uint32(len(torrent.Piece) / 20)
+	fmt.Println("numPieces: ", numPieces)
 	for i := uint32(0); i < numPieces; i++ {
 		blocksPerPiece, _ := parser.BlocksPerPiece(torrent, i)
 		tracker.Requested = append(tracker.Requested, make([]bool, blocksPerPiece))
@@ -57,7 +61,9 @@ func (tracker *PieceTracker) Needed(block parser.PieceBlock) bool {
 
 	// If yes, copy received into request...
 	if allRequested {
+		tracker.lock.Lock()
 		tracker.Requested = clone(tracker.Received)
+		tracker.lock.Unlock()
 	}
 
 	return !tracker.Requested[block.Index][block.Begin/parser.BLOCK_LEN]
@@ -71,6 +77,15 @@ func clone(array [][]bool) (result [][]bool) {
 			temp[index] = j
 		}
 		result = append(result, temp)
+	}
+	return
+}
+
+// PieceIsDone tells if the pieceIndex piece has been downloaded successfully
+func (tracker *PieceTracker) PieceIsDone(pieceIndex uint32) (result bool) {
+	result = true
+	for _, i := range tracker.Received[pieceIndex] {
+		result = result && i
 	}
 	return
 }
@@ -99,4 +114,22 @@ func (tracker *PieceTracker) PrintPercentageDone() {
 	}
 	percent := float64(downloaded*100) / float64(total)
 	fmt.Print("progress:", percent, "\r")
+}
+
+// Reset the piece - Called when invalid SHA
+func (tracker *PieceTracker) Reset(index uint32) {
+	tracker.lock.Lock()
+	for i := range tracker.Requested[index] {
+		tracker.Requested[index][i] = false
+		tracker.Received[index][i] = false
+	}
+	tracker.lock.Unlock()
+}
+
+// Fill is used to revive the piecetracker while resuming the torrent
+func (tracker *PieceTracker) Fill(index uint32) {
+	for i := range tracker.Requested[index] {
+		tracker.Requested[index][i] = true
+		tracker.Received[index][i] = true
+	}
 }
