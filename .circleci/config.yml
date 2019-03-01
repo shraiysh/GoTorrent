@@ -16,7 +16,7 @@ jobs:
       - run : go get github.com/sethgrid/multibar
       - run : go get github.com/fzipp/gocyclo
       - run : go get github.com/client9/misspell/cmd/misspell
-      - run : github.com/gordonklaus/ineffassign
+      - run : go get github.com/gordonklaus/ineffassign
       - run : chmod +x ./build.sh
       - run : ./build.sh
       - run : go build main.go
