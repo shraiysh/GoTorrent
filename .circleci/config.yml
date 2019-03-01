@@ -8,14 +8,10 @@ jobs:
     steps:
       - checkout
       - run : sudo apt-get update
-
-      dependencies:
-        - run : go get github.com/zeebo/bencode
-        - run : go get github.com/alecthomas/gometalinter
-        - run : go get github.com/gojp/goreportcard/cmd/goreportcard  - li
-        - run : go get github.com/stretchr/testify/assert
-
-      script:
-        - run : chmod +x ./build.sh
-        - run : ./build.sh
-        - run : go build main.go
+      - run : go get github.com/zeebo/bencode
+      - run : go get github.com/alecthomas/gometalinter
+      - run : go get github.com/gojp/goreportcard/cmd/goreportcard  - li
+      - run : go get github.com/stretchr/testify/assert
+      - run : chmod +x ./build.sh
+      - run : ./build.sh
+      - run : go build main.go
