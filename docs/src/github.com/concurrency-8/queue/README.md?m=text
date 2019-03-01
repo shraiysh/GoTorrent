@@ -1,0 +1,2 @@
+# ```package queue```
+This package defines a class that act as a ready queue. This queue is different for each peer and tells which pieceblock should be requested for that peer. Class piece ensures thart no two peers are sending same block.
