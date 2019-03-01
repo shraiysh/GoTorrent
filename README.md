@@ -1,18 +1,44 @@
 # GoTorrent
-BitTorrent Client Implementation
+ [![CircleCI](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master.svg?style=svg&circle-token=88f8e60508e4f98f339d7b395c228c6f309c2564)](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE) [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8)
+ 
+Bit-torrent client implementation as part of CS2443 (Principles of Programming Language II ) by Prof. Saurabh Joshi .
 
-## Project Status : [![Build Status](https://travis-ci.com/IITH-SBJoshi/concurrency-8.svg?token=PzczDKzHVxyhM8id75xo&branch=master)](https://travis-ci.com/IITH-SBJoshi/concurrency-8) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE) [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8)
-- Able to parse torrent files.
+* [Description](#description)
+* [Documentation](#Documentation)
+* [Setup](#Setup)
+* [Usage](#Usage)
+* [Guidelines for contribution](#guidelines-for-contribution)
+* [Resources and References](#Resources-and-References)
+
+## Description
+1. **Objective**
+	- Get familair with writing concurrent programs.
+	- Using software technologies like Continous Integration , Unit Testing , Documentation .
+2. **Features**
+	- Downloading multiple torrent files concurrently.
+	- Fetching Peer lists from both HTTP and UDP Trackers.
+	- Fetching pieces of blocks concurrently from Peers.
+	- Enabling Resume capabilities on abrupt termination.
+	- Generating detailed log files for debugging.
+	- A command line interface for managing.
+3. **Team**
+	- Shraiysh Gupta (CS17BTECH11050)
+	- Puneet Mangla (CS17BTECH11029)
+	- Lingam Sai Ramana Reddy (Cs17BTECH11022)
+	- Hitesh (MA17BTECH11004)
+
+## Documentation
+1. You can refer to [this](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8) to see the documentation generated for the master branch.
 
 ## Setup
-1. **Install Golang**
+1. **Installing Golang**
 	- Follow [this](https://golang.org/doc/install) link **OR**
 	- Run ```sudo apt-get install golang```
 	- Set the environment variables `GOPATH` and `GOBIN` as follows :
 		- ```GOPATH="$HOME/go"```
 		- ```GOBIN="$GOPATH/bin"```
 		- ```PATH=$PATH:$GOBIN```
-2. **Run the code**
+2. **Building**
 	
 	Get [dep](https://github.com/golang/dep) for installing the dependencies
 	```
@@ -20,8 +46,21 @@ BitTorrent Client Implementation
 	$ git clone https://github.com/IITH-SBJoshi/concurrency-8.git
 	$ cd concurrency-8/
 	$ dep ensure		# Get the dependencies
-	$ go run main.go	# Run the code
+	$ ./build.sh    	# To check if all tests passes
 	```
+## Usage
+1. **Downloading**
+	- ```go run main.go --files File1 File2 File3 -v -d ../../```
+2. **Flags**
+
+| __Flag Name__ | __Description__ | __Default__ |
+|-------------|------------|------------|
+| ```--files [path] [path] ...``` |  List of Torrent Files | empty |
+| ```--download -d```  | Specify the download path for downloading the files.| "" |
+| ```--rescap -rc```  | True if pause and resume feature is needed. False otherwise. | false |
+| ```--resume -r```  | True to resume partially downloaded files. | false |
+| ```--help```  | Print this help message and exit. |- |
+| ```--verbose -v```  | True if misc output is required. False otherwise. | false |
 
 ## Guidelines for contribution :
 1. Take open issues and ask for assignment in comment section.
@@ -54,8 +93,6 @@ BitTorrent Client Implementation
 	- Include your comments directly preceding an object for GoDoc to document it.
 	- Indent pre-formatted comments.
 	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
-8. **Documentation**
-	- You can refer to [this](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8) link to see the documentation.
 
 ### Resources and References
 - [Bittorent Specifications](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
