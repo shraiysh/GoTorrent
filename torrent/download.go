@@ -13,6 +13,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sethgrid/multibar"
+
 	"github.com/concurrency-8/args"
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/piece"
@@ -46,7 +48,7 @@ var Info *log.Logger
 var Error *log.Logger
 
 // DownloadFromFile downloads torrent from path using port
-func DownloadFromFile(path string, port int) {
+func DownloadFromFile(path string, port int, bar *multibar.ProgressFunc) {
 
 	// Set up logs
 	logFolder := filepath.Join("Logs", path)
@@ -100,10 +102,18 @@ func DownloadFromFile(path string, port int) {
 	wg.Add(len(announceResp.Peers))
 	for _, peer := range announceResp.Peers {
 		Info.Println("Spawning peer thread: peer<", peer, ">")
-		go DownloadFromPeer(peer, clientReport, pieceTracker)
+		go func(peer tracker.Peer, clientReport *tracker.ClientStatusReport, pieceTracker *piece.PieceTracker) {
+			DownloadFromPeer(peer, clientReport, pieceTracker)
+			defer wg.Done()
+		}(peer, clientReport, pieceTracker)
 	}
 
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
+	for !pieceTracker.IsDone() {
+		over := pieceTracker.PrintPercentageDone()
+		(*bar)(over)
+		time.Sleep(2 * time.Second)
+	}
 
 	wg.Wait()
 	pieceTracker.PrintPercentageDone()
@@ -122,8 +132,6 @@ func DownloadFromFile(path string, port int) {
 // DownloadFromPeer is a function that handshakes with a peer specified by peer object.
 // Concurrently call this function to establish parallel connections to many peers.
 func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pieces *piece.PieceTracker) error {
-	defer wg.Done()
-
 	//safely handle reading using onWholeMessage
 
 	queue := queue.NewQueue(report.TorrentFile)

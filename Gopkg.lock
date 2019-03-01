@@ -10,12 +10,36 @@
   version = "v1.1.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:0ec10644ed15628f0510d342c5fde6b7ee88a01c96400dd4282250547580ee53"
+  name = "github.com/kless/term"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e551c64f56c0ac0469b4db1b70918e05bfd3ab20"
+
+[[projects]]
   digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   pruneopts = "UT"
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:5718f5d7649ee8ec3e6f390f67a369f68915f29c8691cffaa318b1688b027bb2"
+  name = "github.com/sethgrid/curse"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d4ee583ebf0f588f3594a262c5e2726ddebda2cc"
+
+[[projects]]
+  branch = "master"
+  digest = "1:0f486c07dc988fa293f2aa0950691ff769cf70aa044ca58024232c02af19c136"
+  name = "github.com/sethgrid/multibar"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4bf4cf7b87d60bfaf4b4ec40fc7aabf376d0be37"
 
 [[projects]]
   digest = "1:972c2427413d41a1e06ca4897e8528e5a1622894050e2f527b38ddf0f343f759"
@@ -26,6 +50,14 @@
   version = "v1.3.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:aa00000450276f69903a7b7d33634584d3ad6582c2c5d4f25450dcaffe38284f"
+  name = "github.com/tredoe/term"
+  packages = ["sys"]
+  pruneopts = "UT"
+  revision = "e551c64f56c0ac0469b4db1b70918e05bfd3ab20"
+
+[[projects]]
   digest = "1:fed6edb8203bf7636124ed05bc38e03a34f9cc0d4ff3d378ba95467f5960dd2c"
   name = "github.com/zeebo/bencode"
   packages = ["."]
@@ -33,10 +65,19 @@
   revision = "cf5003e89e5a68181295c9383cd3329ef85549ac"
   version = "v1.0.0"
 
+[[projects]]
+  branch = "master"
+  digest = "1:a2bc6cb1f4e1d0b512e1d47d392ead580006b5bdade6ffde16271759fe609b34"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  pruneopts = "UT"
+  revision = "a34e9553db1e492c9a76e60db2296ae7e5fbb772"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/sethgrid/multibar",
     "github.com/stretchr/testify/assert",
     "github.com/zeebo/bencode",
   ]

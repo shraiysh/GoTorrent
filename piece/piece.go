@@ -2,6 +2,7 @@ package piece
 
 import (
 	"fmt"
+	"math"
 	"sync"
 
 	"github.com/concurrency-8/parser"
@@ -105,7 +106,7 @@ func (tracker *PieceTracker) IsDone() (result bool) {
 }
 
 // PrintPercentageDone prints the percentage of download completed on the screen
-func (tracker *PieceTracker) PrintPercentageDone() (percent float64) {
+func (tracker *PieceTracker) PrintPercentageDone() (percent int) {
 	downloaded, total := 0.0, 0
 	for _, i := range tracker.Received {
 		for _, j := range i {
@@ -115,7 +116,7 @@ func (tracker *PieceTracker) PrintPercentageDone() (percent float64) {
 			}
 		}
 	}
-	percent = float64(downloaded*100) / float64(total)
+	percent = int(math.Round(float64(downloaded*100) / float64(total)))
 	// fmt.Print("progress:", percent, "\r")
 	return
 }

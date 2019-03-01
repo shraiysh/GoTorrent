@@ -6,8 +6,8 @@ import (
 	"sync"
 
 	"github.com/concurrency-8/args"
-
 	"github.com/concurrency-8/torrent"
+	"github.com/sethgrid/multibar"
 )
 
 func main() {
@@ -29,11 +29,7 @@ func main() {
 	Sample input:
 		  ./concurrency-8 --files File1 File2 File3 -v -d ../../`
 	l := len(os.Args)
-	if l == 1 {
-		fmt.Println(errormsg)
-		return
-	}
-	if os.Args[1] == "--help" {
+	if l == 1 || os.Args[1] == "--help" {
 		fmt.Println(errormsg)
 		return
 	}
@@ -74,15 +70,23 @@ func main() {
 	//start peer ports from 20000. There's actually no restriction on the port numbers.
 	//According to the specification, initially tracker UDP has ports from 6881-6889
 	//Note that some of these ports may already be in use by the OS, in that case, Download fails.
+
+	progressbars, _ := multibar.New()
+
 	ports[0] = 20000
 	for i, file := range files {
 		if ports[i] == 0 {
 			ports[i] = ports[i-1] + 1
 		}
+		bar := progressbars.MakeBar(100, file)
 		go func(file string, port int) {
-			torrent.DownloadFromFile(file, port)
+			torrent.DownloadFromFile(file, port, &bar)
 			defer wait.Done()
 		}(file, ports[i])
+
 	}
+
+	go progressbars.Listen()
+
 	wait.Wait()
 }
