@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>src/github.com/concurrency-8/tracker/utils_test.go - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../lib/godoc/style.css">
+
+<link rel="stylesheet" href="../../../../lib/godoc/jquery.treeview.css">
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../lib/godoc/jquery.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.js" defer></script>
+<script src="../../../../lib/godoc/jquery.treeview.edit.js" defer></script>
+
+
+<script>var goVersion = "go1.11.4";</script>
+<script src="../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="utils_test.go.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="http://localhost:6060/pkg/">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Source file
+    <a href="http://localhost:6060/src">src</a>/<a href="http://localhost:6060/src/github.com">github.com</a>/<a href="http://localhost:6060/src/github.com/concurrency-8">concurrency-8</a>/<a href="../tracker.html">tracker</a>/<span class="text-muted">utils_test.go</span>
+  </h1>
+
+
+
+
+
+  <h2>
+    Documentation: <a href="http://localhost:6060/pkg/github.com/concurrency-8/tracker">github.com/concurrency-8/tracker</a>
+  </h2>
+
+
+
+<div id="nav"></div>
+
+
+<script type='text/javascript'>document.ANALYSIS_DATA = null;</script>
+<pre><span id="L1" class="ln">     1&nbsp;&nbsp;</span><span class="comment">// These are tests for the functions in the file tracker/utils.go</span>
+<span id="L2" class="ln">     2&nbsp;&nbsp;</span><span class="comment">// Run these tests with `go test` in the package directory</span>
+<span id="L3" class="ln">     3&nbsp;&nbsp;</span>
+<span id="L4" class="ln">     4&nbsp;&nbsp;</span>package tracker
+<span id="L5" class="ln">     5&nbsp;&nbsp;</span>
+<span id="L6" class="ln">     6&nbsp;&nbsp;</span>import (
+<span id="L7" class="ln">     7&nbsp;&nbsp;</span>	&#34;bufio&#34;
+<span id="L8" class="ln">     8&nbsp;&nbsp;</span>	&#34;bytes&#34;
+<span id="L9" class="ln">     9&nbsp;&nbsp;</span>	&#34;encoding/binary&#34;
+<span id="L10" class="ln">    10&nbsp;&nbsp;</span>	&#34;fmt&#34;
+<span id="L11" class="ln">    11&nbsp;&nbsp;</span>	&#34;github.com/stretchr/testify/assert&#34;
+<span id="L12" class="ln">    12&nbsp;&nbsp;</span>	&#34;io&#34;
+<span id="L13" class="ln">    13&nbsp;&nbsp;</span>	&#34;math/rand&#34;
+<span id="L14" class="ln">    14&nbsp;&nbsp;</span>	&#34;testing&#34;
+<span id="L15" class="ln">    15&nbsp;&nbsp;</span>)
+<span id="L16" class="ln">    16&nbsp;&nbsp;</span>
+<span id="L17" class="ln">    17&nbsp;&nbsp;</span>func getErrorMsg(varName, functionName string) string {
+<span id="L18" class="ln">    18&nbsp;&nbsp;</span>	return varName + &#34;: not set properly in &#34; + functionName + &#34;. Tip: You might want to check if your network allows torrenting!&#34;
+<span id="L19" class="ln">    19&nbsp;&nbsp;</span>}
+<span id="L20" class="ln">    20&nbsp;&nbsp;</span>
+<span id="L21" class="ln">    21&nbsp;&nbsp;</span>func TestBuildConnReq(t *testing.T) {
+<span id="L22" class="ln">    22&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : buildConnReq(): &#34;)
+<span id="L23" class="ln">    23&nbsp;&nbsp;</span>	req := buildConnReq()
+<span id="L24" class="ln">    24&nbsp;&nbsp;</span>	errorMessage := &#34;Invalid Connection Request for tracker&#34;
+<span id="L25" class="ln">    25&nbsp;&nbsp;</span>	assert.Equal(t, req[:12], []byte{0x00, 0x00, 0x04, 0x17, 0x27, 0x10, 0x19, 0x80, 0x00, 0x00, 0x00, 0x00}, errorMessage)
+<span id="L26" class="ln">    26&nbsp;&nbsp;</span>	assert.NotEqual(t, req[:12], []byte{0x01, 0x00, 0x04, 0x17, 0x27, 0x10, 0x19, 0x80, 0x00, 0x00, 0x00, 0x00}, errorMessage)
+<span id="L27" class="ln">    27&nbsp;&nbsp;</span>
+<span id="L28" class="ln">    28&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L29" class="ln">    29&nbsp;&nbsp;</span>}
+<span id="L30" class="ln">    30&nbsp;&nbsp;</span>
+<span id="L31" class="ln">    31&nbsp;&nbsp;</span>func TestRespType(t *testing.T) {
+<span id="L32" class="ln">    32&nbsp;&nbsp;</span>
+<span id="L33" class="ln">    33&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : respType(): &#34;)
+<span id="L34" class="ln">    34&nbsp;&nbsp;</span>
+<span id="L35" class="ln">    35&nbsp;&nbsp;</span>	var mockResponseBuf bytes.Buffer
+<span id="L36" class="ln">    36&nbsp;&nbsp;</span>	writer := bufio.NewWriter(&amp;mockResponseBuf)
+<span id="L37" class="ln">    37&nbsp;&nbsp;</span>
+<span id="L38" class="ln">    38&nbsp;&nbsp;</span>	<span class="comment">// Mock response contains only action - announce</span>
+<span id="L39" class="ln">    39&nbsp;&nbsp;</span>	binary.Write(writer, binary.BigEndian, uint32(1))
+<span id="L40" class="ln">    40&nbsp;&nbsp;</span>	writer.Flush()
+<span id="L41" class="ln">    41&nbsp;&nbsp;</span>	assert.Equal(t, respType(mockResponseBuf), &#34;announce&#34;, &#34;Unable to detect \&#34;announce\&#34; response when action=1&#34;)
+<span id="L42" class="ln">    42&nbsp;&nbsp;</span>
+<span id="L43" class="ln">    43&nbsp;&nbsp;</span>	<span class="comment">// Mock connect response</span>
+<span id="L44" class="ln">    44&nbsp;&nbsp;</span>	mockResponseBuf = GetMockConnectResponseBuf(rand.Uint32(), rand.Uint64())
+<span id="L45" class="ln">    45&nbsp;&nbsp;</span>	assert.Equal(t, respType(mockResponseBuf), &#34;connect&#34;, &#34;Unable to detect \&#34;connect\&#34; response when action=0&#34;)
+<span id="L46" class="ln">    46&nbsp;&nbsp;</span>
+<span id="L47" class="ln">    47&nbsp;&nbsp;</span>	mockResponseBuf.Reset()
+<span id="L48" class="ln">    48&nbsp;&nbsp;</span>
+<span id="L49" class="ln">    49&nbsp;&nbsp;</span>	<span class="comment">// Mock response has 16 bytes, first 4 bytes show action - announce</span>
+<span id="L50" class="ln">    50&nbsp;&nbsp;</span>	binary.Write(writer, binary.BigEndian, uint32(1)) <span class="comment">// 4 bytes written</span>
+<span id="L51" class="ln">    51&nbsp;&nbsp;</span>	for i := 0; i &lt; 3; i++ {                          <span class="comment">// Next 12 bytes = 3 uint32</span>
+<span id="L52" class="ln">    52&nbsp;&nbsp;</span>		binary.Write(writer, binary.BigEndian, uint32(rand.Uint32()))
+<span id="L53" class="ln">    53&nbsp;&nbsp;</span>	}
+<span id="L54" class="ln">    54&nbsp;&nbsp;</span>	writer.Flush()
+<span id="L55" class="ln">    55&nbsp;&nbsp;</span>
+<span id="L56" class="ln">    56&nbsp;&nbsp;</span>	assert.Equal(t, respType(mockResponseBuf), &#34;announce&#34;, &#34;Unable to detect \&#34;announce\&#34; response when action=1&#34;)
+<span id="L57" class="ln">    57&nbsp;&nbsp;</span>
+<span id="L58" class="ln">    58&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L59" class="ln">    59&nbsp;&nbsp;</span>}
+<span id="L60" class="ln">    60&nbsp;&nbsp;</span>
+<span id="L61" class="ln">    61&nbsp;&nbsp;</span>func TestParseConnResp(t *testing.T) {
+<span id="L62" class="ln">    62&nbsp;&nbsp;</span>
+<span id="L63" class="ln">    63&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : parseConnResp(): &#34;)
+<span id="L64" class="ln">    64&nbsp;&nbsp;</span>	trID := rand.Uint32()
+<span id="L65" class="ln">    65&nbsp;&nbsp;</span>	connID := rand.Uint64()
+<span id="L66" class="ln">    66&nbsp;&nbsp;</span>	mockConnRespBuf := GetMockConnectResponseBuf(trID, connID)
+<span id="L67" class="ln">    67&nbsp;&nbsp;</span>
+<span id="L68" class="ln">    68&nbsp;&nbsp;</span>	mockConnResp := parseConnResp(mockConnRespBuf) <span class="comment">// Object of type ConnectResponse</span>
+<span id="L69" class="ln">    69&nbsp;&nbsp;</span>
+<span id="L70" class="ln">    70&nbsp;&nbsp;</span>	assert.Equal(t, mockConnResp.Action, uint32(0), &#34;Action for connect response must be uint32(0)&#34;)
+<span id="L71" class="ln">    71&nbsp;&nbsp;</span>	assert.Equal(t, mockConnResp.TransactionID, trID, &#34;Unable to detect transactionID in connection response&#34;)
+<span id="L72" class="ln">    72&nbsp;&nbsp;</span>	assert.Equal(t, mockConnResp.ConnectionID, connID, &#34;Unable to detect connectionID in connection response&#34;)
+<span id="L73" class="ln">    73&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L74" class="ln">    74&nbsp;&nbsp;</span>}
+<span id="L75" class="ln">    75&nbsp;&nbsp;</span>
+<span id="L76" class="ln">    76&nbsp;&nbsp;</span><span class="comment">// func GetRandomTorrent() parser.TorrentFile {</span>
+<span id="L77" class="ln">    77&nbsp;&nbsp;</span><span class="comment">// 	return parser.TorrentFile{}</span>
+<span id="L78" class="ln">    78&nbsp;&nbsp;</span><span class="comment">// }</span>
+<span id="L79" class="ln">    79&nbsp;&nbsp;</span>
+<span id="L80" class="ln">    80&nbsp;&nbsp;</span>func TestBuildAnnounceReq(t *testing.T) {
+<span id="L81" class="ln">    81&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : buildAnnounceReq(): &#34;)
+<span id="L82" class="ln">    82&nbsp;&nbsp;</span>
+<span id="L83" class="ln">    83&nbsp;&nbsp;</span>	connID := rand.Uint64()
+<span id="L84" class="ln">    84&nbsp;&nbsp;</span>	report := GetRandomClientReport()
+<span id="L85" class="ln">    85&nbsp;&nbsp;</span>
+<span id="L86" class="ln">    86&nbsp;&nbsp;</span>	announceReqBuf, _ := buildAnnounceReq(connID, report)
+<span id="L87" class="ln">    87&nbsp;&nbsp;</span>
+<span id="L88" class="ln">    88&nbsp;&nbsp;</span>	var announceReqReader io.Reader = bytes.NewReader(announceReqBuf.Bytes())
+<span id="L89" class="ln">    89&nbsp;&nbsp;</span>
+<span id="L90" class="ln">    90&nbsp;&nbsp;</span>	<span class="comment">// Temporary variables to store data read from generated buffer</span>
+<span id="L91" class="ln">    91&nbsp;&nbsp;</span>	var tempUint64 uint64
+<span id="L92" class="ln">    92&nbsp;&nbsp;</span>	var tempUint32 uint32
+<span id="L93" class="ln">    93&nbsp;&nbsp;</span>	var temp20ByteArr [20]byte
+<span id="L94" class="ln">    94&nbsp;&nbsp;</span>	var tempInt32 int32
+<span id="L95" class="ln">    95&nbsp;&nbsp;</span>	var tempUint16 uint16
+<span id="L96" class="ln">    96&nbsp;&nbsp;</span>
+<span id="L97" class="ln">    97&nbsp;&nbsp;</span>	errorMsg := func(varName string) string {
+<span id="L98" class="ln">    98&nbsp;&nbsp;</span>		return varName + &#34;: not set properly in Announce Request&#34;
+<span id="L99" class="ln">    99&nbsp;&nbsp;</span>	}
+<span id="L100" class="ln">   100&nbsp;&nbsp;</span>
+<span id="L101" class="ln">   101&nbsp;&nbsp;</span>	<span class="comment">// connectionID</span>
+<span id="L102" class="ln">   102&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint64)
+<span id="L103" class="ln">   103&nbsp;&nbsp;</span>	assert.Equal(t, connID, tempUint64, errorMsg(&#34;connectionID&#34;))
+<span id="L104" class="ln">   104&nbsp;&nbsp;</span>
+<span id="L105" class="ln">   105&nbsp;&nbsp;</span>	<span class="comment">// action</span>
+<span id="L106" class="ln">   106&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint32)
+<span id="L107" class="ln">   107&nbsp;&nbsp;</span>	assert.Equal(t, uint32(1), tempUint32, errorMsg(&#34;action&#34;))
+<span id="L108" class="ln">   108&nbsp;&nbsp;</span>
+<span id="L109" class="ln">   109&nbsp;&nbsp;</span>	<span class="comment">// Cannot check for transactionID</span>
+<span id="L110" class="ln">   110&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint32)
+<span id="L111" class="ln">   111&nbsp;&nbsp;</span>
+<span id="L112" class="ln">   112&nbsp;&nbsp;</span>	<span class="comment">// InfoHash</span>
+<span id="L113" class="ln">   113&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;temp20ByteArr)
+<span id="L114" class="ln">   114&nbsp;&nbsp;</span>	var infoHash [20]byte
+<span id="L115" class="ln">   115&nbsp;&nbsp;</span>
+<span id="L116" class="ln">   116&nbsp;&nbsp;</span>	copy(infoHash[:], report.TorrentFile.InfoHash)
+<span id="L117" class="ln">   117&nbsp;&nbsp;</span>	assert.Equal(t, infoHash, temp20ByteArr, errorMsg(&#34;torrent.InfoHash&#34;))
+<span id="L118" class="ln">   118&nbsp;&nbsp;</span>
+<span id="L119" class="ln">   119&nbsp;&nbsp;</span>	<span class="comment">// Cannot check for peerID</span>
+<span id="L120" class="ln">   120&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;temp20ByteArr)
+<span id="L121" class="ln">   121&nbsp;&nbsp;</span>
+<span id="L122" class="ln">   122&nbsp;&nbsp;</span>	<span class="comment">// downloaded</span>
+<span id="L123" class="ln">   123&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint64)
+<span id="L124" class="ln">   124&nbsp;&nbsp;</span>	assert.Equal(t, uint64(0), tempUint64, errorMsg(&#34;downloaded&#34;))
+<span id="L125" class="ln">   125&nbsp;&nbsp;</span>
+<span id="L126" class="ln">   126&nbsp;&nbsp;</span>	<span class="comment">// left</span>
+<span id="L127" class="ln">   127&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint64)
+<span id="L128" class="ln">   128&nbsp;&nbsp;</span>
+<span id="L129" class="ln">   129&nbsp;&nbsp;</span>	assert.Equal(t, report.Left, tempUint64, errorMsg(&#34;left&#34;))
+<span id="L130" class="ln">   130&nbsp;&nbsp;</span>	<span class="comment">// uploaded</span>
+<span id="L131" class="ln">   131&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint64)
+<span id="L132" class="ln">   132&nbsp;&nbsp;</span>	assert.Equal(t, uint64(0), tempUint64, errorMsg(&#34;uploaded&#34;))
+<span id="L133" class="ln">   133&nbsp;&nbsp;</span>
+<span id="L134" class="ln">   134&nbsp;&nbsp;</span>	<span class="comment">// event</span>
+<span id="L135" class="ln">   135&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint32)
+<span id="L136" class="ln">   136&nbsp;&nbsp;</span>	assert.Equal(t, uint32(0), tempUint32, errorMsg(&#34;event&#34;))
+<span id="L137" class="ln">   137&nbsp;&nbsp;</span>
+<span id="L138" class="ln">   138&nbsp;&nbsp;</span>	<span class="comment">// Ip address</span>
+<span id="L139" class="ln">   139&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint32)
+<span id="L140" class="ln">   140&nbsp;&nbsp;</span>	assert.Equal(t, uint32(0), tempUint32, errorMsg(&#34;Ip address&#34;))
+<span id="L141" class="ln">   141&nbsp;&nbsp;</span>
+<span id="L142" class="ln">   142&nbsp;&nbsp;</span>	<span class="comment">// Cannot check key</span>
+<span id="L143" class="ln">   143&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint32)
+<span id="L144" class="ln">   144&nbsp;&nbsp;</span>
+<span id="L145" class="ln">   145&nbsp;&nbsp;</span>	<span class="comment">// num want</span>
+<span id="L146" class="ln">   146&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempInt32)
+<span id="L147" class="ln">   147&nbsp;&nbsp;</span>	assert.Equal(t, int32(-1), tempInt32, errorMsg(&#34;num_want&#34;))
+<span id="L148" class="ln">   148&nbsp;&nbsp;</span>
+<span id="L149" class="ln">   149&nbsp;&nbsp;</span>	<span class="comment">// port</span>
+<span id="L150" class="ln">   150&nbsp;&nbsp;</span>	binary.Read(announceReqReader, binary.BigEndian, &amp;tempUint16)
+<span id="L151" class="ln">   151&nbsp;&nbsp;</span>	assert.Equal(t, report.Port, tempUint16, errorMsg(&#34;port&#34;))
+<span id="L152" class="ln">   152&nbsp;&nbsp;</span>
+<span id="L153" class="ln">   153&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L154" class="ln">   154&nbsp;&nbsp;</span>}
+<span id="L155" class="ln">   155&nbsp;&nbsp;</span>
+<span id="L156" class="ln">   156&nbsp;&nbsp;</span>func TestParseAnnounceResp(t *testing.T) {
+<span id="L157" class="ln">   157&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : parseAnnounceResp(): &#34;)
+<span id="L158" class="ln">   158&nbsp;&nbsp;</span>	transactionID, interval, leechers, seeders := rand.Uint32(), rand.Uint32(), rand.Uint32(), rand.Uint32()
+<span id="L159" class="ln">   159&nbsp;&nbsp;</span>	length := rand.Intn(5)
+<span id="L160" class="ln">   160&nbsp;&nbsp;</span>	peers := make([]Peer, length)
+<span id="L161" class="ln">   161&nbsp;&nbsp;</span>	for i := 0; i &lt; length; i++ {
+<span id="L162" class="ln">   162&nbsp;&nbsp;</span>		peers[i].IPAdress = rand.Uint32()
+<span id="L163" class="ln">   163&nbsp;&nbsp;</span>		peers[i].Port = uint16(rand.Intn(9000) + 1000)
+<span id="L164" class="ln">   164&nbsp;&nbsp;</span>	}
+<span id="L165" class="ln">   165&nbsp;&nbsp;</span>
+<span id="L166" class="ln">   166&nbsp;&nbsp;</span>	mockAnnounceResponseBuf := GetMockAnnounceResponseBuf(transactionID, interval, leechers, seeders, peers)
+<span id="L167" class="ln">   167&nbsp;&nbsp;</span>
+<span id="L168" class="ln">   168&nbsp;&nbsp;</span>	announceResponse := parseAnnounceResp(mockAnnounceResponseBuf)
+<span id="L169" class="ln">   169&nbsp;&nbsp;</span>
+<span id="L170" class="ln">   170&nbsp;&nbsp;</span>	<span class="comment">// Checking for parsed parameters</span>
+<span id="L171" class="ln">   171&nbsp;&nbsp;</span>	assert.Equal(t, transactionID, announceResponse.TransactionID, getErrorMsg(&#34;transactionID&#34;, &#34;TestParseAnnounceResp&#34;))
+<span id="L172" class="ln">   172&nbsp;&nbsp;</span>	assert.Equal(t, interval, announceResponse.Interval, getErrorMsg(&#34;interval&#34;, &#34;TestParseAnnounceResp&#34;))
+<span id="L173" class="ln">   173&nbsp;&nbsp;</span>	assert.Equal(t, leechers, announceResponse.Leechers, getErrorMsg(&#34;leechers&#34;, &#34;TestParseAnnounceResponse&#34;))
+<span id="L174" class="ln">   174&nbsp;&nbsp;</span>	assert.Equal(t, seeders, announceResponse.Seeders, getErrorMsg(&#34;seeders&#34;, &#34;TestParseAnnounceResponse&#34;))
+<span id="L175" class="ln">   175&nbsp;&nbsp;</span>
+<span id="L176" class="ln">   176&nbsp;&nbsp;</span>	<span class="comment">// Checking: Number of peers received is same</span>
+<span id="L177" class="ln">   177&nbsp;&nbsp;</span>	assert.Equal(t, len(peers), len(announceResponse.Peers), getErrorMsg(&#34;LengthNotEqual&#34;, &#34;TestParseAnnounceResponse&#34;))
+<span id="L178" class="ln">   178&nbsp;&nbsp;</span>
+<span id="L179" class="ln">   179&nbsp;&nbsp;</span>	<span class="comment">// Checking: every peer created is parsed</span>
+<span id="L180" class="ln">   180&nbsp;&nbsp;</span>	for i := 0; i &lt; length; i++ {
+<span id="L181" class="ln">   181&nbsp;&nbsp;</span>		assert.Equal(t, peers[i].IPAdress, announceResponse.Peers[i].IPAdress, getErrorMsg(&#34;IPMismatchInPeers&#34;, &#34;TestParseAnnounceResponse&#34;))
+<span id="L182" class="ln">   182&nbsp;&nbsp;</span>		assert.Equal(t, peers[i].Port, announceResponse.Peers[i].Port, getErrorMsg(&#34;PortMismatchInPeers&#34;, &#34;TestParseAnnounceResponse&#34;))
+<span id="L183" class="ln">   183&nbsp;&nbsp;</span>
+<span id="L184" class="ln">   184&nbsp;&nbsp;</span>	}
+<span id="L185" class="ln">   185&nbsp;&nbsp;</span>
+<span id="L186" class="ln">   186&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L187" class="ln">   187&nbsp;&nbsp;</span>}
+<span id="L188" class="ln">   188&nbsp;&nbsp;</span>
+<span id="L189" class="ln">   189&nbsp;&nbsp;</span><span class="comment">/*
+<span id="L190" class="ln">   190&nbsp;&nbsp;</span>func TestGetPeers(t *testing.T) {
+<span id="L191" class="ln">   191&nbsp;&nbsp;</span>
+<span id="L192" class="ln">   192&nbsp;&nbsp;</span>	fmt.Print(&#34;Testing tracker/utils.go : GetPeers(): &#34;)
+<span id="L193" class="ln">   193&nbsp;&nbsp;</span>
+<span id="L194" class="ln">   194&nbsp;&nbsp;</span>	for _, torrentfileName := range parser.GetTorrentFileList() {
+<span id="L195" class="ln">   195&nbsp;&nbsp;</span>		//torrentfile := getRandomTorrent();
+<span id="L196" class="ln">   196&nbsp;&nbsp;</span>		torrentfile, _ := parser.ParseFromFile(torrentfileName)
+<span id="L197" class="ln">   197&nbsp;&nbsp;</span>		passes := false
+<span id="L198" class="ln">   198&nbsp;&nbsp;</span>		for _, announceUrl := range torrentfile.Announce {
+<span id="L199" class="ln">   199&nbsp;&nbsp;</span>
+<span id="L200" class="ln">   200&nbsp;&nbsp;</span>			u, err := url.Parse(announceUrl)
+<span id="L201" class="ln">   201&nbsp;&nbsp;</span>			if err != nil {
+<span id="L202" class="ln">   202&nbsp;&nbsp;</span>				fmt.Println(&#34;\nWarning:&#34;, err)
+<span id="L203" class="ln">   203&nbsp;&nbsp;</span>				continue
+<span id="L204" class="ln">   204&nbsp;&nbsp;</span>			}
+<span id="L205" class="ln">   205&nbsp;&nbsp;</span>
+<span id="L206" class="ln">   206&nbsp;&nbsp;</span>			clientReport := GetClientStatusReport(torrentfile, 6881)
+<span id="L207" class="ln">   207&nbsp;&nbsp;</span>
+<span id="L208" class="ln">   208&nbsp;&nbsp;</span>			_, err = GetPeers(u, clientReport)
+<span id="L209" class="ln">   209&nbsp;&nbsp;</span>			if err != nil {
+<span id="L210" class="ln">   210&nbsp;&nbsp;</span>				fmt.Println(&#34;\nWarning:&#34;, err)
+<span id="L211" class="ln">   211&nbsp;&nbsp;</span>				continue
+<span id="L212" class="ln">   212&nbsp;&nbsp;</span>			}
+<span id="L213" class="ln">   213&nbsp;&nbsp;</span>			passes = true
+<span id="L214" class="ln">   214&nbsp;&nbsp;</span>			break
+<span id="L215" class="ln">   215&nbsp;&nbsp;</span>		}
+<span id="L216" class="ln">   216&nbsp;&nbsp;</span>		assert.Equal(t, true, passes, getErrorMsg(&#34;torrentfile&#34;, &#34;TestGetPeers&#34;))
+<span id="L217" class="ln">   217&nbsp;&nbsp;</span>	}
+<span id="L218" class="ln">   218&nbsp;&nbsp;</span>	fmt.Println(&#34;PASS&#34;)
+<span id="L219" class="ln">   219&nbsp;&nbsp;</span>} */</span>
+<span id="L220" class="ln">   220&nbsp;&nbsp;</span>
+</pre><p><a href="utils_test.go%3Fm=text">View as plain text</a></p>
+
+<div id="footer">
+Build version go1.11.4.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

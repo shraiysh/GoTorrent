@@ -1,0 +1,2 @@
+# ```package torrent```
+This package contains function for creating messages for communiation. It also defines a parser function that parses messages received from peer and calls corresponding message handlers. Apart from this it defines a download function that establish handshake with peer and start requesting pieces from it.
