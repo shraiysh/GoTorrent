@@ -22,8 +22,6 @@ func main() {
 		  True if pause and resume feature is needed. False otherwise.
 	--resume -r
 		  True to resume partially downloaded files.
-	--verbose -v
-		  True if misc output is required. False otherwise.
 	--files [path] [path] ...
 		  List of Torrent Files
 	Sample input:
@@ -64,7 +62,6 @@ func main() {
 	args.ARGS.Verbose = verboseflag
 	args.ARGS.DownloadPath = downloadpath
 	args.ARGS.ResumeCapability = rcflag
-	fmt.Printf("%v\n", args.ARGS)
 	wait.Add(len(files))
 	ports := make([]int, len(files))
 	//start peer ports from 20000. There's actually no restriction on the port numbers.
