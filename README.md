@@ -20,8 +20,7 @@ Bit-torrent client implementation as part of CS2443 (Principles of Programming L
 	- Hitesh (MA17BTECH11004)
 
 ## Documentation
-1. You can refer to [this](http://104.211.220.36/pkg/github.com/concurrency-8/) to see the documentation generated for the master branch.
-2. Documentation will be updated automatically upon a pull request into master.
+1. You can refer to [this](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8) to see the documentation generated for the master branch.
 
 ## Setup
 1. **Installing Golang**
