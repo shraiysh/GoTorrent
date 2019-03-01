@@ -1,5 +1,6 @@
 package args
 
+// Args has flags for cli
 type Args struct {
 	FilePath         []string
 	DownloadPath     string
@@ -8,4 +9,5 @@ type Args struct {
 	Verbose          bool
 }
 
+// ARGS is an instance of Args
 var ARGS = &Args{make([]string, 0), "", true, false, true}
