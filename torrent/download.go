@@ -89,7 +89,7 @@ func DownloadFromFile(path string, port int) {
 
 	pieceTracker := piece.NewPieceTracker(torrentFile)
 	if args.ARGS.Resume {
-		readGob(torrentFile.Name+"/resume.gob", pieceTracker)
+		readGob(torrentFile.Name+"/resume.gob", &pieceTracker.Received)
 	}
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 	wg.Add(len(announceResp.Peers))
@@ -423,7 +423,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 	Info.Println("peer: <", peer, ">: Writing block to file ", file.Name())
 	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
 	if args.ARGS.ResumeCapability {
-		writeGob(report.TorrentFile.Name+"/resume.gob", pieces)
+		writeGob(report.TorrentFile.Name+"/resume.gob", pieces.Received)
 	}
 	// file.Sync()
 	pieces.PrintPercentageDone()
