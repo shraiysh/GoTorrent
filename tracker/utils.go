@@ -3,19 +3,27 @@ package tracker
 import (
 	"bufio"
 	"bytes"
-	"crypto/rand"
+	//"crypto"
 	"encoding/binary"
 	"fmt"
 	"github.com/concurrency-8/parser"
 	bencode "github.com/zeebo/bencode"
 	"io/ioutil"
+	"log"
 	"math"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
 	"time"
+)
+
+var (
+	root     string
+	torrents []string
+	err      error
 )
 
 // buildConnReq is the first connection request for tracker
@@ -360,4 +368,20 @@ func GetClientStatusReport(torrent parser.TorrentFile, port uint16) (report *Cli
 	}
 
 	return
+}
+func GetRandomTorrent() parser.TorrentFile {
+	root = "././test_torrents"
+	//Read the directory
+	files, err := ioutil.ReadDir(root)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//store in the list
+	for _, f := range files {
+		torrents = append(torrents, f.Name())
+	}
+	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
+	random_torrent := root + "/" + torrents[rand.Intn(len(torrents))]
+	store, _ := parser.ParseFromFile(random_torrent)
+	return store
 }

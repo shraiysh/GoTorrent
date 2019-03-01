@@ -8,11 +8,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/concurrency-8/parser"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"math/rand"
-	// "net/url"
 	"testing"
 )
 
@@ -75,9 +73,9 @@ func TestParseConnResp(t *testing.T) {
 	fmt.Println("PASS")
 }
 
-func getRandomTorrent() parser.TorrentFile {
-	return parser.TorrentFile{}
-}
+// func GetRandomTorrent() parser.TorrentFile {
+// 	return parser.TorrentFile{}
+// }
 
 func TestBuildAnnounceReq(t *testing.T) {
 	fmt.Print("Testing tracker/utils.go : buildAnnounceReq(): ")
