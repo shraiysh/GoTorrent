@@ -46,7 +46,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 		if !args.ARGS.Resume {
 			filePointer, err = os.Create(info.Name + "/" + info.Name)
 		} else {
-			filePointer, err = os.OpenFile(info.Name+"/"+info.Name, os.O_APPEND|os.O_WRONLY, 0600)
+			filePointer, err = os.OpenFile(info.Name+"/"+info.Name, os.O_WRONLY, 0600)
 		}
 
 		if err != nil {
@@ -72,7 +72,7 @@ func Parse(reader io.Reader) (TorrentFile, error) {
 			if !args.ARGS.Resume {
 				filePointer, err = os.Create(info.Name + "/" + f.Path[0])
 			} else {
-				filePointer, err = os.OpenFile(info.Name+"/"+f.Path[0], os.O_APPEND|os.O_WRONLY, 0600)
+				filePointer, err = os.OpenFile(info.Name+"/"+f.Path[0], os.O_WRONLY, 0600)
 			}
 			if err != nil {
 				fmt.Println(err)

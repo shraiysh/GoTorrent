@@ -1,13 +1,14 @@
 # GoTorrent
  [![CircleCI](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master.svg?style=svg&circle-token=88f8e60508e4f98f339d7b395c228c6f309c2564)](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE) [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8)
  
-Bit-torrent client implementation as part of CS2443 (Principles of Programming Language II ) by Prof. Saurabh Joshi .
+Bit-torrent client implementation as part of CS2433 (Principles of Programming Language II ) by Prof. Saurabh Joshi .
 
 * [Description](#description)
 * [Documentation](#Documentation)
 * [Setup](#Setup)
 * [Usage](#Usage)
 * [Guidelines for contribution](#guidelines-for-contribution)
+* [External packages](#external-packages)
 * [Resources and References](#Resources-and-References)
 
 ## Description
@@ -94,13 +95,18 @@ Bit-torrent client implementation as part of CS2443 (Principles of Programming L
 	- Indent pre-formatted comments.
 	- Refer to the [Guidelines](https://blog.golang.org/godoc-documenting-go-code) for more info on commenting.
 
+### External Packages
+- [github.com/zeebo/bencode](https://github.com/zeebo/bencode/blob/master/LICENSE)
+- [github.com/alecthomas/gometalinter](https://github.com/alecthomas/gometalinter/blob/master/COPYING)
+- [golang.org/x/lint/golint](https://github.com/golang/lint/blob/master/LICENSE)
+- [github.com/gojp/goreportcard](https://github.com/gojp/goreportcard/blob/master/LICENSE)
+- [github.com/stretchr/testify](https://github.com/stretchr/testify/blob/master/LICENSE)
+- [github.com/sethgrid/multibar](https://github.com/sethgrid/multibar/blob/master/LICENSE.md)
+- [github.com/fzipp/gocyclo](https://github.com/fzipp/gocyclo/blob/master/LICENSE)
+- [github.com/client9/misspell/cmd/misspell](https://github.com/client9/misspell/blob/master/LICENSE)
+- [github.com/gordonklaus/ineffassign](https://github.com/gordonklaus/ineffassign/blob/master/LICENSE)
+
 ### Resources and References
 - [Bittorent Specifications](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
 - [Bittorent Specifications](http://www.bittorrent.org/beps/bep_0003.html)
 - [Bittorrent in Javascript](https://allenkim67.github.io/programming/2016/05/04/how-to-make-your-own-bittorrent-client.html)
-- [Bittorrent in C#](https://www.seanjoflynn.com/research/bittorrent.html)
-- [Complete Bittorrent in Go](https://github.com/jackpal/Taipei-Torrent)
-- [Network Programming in Go](https://ipfs.io/ipfs/QmfYeDhGH9bZzihBUDEQbCbTc5k5FZKURMUoUvfmc27BwL/index.html)
-- [Concurrency in Go](https://github.com/golang/go/wiki/LearnConcurrency)
-- [Go advanced testing tips & tricks](https://medium.com/@povilasve/go-advanced-tips-tricks-a872503ac859)
-- [Travis CI tutorial](https://docs.travis-ci.com/user/tutorial/)

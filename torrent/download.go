@@ -98,6 +98,20 @@ func DownloadFromFile(path string, port int, bar *multibar.ProgressFunc) {
 	pieceTracker := piece.NewPieceTracker(torrentFile)
 	if args.ARGS.Resume {
 		readGob(torrentFile.Name+"/resume.gob", &pieceTracker.Received, Log)
+		readGob(torrentFile.Name+"/resume.gob", &pieceTracker.Requested, Log)
+	}
+
+	for i := range pieceTracker.Received {
+		temp := true
+		for j := range pieceTracker.Received[i] {
+			temp = temp && pieceTracker.Received[i][j]
+		}
+
+		if !temp {
+			for j := range pieceTracker.Received[i] {
+				pieceTracker.Received[i][j] = false
+			}
+		}
 	}
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 	wg.Add(len(announceResp.Peers))
