@@ -14,9 +14,9 @@ Bit-torrent client implementation as part of CS2443 (Principles of Programming L
 	- Generating detailed log files for debugging.
 	- A command line interface for managing.
 3. **Team**
-	- Shraiysh (CS17BTECH11050)
+	- Shraiysh Gupta (CS17BTECH11050)
 	- Puneet Mangla (CS17BTECH11029)
-	- Lingam Sai Ramana Reddy (Cs17BTECH11029)
+	- Lingam Sai Ramana Reddy (Cs17BTECH11022)
 	- Hitesh (MA17BTECH11004)
 
 ## Documentation
