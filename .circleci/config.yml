@@ -10,9 +10,13 @@ jobs:
       - run : sudo apt-get update
       - run : go get github.com/zeebo/bencode
       - run : go get github.com/alecthomas/gometalinter
+      - run : go get golang.org/x/lint/golint
       - run : go get github.com/gojp/goreportcard/cmd/goreportcard-cli
       - run : go get github.com/stretchr/testify/assert
       - run : go get github.com/sethgrid/multibar
+      - run : go get github.com/fzipp/gocyclo
+      - run : go get github.com/client9/misspell/cmd/misspell
+      - run : github.com/gordonklaus/ineffassign
       - run : chmod +x ./build.sh
       - run : ./build.sh
       - run : go build main.go
