@@ -2,6 +2,14 @@
  [![CircleCI](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master.svg?style=svg&circle-token=88f8e60508e4f98f339d7b395c228c6f309c2564)](https://circleci.com/gh/IITH-SBJoshi/concurrency-8/tree/master) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/IITH-SBJoshi/concurrency-8/blob/master/LICENSE) [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://iith-sbjoshi.github.io/concurrency-8/pkg/github.com/concurrency-8)
  
 Bit-torrent client implementation as part of CS2443 (Principles of Programming Language II ) by Prof. Saurabh Joshi .
+
+* [Description](#description)
+* [Documentation](#Documentation)
+* [Setup](#Setup)
+* [Usage](#Usage)
+* [Guidelines for contribution](#Guidelines for contribution)
+* [Resources and References](#Resources and References)
+
 ## Description
 1. **Objective**
 	- Get familair with writing concurrent programs.
