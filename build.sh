@@ -8,6 +8,7 @@ files=(
 	torrent/*.go
 	queue/*.go
 	piece/*.go
+	args/*.go
 )
 
 # script for formatting 
