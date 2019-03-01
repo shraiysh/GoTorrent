@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>src/github.com/concurrency-8/build.sh - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../lib/godoc/style.css">
+
+<link rel="stylesheet" href="../../../lib/godoc/jquery.treeview.css">
+<script>window.initFuncs = [];</script>
+
+<script src="../../../lib/godoc/jquery.js" defer></script>
+<script src="../../../lib/godoc/jquery.treeview.js" defer></script>
+<script src="../../../lib/godoc/jquery.treeview.edit.js" defer></script>
+
+
+<script>var goVersion = "go1.11.4";</script>
+<script src="../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="build.sh.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="http://localhost:6060/pkg/">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Text file
+    <a href="http://localhost:6060/src">src</a>/<a href="http://localhost:6060/src/github.com">github.com</a>/<a href="http://localhost:6060/src/github.com/concurrency-8">concurrency-8</a>/<span class="text-muted">build.sh</span>
+  </h1>
+
+
+
+
+
+  <h2>
+    Documentation: <a href="http://localhost:6060/pkg/github.com/concurrency-8">github.com/concurrency-8</a>
+  </h2>
+
+
+
+<div id="nav"></div>
+
+
+<pre><span id="L1" class="ln">     1</span>	#!/bin/bash
+<span id="L2" class="ln">     2</span>	
+<span id="L3" class="ln">     3</span>	# all files should be here
+<span id="L4" class="ln">     4</span>	files=( 
+<span id="L5" class="ln">     5</span>		main.go
+<span id="L6" class="ln">     6</span>		parser/*.go
+<span id="L7" class="ln">     7</span>		tracker/*.go
+<span id="L8" class="ln">     8</span>		torrent/*.go
+<span id="L9" class="ln">     9</span>		queue/*.go
+<span id="L10" class="ln">    10</span>		piece/*.go
+<span id="L11" class="ln">    11</span>		args/*.go
+<span id="L12" class="ln">    12</span>	)
+<span id="L13" class="ln">    13</span>	
+<span id="L14" class="ln">    14</span>	# script for formatting 
+<span id="L15" class="ln">    15</span>	for i in &#34;${files[@]}&#34;; do
+<span id="L16" class="ln">    16</span>		gofmt -w &#34;$i&#34;
+<span id="L17" class="ln">    17</span>	done 
+<span id="L18" class="ln">    18</span>	
+<span id="L19" class="ln">    19</span>	# script for running test files
+<span id="L20" class="ln">    20</span>	go test ./... -v
+<span id="L21" class="ln">    21</span>	
+<span id="L22" class="ln">    22</span>	#checking goreportcard-cli for issues
+<span id="L23" class="ln">    23</span>	set -e
+<span id="L24" class="ln">    24</span>	report=$(goreportcard-cli)
+<span id="L25" class="ln">    25</span>	startindex=$(($(echo $report | grep -b -o Issue | cut -d: -f1)+8))
+<span id="L26" class="ln">    26</span>	endindex=$(($(echo $report|grep -b -o gofmt | cut -d: -f1)-1))
+<span id="L27" class="ln">    27</span>	issuecount=${report:$startindex:$endindex-$startindex}
+<span id="L28" class="ln">    28</span>	if [ $issuecount == &#34;0&#34; ]; then
+<span id="L29" class="ln">    29</span>	        echo &#34;goreportcard-cli passed&#34;
+<span id="L30" class="ln">    30</span>	fi
+<span id="L31" class="ln">    31</span>	if [ $issuecount != 0 ]; then
+<span id="L32" class="ln">    32</span>	        echo $issuecount&#34; issues. Run \`goreportcard-cli -v\` to check. Ignore the issues from \`vendor\` directory&#34;
+<span id="L33" class="ln">    33</span>		exit 1
+<span id="L34" class="ln">    34</span>	fi
+<span id="L35" class="ln">    35</span>	
+<span id="L36" class="ln">    36</span>	echo &#34;Build Successful!&#34;
+</pre><p><a href="build.sh%3Fm=text">View as plain text</a></p>
+
+<div id="footer">
+Build version go1.11.4.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+
