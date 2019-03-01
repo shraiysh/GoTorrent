@@ -10,7 +10,7 @@ jobs:
       - run : sudo apt-get update
       - run : go get github.com/zeebo/bencode
       - run : go get github.com/alecthomas/gometalinter
-      - run : go get github.com/gojp/goreportcard/cmd/goreportcard  - li
+      - run : go get github.com/gojp/goreportcard/cmd/goreportcard
       - run : go get github.com/stretchr/testify/assert
       - run : chmod +x ./build.sh
       - run : ./build.sh
