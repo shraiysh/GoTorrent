@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
-	"fmt"
 
 	"github.com/concurrency-8/args"
 	"github.com/concurrency-8/parser"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/concurrency-8/args"
 	"fmt"
+	"github.com/concurrency-8/args"
 	"os"
 	"sync"
 
@@ -43,7 +43,7 @@ func main() {
 	verboseflag := false
 	for i := 1; i < l; i++ {
 		arg := os.Args[i]
-		if filesflag == true && arg[0] != '-'{
+		if filesflag == true && arg[0] != '-' {
 			files = append(files, arg)
 		} else {
 			filesflag = false
@@ -51,7 +51,7 @@ func main() {
 				resumeflag = true
 			} else if arg == "--verbose" || arg == "-v" {
 				verboseflag = true
-			} else if arg == "--rescap" || arg == "-rc"{
+			} else if arg == "--rescap" || arg == "-rc" {
 				rcflag = true
 			} else if arg == "--download" || arg == "-d" {
 				downloadpath = os.Args[i+1]
@@ -71,14 +71,14 @@ func main() {
 	wait.Add(len(files))
 	ports := make([]int, len(files))
 	//start peer ports from 20000. There's actually no restriction on the port numbers.
-	//According to the specification, intially tracker UDP has ports from 6881-6889
+	//According to the specification, initially tracker UDP has ports from 6881-6889
 	//Note that some of these ports may already be in use by the OS, in that case, Download fails.
 	ports[0] = 20000
 	for i, file := range files {
 		if ports[i] == 0 {
 			ports[i] = ports[i-1] + 1
 		}
-		go func(file string, port int){
+		go func(file string, port int) {
 			torrent.DownloadFromFile(file, port)
 			defer wait.Done()
 		}(file, ports[i])
