@@ -13,7 +13,6 @@ type PieceTracker struct {
 	Torrent   parser.TorrentFile
 	Requested [][]bool
 	Received  [][]bool
-	Trials    []int
 	lock      sync.Mutex
 }
 
@@ -28,7 +27,6 @@ func NewPieceTracker(torrent parser.TorrentFile) (tracker *PieceTracker) {
 		tracker.Requested = append(tracker.Requested, make([]bool, blocksPerPiece))
 		tracker.Received = append(tracker.Received, make([]bool, blocksPerPiece))
 	}
-	tracker.Trials = make([]int, numPieces)
 	return
 }
 
@@ -126,4 +124,12 @@ func (tracker *PieceTracker) Reset(index uint32) {
 		tracker.Received[index][i] = false
 	}
 	tracker.lock.Unlock()
+}
+
+// Fill is used to revive the piecetracker while resuming the torrent
+func (tracker *PieceTracker) Fill(index uint32) {
+	for i := range tracker.Requested[index] {
+		tracker.Requested[index][i] = true
+		tracker.Received[index][i] = true
+	}
 }

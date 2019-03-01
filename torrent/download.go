@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha1"
 	"encoding/binary"
+	"encoding/gob"
 	"io"
 	"log"
 	"net"
@@ -13,6 +14,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/concurrency-8/args"
 	"github.com/concurrency-8/parser"
 	"github.com/concurrency-8/piece"
 	"github.com/concurrency-8/queue"
@@ -86,6 +88,9 @@ func DownloadFromFile(path string, port int) {
 	}
 
 	pieceTracker := piece.NewPieceTracker(torrentFile)
+	if args.ARGS.Resume {
+		readGob(torrentFile.Name+"/resume.gob", pieceTracker)
+	}
 	// DownloadFromPeer(announceResp.Peers[0], clientReport, pieceTracker)
 	wg.Add(len(announceResp.Peers))
 	for _, peer := range announceResp.Peers {
@@ -117,7 +122,10 @@ func DownloadFromPeer(peer tracker.Peer, report *tracker.ClientStatusReport, pie
 		if err != nil {
 			break
 		}
-		exitStatus, _ = onWholeMessage(peer, conn, msgHandler, pieces, queue, report)
+		exitStatus, err = onWholeMessage(peer, conn, msgHandler, pieces, queue, report)
+		if err != nil {
+			break
+		}
 	}
 
 	Info.Println("peer: <", peer, ">: ends!")
@@ -385,8 +393,7 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		for i := range expected {
 			same = same && expected[i] == actual[i]
 		}
-		if !same && pieces.Trials[pieceResp.Index] < MaxTry {
-			pieces.Trials[pieceResp.Index]++
+		if !same {
 			Error.Println("peer: <", peer, ">: SHA do not match for piece:", pieceResp.Index)
 			Error.Println("peer: <", peer, ">: Expected:\t", report.TorrentFile.Piece[pieceResp.Index*20:(pieceResp.Index+1)*20])
 			Error.Println("peer: <", peer, ">: Actual:\t", toSHA1(piece))
@@ -415,8 +422,10 @@ func PieceHandler(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 	}
 	Info.Println("peer: <", peer, ">: Writing block to file ", file.Name())
 	file.WriteAt(pieceResp.Bytes, int64(offsetInFile))
+	if args.ARGS.ResumeCapability {
+		writeGob(report.TorrentFile.Name+"/resume.gob", pieces)
+	}
 	// file.Sync()
-
 	pieces.PrintPercentageDone()
 
 	if pieces.IsDone() {
@@ -475,4 +484,24 @@ func RequestPiece(peer tracker.Peer, conn net.Conn, pieces *piece.PieceTracker, 
 		}
 	}
 	return
+}
+
+func writeGob(filePath string, object interface{}) error {
+	file, err := os.Create(filePath)
+	if err == nil {
+		encoder := gob.NewEncoder(file)
+		encoder.Encode(object)
+	}
+	file.Close()
+	return err
+}
+
+func readGob(filePath string, object interface{}) error {
+	file, err := os.Open(filePath)
+	if err == nil {
+		decoder := gob.NewDecoder(file)
+		err = decoder.Decode(object)
+	}
+	file.Close()
+	return err
 }
