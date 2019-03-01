@@ -18,15 +18,18 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func setLogs() {
-	Info = log.New(os.Stdout, "Testing ", 0)
-	Error = log.New(os.Stderr, "Testing ", 0)
+func getLog() Log {
+	Info := log.New(os.Stdout, "Testing ", 0)
+	Error := log.New(os.Stderr, "Testing ", 0)
+	return Log{
+		Info:  Info,
+		Error: Error,
+	}
 }
 
 /*
 // TestOnWholeMessage tests torrent/download.go : onWholeMessage(*kwargs)
 func TestOnWholeMessage(t *testing.T) {
-	setLogs()
 	fmt.Println("Testing torrent/download.go : onWholeMessage(*kwargs)")
 	num := 20
 	messages := make([][]byte, num)
@@ -111,9 +114,8 @@ func TestDownload(t *testing.T) {
 
 // TestUnchokeHandler tests handling of unchoking protocol
 func TestUnChokeHandler(t *testing.T) {
-	setLogs()
 	queue := queue.NewQueue(parser.TorrentFile{})
-	UnchokeHandler(tracker.Peer{}, nil, nil, queue)
+	UnchokeHandler(tracker.Peer{}, nil, nil, queue, getLog())
 	assert.Equal(t, queue.Choked, false, "Choked attribute not set properly")
 }
 
@@ -131,7 +133,7 @@ func TestRequestPiece(t *testing.T) {
 	fmt.Println(pieceBlock)
 	go func() {
 		for i := 0; i < length; i++ {
-			RequestPiece(tracker.Peer{}, server, pieces, queue)
+			RequestPiece(tracker.Peer{}, server, pieces, queue, getLog())
 		}
 		defer server.Close()
 	}()
@@ -184,7 +186,7 @@ func TestHaveHandler(t *testing.T) {
 	assert.Equal(t, uint32(5), size, "Invalid size")
 	assert.NotEmpty(t, payload["payload"], "Empty piece index in payload.")
 	var pieceIndex uint32
-	pieceIndex, err = HaveHandler(tracker.Peer{}, client, pieces, queue, payload)
+	pieceIndex, err = HaveHandler(tracker.Peer{}, client, pieces, queue, payload, getLog())
 	assert.Nil(t, err, "Error in HaveHandler")
 	assert.Equal(t, pieceBlock.Index, pieceIndex, "Piece Index doesn't match.")
 	assert.True(t, pieces.Requested[pieceBlock.Index][0], "Requested not set.")
@@ -235,7 +237,7 @@ func TestBitFieldHandler(t *testing.T) {
 	assert.Equal(t, uint8(5), id, "Invalid id after reading from Pipe")
 	assert.Equal(t, uint32(nbytes+1), size, "Invalid size")
 	assert.NotEmpty(t, payload["payload"], "Empty pieces in payload")
-	err = BitFieldHandler(tracker.Peer{}, client, pieces, queue, payload)
+	err = BitFieldHandler(tracker.Peer{}, client, pieces, queue, payload, getLog())
 	assert.Nil(t, err, "Error in BitFieldHandler")
 	// For each item in the queue, assert into the received field.
 	for i := 0; queue.Length() > 0; i++ {

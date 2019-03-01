@@ -3,11 +3,10 @@ package tracker
 import (
 	"bufio"
 	"bytes"
+
 	//"crypto"
 	"encoding/binary"
 	"fmt"
-	"github.com/concurrency-8/parser"
-	bencode "github.com/zeebo/bencode"
 	"io/ioutil"
 	"log"
 	"math"
@@ -18,6 +17,9 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/concurrency-8/parser"
+	bencode "github.com/zeebo/bencode"
 )
 
 var (
@@ -369,6 +371,8 @@ func GetClientStatusReport(torrent parser.TorrentFile, port uint16) (report *Cli
 
 	return
 }
+
+// GetRandomTorrent returns a random torrent from test_torrents
 func GetRandomTorrent() parser.TorrentFile {
 	root = "././test_torrents"
 	//Read the directory
@@ -381,7 +385,7 @@ func GetRandomTorrent() parser.TorrentFile {
 		torrents = append(torrents, f.Name())
 	}
 	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
-	random_torrent := root + "/" + torrents[rand.Intn(len(torrents))]
-	store, _ := parser.ParseFromFile(random_torrent)
+	randomTorrent := root + "/" + torrents[rand.Intn(len(torrents))]
+	store, _ := parser.ParseFromFile(randomTorrent)
 	return store
 }
